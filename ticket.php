@@ -4,7 +4,6 @@
  *
  * Allows a ticket to be created or edited
  *
- * @author  Matt Beall
  * @author  Crystal Carr
  * @package Echo/PHP
  * @since 0.0.1
