@@ -1,6 +1,6 @@
 <?php
 /**
- * Users class
+ * User class
  *
  * Connects to database and creates user object.
  *
