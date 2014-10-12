@@ -24,40 +24,39 @@ include_once('header.php');?>
             <header class="entry-header">
               <h1 class="entry-title"><?php echo $the_title; ?></h1>
             </header><!-- .entry-header -->
-							<div class="entry-content">
-							<form class="col-xs-6" action="ticket.php" method="post" name="create_edit_ticket" id="create_edit_ticket">
-								<input type="hidden" name="tkt_id_pk" value="">
-								<div class="form-group">
-									<label for="tkt_name">Ticket Name</label>
-									<input class="form-control" type="text" name="tkt_name" id="tkt_name" maxlength="45">
-								</div>
-								<input type="hidden" name="tkt_priority" value="">
-								<div class="form-group">
-								<label>Status:</label>
-									<select class="form-control" name="tkt_status" id="tkt_status" size="1">
-										<option value="Open">Open</option>
-										<option value="Close">Close</option>
-										<option value="Review">Review</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="tkt_desc">Description:</label>
-									<textarea class="form-control"></textarea>
-								</div>
-								<p><input type="submit" value="Sumbit">
-							<a href="index.php">Cancel</a>
-						</p>
-							</form>
-						
-							</div> <!--.entry-content -->
-					</article>
-				</div> <!--.row -->
-			</div> <!-- #content -->
-		</div> <!-- #primary -->
+              <div class="entry-content">
+              <form class="col-xs-6" action="ticket.php" method="post" name="create_edit_ticket" id="create_edit_ticket">
+                <input type="hidden" name="tkt_id_pk" value="">
+                <div class="form-group">
+                  <label for="tkt_name">Ticket Name</label>
+                  <input class="form-control" type="text" name="tkt_name" id="tkt_name" maxlength="45">
+                </div>
+                <input type="hidden" name="tkt_priority" value="">
+                <div class="form-group">
+                <label>Status:</label>
+                  <select class="form-control" name="tkt_status" id="tkt_status" size="1">
+                    <option value="Open">Open</option>
+                    <option value="Close">Close</option>
+                    <option value="Review">Review</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="tkt_desc">Description:</label>
+                  <textarea class="form-control"></textarea>
+                </div>
+                <p><input type="submit" value="Sumbit">
+              <a href="index.php">Cancel</a>
+            </p>
+              </form>
+
+              </div> <!--.entry-content -->
+          </article>
+        </div> <!--.row -->
+      </div> <!-- #content -->
+    </div> <!-- #primary -->
 
 
 
 
 <?php include_once('footer.php'); ?>
 
-	
