@@ -10,7 +10,15 @@
  * @package Echo/PHP
  * @version 0.0.1
  */
+include_once('inc/class-edb.php');
+
+$edb = new edb;
+
+global $connect;
+$connect = $edb->connect();
+
 global $the_title;
+
 ?>
 
 <!DOCTYPE html>
