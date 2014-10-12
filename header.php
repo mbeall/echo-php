@@ -14,9 +14,6 @@ include_once('inc/class-edb.php');
 
 $edb = new edb;
 
-global $connect;
-$connect = $edb->connect();
-
 global $the_title;
 
 ?>
