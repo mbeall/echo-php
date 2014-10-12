@@ -44,19 +44,17 @@ class edb {
 
   }
 
-  function select( $table, $columns = '*', $args = array() ) {
+  function select( $table, $columns = '*', $match = NULL, $args = array() ) {
 
     /**
      * Default parameters for select statement
      *
-     * @var string $where   Search condition for row
      * @var string $groupby Group by expression
      * @var string $having  Search condition for group
      * @var string $orderby Order expression
      * @var string $order   Ascending or descending (ASC or DESC)
      */
     $defaults = array(
-      'where'   => '',
       'groupby' => '',
       'having'  => '',
       'orderby' => '',
@@ -74,9 +72,9 @@ class edb {
     $query  = '';
     $query .= 'SELECT ' . $columns;
     $query .= ' FROM ' . $table;
-    $query .= !empty($args->where)   ? ' WHERE '    . $args->where : '';
+    $query .= !empty($match)         ? ' WHERE '    . $match         : '';
     $query .= !empty($args->groupby) ? ' GROUP BY ' . $args->groupby : '';
-    $query .= !empty($args->having)  ? ' HAVING '   . $args->having : '';
+    $query .= !empty($args->having)  ? ' HAVING '   . $args->having  : '';
     $query .= !empty($args->orderby) ? ' ORDER BY ' . $args->orderby . ' ' . $args->order : '';
     $query .= ';';
 
@@ -88,13 +86,13 @@ class edb {
 
   }
 
-  function insert( $table, (array) $values ) {
+  function insert( $table, $columns, $values ) {
 
     /**
      * Build the query
      */
     $query  = '';
-    $query .= 'INSERT INTO ' . $table;
+    $query .= 'INSERT INTO ' . $table . ' (' . $columns . ')';
     $query .= ' VALUES ';
 
     foreach($values as $row) {
@@ -105,7 +103,7 @@ class edb {
 
     $query .= ';';
 
-    preg_replace($query, ')(', '), (');
+    $query = preg_replace('/\)\(/', '\), \(', $query);
 
     /**
      * Execute the query
