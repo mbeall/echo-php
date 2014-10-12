@@ -22,17 +22,17 @@ include_once ('header.php');?>
 
             <div class="entry-content">
 <section>
-	<form action="" method = "post" name="searchbyticket" id="searchbyticket">
-		<label for="ticket"> Ticket Search:</label>
-		<input type="text" name="ticket" id ="ticket" maxlength="50" />
-		<p>
-			<input type="submit" value="Search" name="search" />
-		</p>
-	</form>
+  <form action="" method = "post" name="searchbyticket" id="searchbyticket">
+    <label for="ticket"> Ticket Search:</label>
+    <input type="text" name="ticket" id ="ticket" maxlength="50" />
+    <p>
+      <input type="submit" value="Search" name="search" />
+    </p>
+  </form>
 </section>
 
 
-<?php	
+<?php
 $ticketname = $_POST['tkt_name'];
 $ticketdesc = $_POST['tkt_desc'];
 $ticketpriority = $_POST['tkt_priority'];
@@ -66,7 +66,7 @@ if ($matchingRecords == 0)
    echo "<h3>No matches found for the search term(s)</h3>";
 }
 else
-{   
+{
 
 $output = <<<ABC
 <table>
@@ -95,7 +95,7 @@ ABC;
         </tr>
 ABC;
     }
-    
+
     $output .= "<tbody></table>";
 }
 $output .= <<<ABC
