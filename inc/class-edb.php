@@ -9,9 +9,10 @@
 class edb {
 
   function connect( $dbuser = 'cmh', $dbpassword = 'cbt', $dbhost = 'buscissql\cisweb' ) {
-    $dbuser = empty($dbuser) ? $this->dbuser : $dbuser;
-    $dbpassword = empty($dbuser) ? $this->dbpassword : $dbpassword;
-    $dbhost = empty($dbuser) ? $this->dbhost : $dbhost;
+    
+    $dbuser     = empty($dbuser)     ? $this->dbuser     : $dbuser;
+    $dbpassword = empty($dbpassword) ? $this->dbpassword : $dbpassword;
+    $dbhost     = empty($dbhost)     ? $this->dbhost     : $dbhost;
 
     $conn = new PDO('sqlsrv:Server='.$dbhost, $dbuser, $dbpassword, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
@@ -113,10 +114,25 @@ class edb {
 
   }
 
-  function update() {
-  }
+  function update( $table, $new, $match ) {
 
-  function delete() {
+    /**
+     * Build the query
+     */
+    $query  = '';
+    $query .= 'UPDATE ' . $table;
+    $query .= ' SET '   . $new;
+    $query .= ' WHERE ' . $match;
+    $query .= ';';
+
+    echo $query;
+    
+    /**
+     * Execute the query
+     */
+    $results = $this->query($query);
+    return $results;
+
   }
 
 }
