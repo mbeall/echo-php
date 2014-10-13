@@ -4,10 +4,23 @@
  *
  * @author Matt Beall <me@rams.colostate.edu>
  * @license MIT http://opensource.org/licenses/MIT
- * @since 0.0.1
+ * @version 0.0.1
  */
 class edb {
 
+  /**
+   * Connect to database
+   *
+   * @since 0.0.1
+   *
+   * @param string $dbuser     The user connecting to the database
+   * @param string $dbpassword The password for the user connecting to the database
+   * @param string $dbhost     The host of the database (i.e. 'localhost')
+   * 
+   * @return object PHP Data Object
+   * 
+   * @var object $conn PHP Data Object
+   */
   function connect( $dbuser = 'cmh', $dbpassword = 'cbt', $dbhost = 'buscissql\cisweb' ) {
     
     $dbuser     = empty($dbuser)     ? $this->dbuser     : $dbuser;
@@ -19,6 +32,21 @@ class edb {
     return $conn;
   }
 
+  /**
+   * Execute query
+   *
+   * Attempt to connect to database and execute SQL query
+   * If successful, return results.
+   * 
+   * @since 0.0.1
+   *
+   * @uses edb::connect()
+   * @throws PDOException if connection or query cannot execute
+   *
+   * @param  string $query The SQL query to be executed
+   * @return array         Data retrieved from database
+   * @var    string $conn  The PHP Data Object
+   */
   function query( $query ) {
 
     $conn = $this->connect();
@@ -45,15 +73,32 @@ class edb {
 
   }
 
+  /**
+   * Execute select statement
+   *
+   * Build a SQL select statement, and execute the statement
+   *
+   * @since 0.0.1
+   *
+   * @uses edb::query()
+   *
+   * @param string $table   The database table to query
+   * @param string $columns The columns or data fields to query from the table
+   * @param string $match   Search condition for row
+   * @param array  $args    Additional, optional parameters (see below)
+   * 
+   * @return array         Data results
+   * @var    string $query The select statement to be executed
+   */
   function select( $table, $columns = '*', $match = NULL, $args = array() ) {
 
     /**
      * Default parameters for select statement
      *
-     * @var string $groupby Group by expression
-     * @var string $having  Search condition for group
-     * @var string $orderby Order expression
-     * @var string $order   Ascending or descending (ASC or DESC)
+     * @param string $groupby Group by expression
+     * @param string $having  Search condition for group
+     * @param string $orderby Order expression
+     * @param string $order   Ascending or descending ('ASC' or 'DESC')
      */
     $defaults = array(
       'groupby' => '',
@@ -87,6 +132,22 @@ class edb {
 
   }
 
+  /**
+   * Insert data into the database
+   *
+   * Build a SQL insert statement, and execute the statement
+   *
+   * @since 0.0.1
+   *
+   * @uses edb::query()
+   *
+   * @param string $table   The database table that the data will be inserted into
+   * @param string $columns The columns, delimited by commas, that specifies which data will be inserted
+   * @param array  $values  A one-dimensional array of comma-separated values to be inserted into the database
+   * 
+   * @return void
+   * @var string $query The insert statement to be executed
+   */
   function insert( $table, $columns, $values ) {
 
     /**
@@ -104,6 +165,9 @@ class edb {
 
     $query .= ';';
 
+    /**
+     * If there are multiple rows, make sure they are comma-separated
+     */
     $query = preg_replace('/\)\(/', '\), \(', $query);
 
     /**
@@ -114,6 +178,24 @@ class edb {
 
   }
 
+  /**
+   * Update data in database
+   *
+   * Build a SQL update statement, and execute the statement
+   *
+   * @since 0.0.1
+   *
+   * @uses edb::query()
+   *
+   * @param string $table The table where the data will be updated
+   * @param string $new The column name and new value (i.e. "name = 'Bob'")
+   * @param string $match The search condition to limit which rows are updated
+   * 
+   * @return void
+   * @var string $query The update statement to be executed
+   *
+   * @todo Change $new to allow multi-dimensional array input
+   */
   function update( $table, $new, $match ) {
 
     /**
@@ -124,8 +206,6 @@ class edb {
     $query .= ' SET '   . $new;
     $query .= ' WHERE ' . $match;
     $query .= ';';
-
-    echo $query;
     
     /**
      * Execute the query
