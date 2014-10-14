@@ -147,6 +147,8 @@ class edb {
    * 
    * @return void
    * @var string $query The insert statement to be executed
+   *
+   * @todo Change $values to sanitize input and not require strings to be in quotes
    */
   function insert( $table, $columns, $values ) {
 
