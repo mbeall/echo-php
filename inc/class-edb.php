@@ -16,13 +16,13 @@ class edb {
    * @param string $dbuser     The user connecting to the database
    * @param string $dbpassword The password for the user connecting to the database
    * @param string $dbhost     The host of the database (i.e. 'localhost')
-   * 
+   *
    * @return object PHP Data Object
-   * 
+   *
    * @var object $conn PHP Data Object
    */
   function connect( $dbuser = 'cmh', $dbpassword = 'cbt', $dbhost = 'buscissql\cisweb' ) {
-    
+
     $dbuser     = empty($dbuser)     ? $this->dbuser     : $dbuser;
     $dbpassword = empty($dbpassword) ? $this->dbpassword : $dbpassword;
     $dbhost     = empty($dbhost)     ? $this->dbhost     : $dbhost;
@@ -37,7 +37,7 @@ class edb {
    *
    * Attempt to connect to database and execute SQL query
    * If successful, return results.
-   * 
+   *
    * @since 0.0.1
    *
    * @uses edb::connect()
@@ -57,7 +57,7 @@ class edb {
 
       do {
         if ($query->columnCount() > 0) {
-          $results = $query->fetchAll(PDO::FETCH_ASSOC);
+          $results = $query->fetchAll(PDO::FETCH_OBJ);
         }
       }
       while ($query->nextRowset());
@@ -86,7 +86,7 @@ class edb {
    * @param string $columns The columns or data fields to query from the table
    * @param string $match   Search condition for row
    * @param array  $args    Additional, optional parameters (see below)
-   * 
+   *
    * @return array         Data results
    * @var    string $query The select statement to be executed
    */
@@ -110,7 +110,7 @@ class edb {
     /**
      * Parse connection arguments
      */
-    $args = array_replace( $defaults, $args );
+    $args = array_merge( $defaults, $args );
 
     /**
      * Build the query
@@ -144,7 +144,7 @@ class edb {
    * @param string $table   The database table that the data will be inserted into
    * @param string $columns The columns, delimited by commas, that specifies which data will be inserted
    * @param array  $values  A one-dimensional array of comma-separated values to be inserted into the database
-   * 
+   *
    * @return void
    * @var string $query The insert statement to be executed
    *
@@ -157,14 +157,7 @@ class edb {
      */
     $query  = '';
     $query .= 'INSERT INTO ' . $table . ' (' . $columns . ')';
-    $query .= ' VALUES ';
-
-    foreach($values as $row) {
-      $query .= '(';
-      $query .= $row;
-      $query .= ')';
-    }
-
+    $query .= ' VALUES (' . $values . ')';
     $query .= ';';
 
     /**
@@ -192,7 +185,7 @@ class edb {
    * @param string $table The table where the data will be updated
    * @param string $new The column name and new value (i.e. "name = 'Bob'")
    * @param string $match The search condition to limit which rows are updated
-   * 
+   *
    * @return void
    * @var string $query The update statement to be executed
    *
@@ -208,7 +201,7 @@ class edb {
     $query .= ' SET '   . $new;
     $query .= ' WHERE ' . $match;
     $query .= ';';
-    
+
     /**
      * Execute the query
      */
