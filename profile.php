@@ -29,7 +29,7 @@ include_once ('header.php'); ?>
 
 <section>
   <h1>My Profile</h1>
-    <?php echo $u_first . $u_last; ?>
+    <?php echo $u_first $u_last; ?>
   <h2>My Contact Info</h2>
         <h3>Email:</h3>
 </section>
