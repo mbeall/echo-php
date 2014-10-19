@@ -12,7 +12,7 @@
  */
 
 Global $the_title;
-$the_title='';
+$the_title='Login';
 include_once ('header.php');?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -47,5 +47,8 @@ return executeQuery($query);-->
          New user?  <a href="register.php">Register Here</a>
       </p>
 </form>
-
+</div><!-- .entry-content -->
+        </div><!-- .row -->
+      </div><!-- #content -->
+    </div><!-- #primary -->
 <?php include_once ('footer.php'); ?>
