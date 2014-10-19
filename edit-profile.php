@@ -4,14 +4,13 @@
  *
  * Allows a registered user to login
  *
- * @author  Hannah Turner
- * @package Echo/PHP
- * @since 0.0.1
+ * @author Hannah Turner
+ * @since 0.0.3
  *
  * @todo Validate input fields
  */
 
-Global $the_title;
+global $the_title;
 $the_title='Edit Profile';
 include_once ('header.php');?>
 <div id="primary" class="content-area container">
