@@ -7,10 +7,36 @@
  * on all pages.
  *
  * @author  Matt Beall
- * @package Echo/PHP
  * @version 0.0.1
  */
+include_once('functions.php');
+include_once('inc/class-edb.php');
+include_once('inc/class-e-user.php');
+
+$edb = new edb;
+
 global $the_title;
+global $the_type;
+
+if (!empty($the_type)) {
+  switch ($the_type) {
+    case 'user':
+      global $user;
+      if (!empty($_REQUEST['u'])) {
+        $u = (int) $_REQUEST['u'];
+        $user = get_user( $u );
+      }
+      else {
+        $u = 0;
+        $user = null;
+      }
+      break;
+
+    default:
+      break;
+  }
+}
+
 ?>
 
 <!DOCTYPE html>
