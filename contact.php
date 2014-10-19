@@ -4,8 +4,7 @@
  *
  * Displays contact information and includes basic contact form
  *
- * @author  Crystal Carr
- * @package Echo/PHP
+ * @author Crystal Carr
  * @since 0.0.1
  *
  * @todo Validate input fields

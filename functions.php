@@ -4,8 +4,8 @@
  *
  * All function definitions for the site
  *
- * @author  Matt Beall
- * @version 0.0.3
+ * @author Matt Beall
+ * @since 0.0.3
  */
 
 /**

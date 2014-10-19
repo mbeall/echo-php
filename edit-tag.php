@@ -4,8 +4,8 @@
  *
  * Allows a registered user to create or edit a tag
  *
- * @author  Crystal Carr
- * @since   0.0.3
+ * @author Crystal Carr
+ * @since  0.0.3
  *
  * @todo Validate input fields
  */

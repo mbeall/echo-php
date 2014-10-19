@@ -6,8 +6,8 @@
  * along with the header and navigation that is consistent
  * on all pages.
  *
- * @author  Matt Beall
- * @version 0.0.3
+ * @author Matt Beall
+ * @since 0.0.3
  */
 include_once('functions.php');
 include_once('inc/class-edb.php');

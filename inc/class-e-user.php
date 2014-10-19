@@ -3,8 +3,6 @@
  * Defines class E_User and related functions
  *
  * @author Matt Beall
- * @license MIT
- * @version 0.0.3
  */
 
 /**
@@ -12,7 +10,7 @@
  *
  * Connects to database and creates user object.
  *
- * @author  Matt Beall
+ * @author Matt Beall
  * @since 0.0.1
  */
 class E_User {

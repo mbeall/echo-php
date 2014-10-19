@@ -3,8 +3,6 @@
  * Defines class E_Ticket and related functions
  *
  * @author Matt Beall
- * @license MIT
- * @version 0.0.3
  */
 
 /**
@@ -12,7 +10,7 @@
  *
  * Connects to database and creates ticket object.
  *
- * @author  Matt Beall
+ * @author Matt Beall
  * @since 0.0.3
  */
 class E_Ticket {
