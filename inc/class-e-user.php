@@ -132,12 +132,12 @@ class E_User {
   public static function get_instance( $u_id ) {
     global $edb;
 
-    $user_id = (int) $user_id;
+    $u_id = (int) $u_id;
 
     if ( ! $user_id )
       return false;
 
-    $_user = self::query("SELECT TOP 1 * FROM users LEFT JOIN registered_users ON u_id_PK = reg_u_id_PK_FK WHERE u_id_PK = $user_id");
+    $_user = self::query("SELECT TOP 1 * FROM users LEFT JOIN registered_users ON u_id_PK = reg_u_id_PK_FK WHERE u_id_PK = $u_id");
 
     return new E_User ( $_user );
   }
@@ -243,7 +243,7 @@ class E_User {
    */
   private function get_user_id( $u_ip ) {
     global $edb;
-    $users = self::query("SELECT BOTTOM 1 * FROM users WHERE u_ip = $u_ip");
+    $users = self::query("SELECT TOP 1 * FROM users WHERE u_ip = '$u_ip' ORDER BY u_id_PK DESC");
     foreach ( $users as $user ) {
         get_class($user);
         foreach ( $user as $key => $value )
@@ -365,4 +365,27 @@ function get_user_login_name( $user ) {
 function get_user_email( $user ) {
   $u_email = get_user_data( $user , 'u_email' );
   return $u_email;
+}
+
+/**
+ * Check if the user is an admin user
+ *
+ * @since 0.0.3
+ *
+ * @uses get_user_data()
+ *
+ * @param  object $user    The E_User class containing the data for the user
+ * @return bool
+ * @var    int    $u_admin If 1, user is admin; else, user is not admin.
+ */
+function is_user_admin( $user ) {
+  $u_admin = get_user_data( $user , 'u_admin' );
+  $u_admin = (int) $u_admin;
+
+  if ($u_admin == 1) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
