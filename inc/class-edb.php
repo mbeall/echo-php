@@ -1,10 +1,14 @@
 <?php
 /**
- * Connect to database and execute SQL query
+ * Defines edb class and related functions
  *
  * @author Matt Beall <me@rams.colostate.edu>
  * @license MIT http://opensource.org/licenses/MIT
  * @version 0.0.1
+ */
+
+/**
+ * Connect to database and execute SQL query
  */
 class edb {
 
@@ -43,9 +47,9 @@ class edb {
    * @uses edb::connect()
    * @throws PDOException if connection or query cannot execute
    *
-   * @param  string $query The SQL query to be executed
-   * @return array         Data retrieved from database
-   * @var    string $conn  The PHP Data Object
+   * @param  string       $query The SQL query to be executed
+   * @return object|array        stdClass object or array of stdClass objects containing data from
+   * @var    string       $conn  The PHP Data Object
    */
   function query( $query ) {
 
