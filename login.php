@@ -13,7 +13,8 @@
 
 Global $the_title;
 $the_title='Login';
-include_once ('header.php');?>
+include_once ('header.php');
+require_once ('functions.php');?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
@@ -23,18 +24,45 @@ include_once ('header.php');?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
+<?php 
+$userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
+$userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';
 
-<!--function getUser($u_login_name, $u_pass)
+$redirect = (isset($_REQUEST['redirect'])) ? $_REQUEST['redirect'] : 'd8home.php';
+
+// if the form was submitted
+
+if (isset($_POST['login']))
 {
-    $query = <<<STR
-Select reg_u_id_PK_FK, u_first, u_last
-From registered_users
-Where userlogin = '$u_login_name'
-and userpassword = '$u_pass'
-STR;
+    //Call getUser method to check credentials
 
-return executeQuery($query);-->
+    $userList = get_user($userLogin, $userPassword);
 
+    if (count($userList)==1) //If credentials check out
+    {
+        extract($userList[0]);
+
+        // assign user info to an array
+
+        $userInfo = array('contactpk'=>$contactpk, 'firstname'=>$firstname, 'userrole'=>$userrolename);
+
+        // assign the array to a session array element
+
+        $_SESSION['userInfo'] = $userInfo;
+        session_write_close(); //typically not required; ensures that the session data is stored
+
+        // redirect the user
+
+        header('location:' . $redirect);
+        die();
+    }
+
+    else // Otherwise, assign error message to $error
+    {
+        $error = 'Invalid login credentials<br />Please try again';
+    }
+}
+?> 
 <form action="login.php" name="loginForm" id="loginForm" method="post">
 
    <input type="hidden" name ="redirect" value ="<?php echo $redirect ?>" />
@@ -47,6 +75,11 @@ return executeQuery($query);-->
          New user?  <a href="register.php">Register Here</a>
       </p>
 </form>
+							
+<?php 
+//$login=get_user() 
+?>	
+							
 </div><!-- .entry-content -->
         </div><!-- .row -->
       </div><!-- #content -->
