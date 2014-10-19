@@ -7,6 +7,21 @@
  * @author  Matt Beall
  * @version 0.0.1
  */
+<<<<<<< HEAD
+
+/*function get_user($u_login_name, $u_pass)
+{
+    $query = <<<STR
+Select reg_u_id_PK_FK, u_login_name, u_pass
+From registered_users
+Where userlogin = '$u_login_name'
+and userpassword = '$u_pass'
+STR;
+
+return executeQuery($query);
+}
+*/
+=======
 function is_user_logged_in() {
   global $user;
 
@@ -18,3 +33,4 @@ function is_user_logged_in() {
   else
     return false;
 }
+>>>>>>> origin/master
