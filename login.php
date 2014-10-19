@@ -24,7 +24,7 @@ require_once ('functions.php');?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
-<?php 
+<?php
 $userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
 $userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';
 
@@ -62,7 +62,7 @@ if (isset($_POST['login']))
         $error = 'Invalid login credentials<br />Please try again';
     }
 }
-?> 
+?>
 <form action="login.php" name="loginForm" id="loginForm" method="post">
 
    <input type="hidden" name ="redirect" value ="<?php echo $redirect ?>" />
@@ -75,11 +75,11 @@ if (isset($_POST['login']))
          New user?  <a href="register.php">Register Here</a>
       </p>
 </form>
-							
-<?php 
-//$login=get_user() 
-?>	
-							
+
+<?php
+//$login=get_user()
+?>
+
 </div><!-- .entry-content -->
         </div><!-- .row -->
       </div><!-- #content -->
