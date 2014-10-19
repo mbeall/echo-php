@@ -15,8 +15,7 @@
 
 Global $the_title;
 $the_title='Profile';
-include_once ('header.php');
-include_once ('?>
+include_once ('header.php'); ?>
 
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -39,4 +38,4 @@ include_once ('?>
 
 
 
-<?php include_once ('footer.php');
+<?php include_once ('footer.php'); ?>
