@@ -34,18 +34,18 @@ and userpassword = '$u_pass'
 STR;
 
 return executeQuery($query);-->
-              
+
 <form action="login.php" name="loginForm" id="loginForm" method="post">
 
    <input type="hidden" name ="redirect" value ="<?php echo $redirect ?>" />
    <label for="userlogin">Username:</label>
    <input type="text" name="userlogin" id ="userlogin" value="<?php echo $userLogin; ?>" maxlength="10" autofocus="autofocus" required="required" pattern="^[\w@\.\-]+" title="User Name has invalid characters" />
-   <label for="userpassword">Password:</label> 
+   <label for="userpassword">Password:</label>
    <input type="password" name="userpassword" id="userpassword" value="<?php echo $userPassword; ?>" maxlength="10" required="required" pattern="^[\w@\.\-]+" title="Password has invalid characters" />
       <p>
          <input type="submit" value="Login" name="login" /> <br />
          New user?  <a href="register.php">Register Here</a>
       </p>
 </form>
-                
+
 <?php include_once ('footer.php'); ?>
