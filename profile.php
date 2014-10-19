@@ -29,13 +29,22 @@ include_once ('header.php'); ?>
 
 <section>
   <h1>My Profile</h1>
-    <?php echo $u_first $u_last; ?>
+    <?php echo $u_first . $u_last; ?>
   <h2>My Contact Info</h2>
         <h3>Email:</h3>
 </section>
 
 
+<FORM METHOD="LINK" action="editprofile.php">
+<p>
+  <input type="submit"  value="Edit Profile" name="edit profile" />
+</p>
+</FORM>
 
+ </div><!-- .entry-content -->
+          </article>
+        </div><!-- .row -->
+      </div><!-- #content -->
+    </div><!-- #primary -->
 
-
-<?php include_once ('footer.php'); ?>
+<?php include_once('footer.php'); ?>
