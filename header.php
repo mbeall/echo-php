@@ -7,7 +7,7 @@
  * on all pages.
  *
  * @author  Matt Beall
- * @version 0.0.1
+ * @version 0.0.3
  */
 include_once('functions.php');
 include_once('inc/class-edb.php');

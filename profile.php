@@ -37,10 +37,10 @@ include_once ('header.php'); ?>
 
 <FORM METHOD="LINK" action="editprofile.php">
 <p>
-	<input type="submit"  value="Edit Profile" name="edit profile" />
+  <input type="submit"  value="Edit Profile" name="edit profile" />
 </p>
 </FORM>
-	
+
  </div><!-- .entry-content -->
           </article>
         </div><!-- .row -->
