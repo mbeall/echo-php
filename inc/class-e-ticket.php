@@ -252,3 +252,24 @@ function get_ticket_status( $ticket ) {
   $tkt_status = get_ticket_data( $ticket , 'tkt_status' );
   return $tkt_status;
 }
+
+/**
+ * Check if the ticket is visible or not
+ *
+ * @since 0.0.1
+ *
+ * @uses get_ticket_data()
+ *
+ * @param  object $ticket      The E_Ticket class containing the data for the tag
+ * @return bool
+ * @var    string $tkt_visible If 0, ticket has been "deleted"; else, ticket is visible.
+ */
+function is_ticket_visible( $ticket ) {
+  $tkt_visible = get_ticket_data( $tag , 'tkt_visible' );
+  $tkt_visible = (int) $tkt_visible;
+
+  if ($tkt_visible == 1)
+    return true;
+  else
+    return false;
+}
