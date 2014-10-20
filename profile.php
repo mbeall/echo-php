@@ -6,14 +6,13 @@
  * If not logged in, or different user from current profile,
  * this page displays public information for a particular user.
  *
- * @author  Hannah Turner
- * @package Echo/PHP
- * @since 0.0.1
+ * @author Hannah Turner
+ * @since 0.0.3
  *
  * @todo Validate input fields
  */
 
-Global $the_title;
+global $the_title;
 $the_title='Profile';
 include_once ('header.php'); ?>
 
