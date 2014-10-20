@@ -6,14 +6,13 @@
  * If not logged in, or different user from current profile,
  * this page displays public information for a particular user.
  *
- * @author  Hannah Turner
- * @package Echo/PHP
- * @since 0.0.1
+ * @author Hannah Turner
+ * @since 0.0.3
  *
  * @todo Validate input fields
  */
 
-Global $the_title;
+global $the_title;
 $the_title='Profile';
 include_once ('header.php'); ?>
 
@@ -29,13 +28,22 @@ include_once ('header.php'); ?>
 
 <section>
   <h1>My Profile</h1>
-    <?php echo $u_first $u_last; ?>
+    <?php echo $u_first . $u_last; ?>
   <h2>My Contact Info</h2>
         <h3>Email:</h3>
 </section>
 
 
+<FORM METHOD="LINK" action="editprofile.php">
+<p>
+  <input type="submit"  value="Edit Profile" name="edit profile" />
+</p>
+</FORM>
 
+ </div><!-- .entry-content -->
+          </article>
+        </div><!-- .row -->
+      </div><!-- #content -->
+    </div><!-- #primary -->
 
-
-<?php include_once ('footer.php'); ?>
+<?php include_once('footer.php'); ?>
