@@ -380,10 +380,29 @@ function is_user_admin( $user ) {
   $u_admin = get_user_data( $user , 'u_admin' );
   $u_admin = (int) $u_admin;
 
-  if ($u_admin == 1) {
+  if ($u_admin == 1)
     return true;
-  }
-  else {
+  else
     return false;
-  }
+}
+
+/**
+ * Check if the user is visible or not
+ *
+ * @since 0.0.1
+ *
+ * @uses get_user_data()
+ *
+ * @param  object $user      The E_User class containing the data for the user
+ * @return bool
+ * @var    int    $u_visible If 0, user has been "deleted"; else, user is visible.
+ */
+function is_user_visible( $user ) {
+  $u_visible = get_user_data( $user , 'u_visible' );
+  $u_visible = (int) $u_visible;
+
+  if ($u_visible == 1)
+    return true;
+  else
+    return false;
 }
