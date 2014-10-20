@@ -6,7 +6,7 @@
  */
 
 /**
- * User class
+ * Ticket class
  *
  * Connects to database and creates ticket object.
  *
