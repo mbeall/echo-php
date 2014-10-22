@@ -11,7 +11,7 @@
  * Connects to database and creates tag object.
  *
  * @author Matt Beall
- * @since 0.0.1
+ * @since 0.0.4
  */
 class E_Tag {
 
@@ -45,7 +45,7 @@ class E_Tag {
    *
    * Takes PDO and constructs E_Tag class
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @param  object $tags The PHP Data Object
    */
@@ -63,7 +63,7 @@ class E_Tag {
    * Attempt to connect to database and execute SQL query
    * If successful, return results.
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @uses edb::connect()
    * @throws PDOException if connection or query cannot execute
@@ -99,7 +99,7 @@ class E_Tag {
    *
    * Prepare and execute query to select tag from database
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @uses self::query()
    *
@@ -125,7 +125,7 @@ class E_Tag {
    *
    * Prepare and execute query to create tag in tags table
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @uses edb::insert()
    * @uses _text()
@@ -158,7 +158,7 @@ class E_Tag {
    *
    * Prepare and execute query to create tag in tags table
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @uses edb::insert()
    * @uses _text()
@@ -195,7 +195,7 @@ class E_Tag {
 /**
  * Insert tag into database
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses E_Tag::new_instance() Constructs E_Tag class and inserts into database
  *
@@ -211,7 +211,7 @@ function create_tag( $tag_name, $tag_color = null, $tag_bg = null ) {
 /**
  * Update tag in database
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses E_Tag::set_instance() Constructs E_Tag class and updates in database
  *
@@ -228,7 +228,7 @@ function update_tag( $tag_id, $tag_name = null, $tag_color = null, $tag_bg = nul
 /**
  * Create E_Tag class
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses E_Tag::get_instance() Constructs E_Tag class and gets class object
  *
@@ -244,7 +244,7 @@ function get_tag( $tag_id ) {
 /**
  * Get specific data from a tag object
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @param  object $tag The E_Tag class containing the data for a tag
  * @param  string $key  The name of the field to be retrieved
@@ -261,7 +261,7 @@ function get_tag_data( $tag, $key ) {
 /**
  * Get the name of the tag
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses get_tag_data()
  *
@@ -277,7 +277,7 @@ function get_tag_name( $tag ) {
 /**
  * Get the text color of the tag
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses get_tag_data()
  *
@@ -293,7 +293,7 @@ function get_tag_color( $tag ) {
 /**
  * Get the background color of the tag
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses get_tag_data()
  *
@@ -309,7 +309,7 @@ function get_tag_bg( $tag ) {
 /**
  * Check if the tag is visible or not
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses get_tag_data()
  *

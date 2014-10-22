@@ -145,7 +145,7 @@ class E_User {
    *
    * Prepare and execute query to register user in registered_users table
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @uses self::get_user_id()
    * @uses self::login_name_exists()
@@ -194,16 +194,13 @@ class E_User {
   }
 
   /**
-   * Register user in database
+   * Update user in database
    *
-   * Prepare and execute query to register user in registered_users table
+   * Prepare and execute query to update user in registered_users table
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
-   * @uses self::get_user_id()
-   * @uses self::login_name_exists()
-   * @uses self::email_exists()
-   * @uses edb::insert()
+   * @uses edb::update()
    *
    * @param int    $u_id         The ID of the user to update
    * @param string $u_email      The requested email address for the registered user
@@ -307,7 +304,7 @@ class E_User {
 /**
  * Create user
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses E_User::new_instance() Constructs E_User class and inserts into database
  *
@@ -325,7 +322,7 @@ function create_user( $u_email, $u_login_name, $u_pass, $u_first = null, $u_last
 /**
  * Update user
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses E_User::set_instance() Constructs E_User class and updates in database
  *
@@ -459,7 +456,7 @@ function get_user_email( $user ) {
 /**
  * Check if the user is an admin user
  *
- * @since 0.0.3
+ * @since 0.0.4
  *
  * @uses get_user_data()
  *
@@ -480,7 +477,7 @@ function is_user_admin( $user ) {
 /**
  * Check if the user is visible or not
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses get_user_data()
  *
