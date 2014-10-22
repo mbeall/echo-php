@@ -128,6 +128,7 @@ class E_Tag {
    * @since 0.0.1
    *
    * @uses edb::insert()
+   * @uses _text()
    * @uses _hexadec()
    *
    * @param string $tag_name  The name of the tag
@@ -140,9 +141,10 @@ class E_Tag {
    *
    * @todo Test
    */
-  public static function set_instance( $tag_name, $tag_color = null, $tag_bg = null ) {
+  public static function new_instance( $tag_name, $tag_color = null, $tag_bg = null ) {
     global $edb;
 
+    $tag_name  = _text( $tag_name, 32 );
     $tag_color = !empty($tag_color) ? _hexadec($tag_color) : 'ffffff';
     $tag_bg    = !empty($tag_bg)    ? _hexadec($tag_bg)    : '777777';
 
@@ -150,10 +152,81 @@ class E_Tag {
 
     $edb->insert('tags', 'tag_name,tag_color,tag_bg,tag_visible', "'$tag_name', '#$tag_color', '#$tag_bg', $tag_visible" );
   }
+
+  /**
+   * Update tag in database
+   *
+   * Prepare and execute query to create tag in tags table
+   *
+   * @since 0.0.1
+   *
+   * @uses edb::insert()
+   * @uses _text()
+   * @uses _hexadec()
+   *
+   * @param int    $tag_id      The ID of the tag to update
+   * @param string $tag_name    The name of the tag
+   * @param string $tag_color   The text color of the tag
+   * @param string $tag_bg      The background color of the tag
+   * @param int    $tag_visible If 0, tag has been "deleted"; else, tag is visible.
+   *
+   * @return void
+   *
+   * @var int $tag_id The primary key of the tag being registered, as created in tag database
+   *
+   * @todo Test
+   */
+  public static function set_instance( $tag_id, $tag_name = null, $tag_color = null, $tag_bg = null, $tag_visible = 1 ) {
+    global $edb;
+
+    $tag_id = (int) $tag_id;
+
+    $_tag = self::get_instance( $tag_id );
+
+    $tag_name    = !empty($tag_name)  ? _text( $tag_name, 32 ) : $_tag->tag_name;
+    $tag_color   = !empty($tag_color) ? _hexadec($tag_color)   : $_tag->tag_color;
+    $tag_bg      = !empty($tag_bg)    ? _hexadec($tag_bg)      : $_tag->tag_bg;
+    $tag_visible = !empty($tag_bg)    ? (int) $tag_visible     : $_tag->tag_visible;
+
+    $edb->update('tags', 'tag_name,tag_color,tag_bg,tag_visible', "'$tag_name', '#$tag_color', '#$tag_bg', $tag_visible", "tag_id_PK = $tag_id" );
+  }
 }
 
 /**
- * Get the E_Tag class
+ * Insert tag into database
+ *
+ * @since 0.0.1
+ *
+ * @uses E_Tag::new_instance() Constructs E_Tag class and inserts into database
+ *
+ * @param string $tag_name  The name of the tag
+ * @param string $tag_color The text color of the tag
+ * @param string $tag_bg    The background color of the tag
+ */
+function create_tag( $tag_name, $tag_color = null, $tag_bg = null ) {
+  $tag = E_Tag::new_instance( $tag_name, $tag_color, $tag_bg );
+  return $tag;
+}
+
+/**
+ * Update tag in database
+ *
+ * @since 0.0.1
+ *
+ * @uses E_Tag::set_instance() Constructs E_Tag class and updates in database
+ *
+ * @param int    $tag_id    The ID of the tag to update
+ * @param string $tag_name  The name of the tag
+ * @param string $tag_color The text color of the tag
+ * @param string $tag_bg    The background color of the tag
+ */
+function update_tag( $tag_id, $tag_name = null, $tag_color = null, $tag_bg = null ) {
+  $tag = E_Tag::set_instance( $tag_id, $tag_name, $tag_color, $tag_bg );
+  return $tag;
+}
+
+/**
+ * Create E_Tag class
  *
  * @since 0.0.1
  *
@@ -252,14 +325,4 @@ function is_tag_visible( $tag ) {
     return true;
   else
     return false;
-}
-
-function _hexadec( $string ) {
-  $str = preg_replace( '[^0-9a-f]', '', strtolower($string) );
-  $len = strlen($str);
-
-  if ($len == 6 | $len == 3)
-    return $str;
-  elseif ($len > 6)
-    return substr($str,0,6);
 }

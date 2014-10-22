@@ -3,6 +3,8 @@
  * Defines class E_Ticket and related functions
  *
  * @author Matt Beall
+ *
+ * @todo Incorporate ticket_tags and ticket_history tables
  */
 
 /**
@@ -138,6 +140,7 @@ class E_Ticket {
    * @since 0.0.3
    *
    * @uses edb::insert()
+   * @uses _text()
    *
    * @param string $tkt_name     The title of the ticket
    * @param string $tkt_desc     The description of the ticket
@@ -147,13 +150,85 @@ class E_Ticket {
    * @todo Add ability to specify tags
    * @todo Test
    */
-  public static function set_instance( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_status = 'open' ) {
+  public static function new_instance( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_status = 'open' ) {
     global $edb;
 
+    $tkt_name     = _text( $tkt_name    , 45 );
+    $tkt_desc     = _text( $tkt_desc         );
+    $tkt_priority = _text( $tkt_priority, 8  );
+    $tkt_status   = _text( $tkt_status  , 8  );
     $tkt_visible = 1;
 
     $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_priority,tkt_status', "'$tkt_name', '$tkt_desc', '$tkt_priority', '$tkt_status', $tkt_visible" );
   }
+
+  /**
+   * Update ticket in database
+   *
+   * Prepare and execute query to register ticket in tickets table
+   *
+   * @since 0.0.3
+   *
+   * @uses edb::update()
+   * @uses _text()
+   *
+   * @param int    $tkt_id       The ID of the ticket to update
+   * @param string $tkt_name     The title of the ticket
+   * @param string $tkt_desc     The description of the ticket
+   * @param string $tkt_priority The priority of the ticket
+   * @param string $tkt_status   The status of the ticket
+   * @param int    $tkt_visible  If 0, then ticket is "deleted", otherwise ticket is visible.
+   *
+   * @todo Add ability to specify tags
+   * @todo Test
+   */
+  public static function set_instance( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null, $tkt_visible = null ) {
+    global $edb;
+
+    $tkt_name     = !empty($tkt_name)     ? _text( $tkt_name    , 45 ) : $_ticket->tkt_name;
+    $tkt_desc     = !empty($tkt_desc)     ? _text( $tkt_desc         ) : $_ticket->tkt_desc;
+    $tkt_priority = !empty($tkt_priority) ? _text( $tkt_priority, 8  ) : $_ticket->tkt_priority;
+    $tkt_status   = !empty($tkt_status)   ? _text( $tkt_status  , 8  ) : $_ticket->tkt_status;
+    $tkt_visible  = !empty($tkt_visible)  ? (int) $tkt_visible         : (int) $_ticket->tkt_visible;
+
+    $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_priority,tkt_status', "'$tkt_name', '$tkt_desc', '$tkt_priority', '$tkt_status', $tkt_visible" );
+  }
+}
+
+/**
+ * Create ticket
+ *
+ * @since 0.0.3
+ *
+ * @uses E_Ticket::new_instance() Constructs E_Ticket class and gets class object
+ *
+ * @param string $tkt_name     The title of the ticket
+ * @param string $tkt_desc     The description of the ticket
+ * @param string $tkt_priority The priority of the ticket
+ * @param string $tkt_status   The status of the ticket
+ */
+function create_ticket( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_status = 'open' ) {
+  $ticket = E_Ticket::new_instance( $tkt_name, $tkt_desc, $tkt_priority, $tkt_status );
+  return $ticket;
+}
+
+/**
+ * Update ticket
+ *
+ * @since 0.0.3
+ *
+ * @uses E_Ticket::set_instance() Constructs E_Ticket class and gets class object
+ *
+ * @param int    $tkt_id       The ID of the ticket to update
+ * @param string $tkt_name     The title of the ticket
+ * @param string $tkt_desc     The description of the ticket
+ * @param string $tkt_priority The priority of the ticket
+ * @param string $tkt_status   The status of the ticket
+ * @param int    $tkt_visible  If 0, then ticket is "deleted", otherwise ticket is visible.
+ */
+function update_ticket( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null, $tkt_visible = null ) {
+  $ticket = E_Ticket::set_instance( $tkt_name, $tkt_desc, $tkt_priority, $tkt_status, $tkt_visible );
+  return $ticket;
 }
 
 /**
