@@ -5,7 +5,6 @@
  * All function definitions for the site
  *
  * @author Matt Beall
- * @since 0.0.3
  */
 
 /**
@@ -90,4 +89,78 @@ function is_admin() {
   else {
     return false;
   }
+}
+
+/**
+ * Sanitize input to hexadecimal value
+ *
+ * First, checks to make sure that string only contains 0-9 and lowercase a-f.
+ * Then, checks to make sure length is either 6 or 3 (shorthand).
+ * If longer than 6, truncates to 6. If less than 6 and not 3, returns nothing.
+ *
+ * @since 0.0.4
+ *
+ * @param  string      $string The string to sanitize
+ * @return string|void
+ * @var    string      $new The sanitized string
+ * @var    int         $len The length of $str
+ */
+function _hexadec( $string ) {
+  $new = preg_replace( '[^0-9a-f]', '', strtolower($string) );
+  $len = strlen($str);
+
+  if ($len == 6 | $len == 3)
+    return $new;
+  elseif ($len > 6)
+    return substr($new,0,6);
+  else
+    return;
+}
+
+/**
+ * Sanitize text input and trim to size
+ *
+ * First, make sure only numbers and letters are used.
+ * Next, if length is specificied, trim to length.
+ *
+ * @since 0.0.4
+ *
+ * @param  string $text The string to sanitize
+ * @param  int    $length The length of the string
+ * @return string
+ * @var    string $new The sanitized string
+ */
+function _text( $text, $length = 0 ) {
+  $new = preg_replace( '[^0-9a-fA-F]', '', $text);
+
+  $length = (int) $length;
+
+  if ( $length != 0 )
+    return substr($new, 0, $length);
+  else
+    return $new;
+}
+
+/**
+ * Sanitize email input and trim to size
+ *
+ * First, make sure string is an email address.
+ * Next, if length is specificied, trim to length.
+ *
+ * @since 0.0.4
+ *
+ * @param  string $email The string to sanitize
+ * @param  int    $length The length of the string
+ * @return string
+ * @var    string $new The sanitized string
+ */
+function _email( $email, $length = 0 ) {
+  $new = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+  $length = (int) $length;
+
+  if ( $length != 0 )
+    return substr($new, 0, $length);
+  else
+    return $new;
 }
