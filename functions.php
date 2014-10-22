@@ -5,7 +5,6 @@
  * All function definitions for the site
  *
  * @author Matt Beall
- * @since 0.0.3
  */
 
 /**
@@ -99,7 +98,7 @@ function is_admin() {
  * Then, checks to make sure length is either 6 or 3 (shorthand).
  * If longer than 6, truncates to 6. If less than 6 and not 3, returns nothing.
  *
- * @since 0.0.3
+ * @since 0.0.4
  *
  * @param  string      $string The string to sanitize
  * @return string|void
@@ -124,7 +123,7 @@ function _hexadec( $string ) {
  * First, make sure only numbers and letters are used.
  * Next, if length is specificied, trim to length.
  *
- * @since 0.0.3
+ * @since 0.0.4
  *
  * @param  string $text The string to sanitize
  * @param  int    $length The length of the string
@@ -148,7 +147,7 @@ function _text( $text, $length = 0 ) {
  * First, make sure string is an email address.
  * Next, if length is specificied, trim to length.
  *
- * @since 0.0.3
+ * @since 0.0.4
  *
  * @param  string $email The string to sanitize
  * @param  int    $length The length of the string

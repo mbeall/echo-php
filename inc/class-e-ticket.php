@@ -137,7 +137,7 @@ class E_Ticket {
    *
    * Prepare and execute query to register ticket in tickets table
    *
-   * @since 0.0.3
+   * @since 0.0.4
    *
    * @uses edb::insert()
    * @uses _text()
@@ -167,7 +167,7 @@ class E_Ticket {
    *
    * Prepare and execute query to register ticket in tickets table
    *
-   * @since 0.0.3
+   * @since 0.0.4
    *
    * @uses edb::update()
    * @uses _text()
@@ -198,7 +198,7 @@ class E_Ticket {
 /**
  * Create ticket
  *
- * @since 0.0.3
+ * @since 0.0.4
  *
  * @uses E_Ticket::new_instance() Constructs E_Ticket class and gets class object
  *
@@ -215,7 +215,7 @@ function create_ticket( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_sta
 /**
  * Update ticket
  *
- * @since 0.0.3
+ * @since 0.0.4
  *
  * @uses E_Ticket::set_instance() Constructs E_Ticket class and gets class object
  *
@@ -331,7 +331,7 @@ function get_ticket_status( $ticket ) {
 /**
  * Check if the ticket is visible or not
  *
- * @since 0.0.1
+ * @since 0.0.4
  *
  * @uses get_ticket_data()
  *
