@@ -6,15 +6,21 @@
  * If not logged in, or different user from current profile,
  * this page displays public information for a particular user.
  *
- * @author Hannah Turner
- * @since 0.0.3
+ * @author  Hannah Turner
+ * @package Echo/PHP
+ * @since 0.0.1
  *
  * @todo Validate input fields
  */
 
-global $the_title;
+Global $the_title;
 $the_title='Profile';
-include_once ('header.php'); ?>
+include_once ('header.php');
+
+$u_firstname=$_POST['u_first'];
+$u_first=get_user($u_firstname);
+$u_lastname=$_POST['u_last'];
+$u_last=get_user($u_lastname)?>
 
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -28,7 +34,7 @@ include_once ('header.php'); ?>
 
 <section>
   <h1>My Profile</h1>
-    <?php echo $u_first . $u_last; ?>
+    <?php echo '$u_first . $u_last'; ?>
   <h2>My Contact Info</h2>
         <h3>Email:</h3>
 </section>

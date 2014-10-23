@@ -29,7 +29,6 @@ $firstName = (isset($_POST['firstname'])) ? trim($_POST['firstname']) : '';
 $lastName = (isset($_POST['lastname'])) ? trim($_POST['lastname']) : '';
 $eMail = (isset($_POST['email'])) ? trim($_POST['email']) : '';
 $phone = (isset($_POST['phone'])) ? trim($_POST['phone']) : '';
-$mailingList = (isset($_POST['mailinglist'])) ? 'true' : 'false';
 
 // if the form was submitted
 
@@ -47,7 +46,7 @@ if (isset($_POST['register']))
     {
         // insert new record
 
-        addCustomer($userLogin, $userPassword, $firstName, $lastName, $eMail, $phone, $mailingList);
+        addCustomer($userLogin, $userPassword, $firstName, $lastName, $eMail, $phone);
 
         //redirect user to login page
 
