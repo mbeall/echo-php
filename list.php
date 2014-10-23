@@ -5,7 +5,7 @@
  * Used for search; displays list of tickets.
  *
  * @author Hannah Turner
- * @since 0.0.1
+ * @since 0.0.6
  */
 
 global $the_title;
@@ -20,8 +20,9 @@ include_once ('header.php');?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
+<!--
 <section>
-  <form action="" method = "post" name="searchbyticket" id="searchbyticket">
+  <form action="list.php" method = "post" name="searchbyticket" id="searchbyticket">
     <label for="ticket"> Ticket Search:</label>
     <input type="text" name="ticket" id ="ticket" maxlength="50" />
     <p>
@@ -29,7 +30,27 @@ include_once ('header.php');?>
     </p>
   </form>
 </section>
+-->
+<?php
+$ticket=get_ticket(); ?>
 
+<section>
+    <form action="list.php" method = "post" name="SearchByMultiCriteria" id="SearchByMultiCriteria">
+   <label for="ticketname">Ticket Name:</label>
+   <input type="text" name="ticketname" id="ticketname" maxlength="50" />
+   <label for="ticketdesc">Ticket Description:</label>
+   <input type="text" name="ticketdesc" id="ticketdesc" maxlength="50" />
+   <label for="ticketpriority">Ticket Priority:</label>
+   <input type="text" name="ticketstatus" id="ticketstatus" maxlength="50" />
+   <label for="ticketstatus">Ticket Status:</label>
+   <input type="text" name="tickestatus" id="ticketstatus" maxlength="50" />
+
+   <p>
+      <input name = "search" type="submit" value="Search" />
+   </p>
+
+</form>
+</section>
 
 <?php
 $ticketname = $_POST['tkt_name'];
@@ -43,6 +64,7 @@ $ticketdesc = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketdesc);
 $ticketpriority = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketpriority);
 $ticketstatus = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketstatus);
 
+
 $heading = <<<ABC
 You searched for<br />
 Ticket Name: '$ticketname' <br />
@@ -51,9 +73,11 @@ Ticket Priority: '$ticketpriority' <br />
 Ticket Status: '$ticektstatus'
 ABC;
 
-echo $heading;
-/*
 
+echo $heading;
+?>
+
+<!--
 $tickets = getTicketByMultiCriteria($ticketname, $ticketdesc, $ticketpriority, $ticketstatus);
 
 $matchingRecords = count($tickets);
@@ -104,8 +128,14 @@ $output .= <<<ABC
 ABC;
 
 echo $output;
-*/
+-->
 
 
-include_once ('footer.php');
+ </div><!-- .entry-content -->
+          </article>
+        </div><!-- .row -->
+      </div><!-- #content -->
+    </div><!-- #primary -->
+
+<?php include_once('footer.php'); ?>
 
