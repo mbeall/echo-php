@@ -3,8 +3,6 @@
  * Defines class E_User and related functions
  *
  * @author Matt Beall
- * @license MIT
- * @version 0.0.1
  */
 
 /**
@@ -12,7 +10,7 @@
  *
  * Connects to database and creates user object.
  *
- * @author  Matt Beall
+ * @author Matt Beall
  * @since 0.0.1
  */
 class E_User {
@@ -132,12 +130,12 @@ class E_User {
   public static function get_instance( $u_id ) {
     global $edb;
 
-    $user_id = (int) $user_id;
+    $u_id = (int) $u_id;
 
     if ( ! $user_id )
       return false;
 
-    $_user = self::query("SELECT TOP 1 * FROM users LEFT JOIN registered_users ON u_id_PK = reg_u_id_PK_FK WHERE u_id_PK = $user_id");
+    $_user = self::query("SELECT TOP 1 * FROM users LEFT JOIN registered_users ON u_id_PK = reg_u_id_PK_FK WHERE u_id_PK = $u_id");
 
     return new E_User ( $_user );
   }
@@ -147,7 +145,7 @@ class E_User {
    *
    * Prepare and execute query to register user in registered_users table
    *
-   * @since 0.0.1
+   * @since 0.0.4
    *
    * @uses self::get_user_id()
    * @uses self::login_name_exists()
@@ -166,12 +164,17 @@ class E_User {
    *
    * @todo Test
    */
-  public static function set_instance( $u_email, $u_login_name, $u_pass, $u_first = null, $u_last = null ) {
+  public static function new_instance( $u_email, $u_login_name, $u_pass, $u_first = null, $u_last = null ) {
     global $edb;
 
-    $u_ip      = $_SERVER['REMOTE_ADDR'];
-    $u_admin   = 0;
-    $u_visible = 1;
+    $u_email      = _email( $u_email     , 64 );
+    $u_login_name = _text ( $u_login_name, 32 );
+    $u_pass       = _text ( $u_pass      , 32 );
+    $u_first      = _text ( $u_first     , 32 );
+    $u_last       = _text ( $u_last      , 32 );
+    $u_ip         = $_SERVER['REMOTE_ADDR'];
+    $u_admin      = 0;
+    $u_visible    = 1;
 
     $edb->insert('users', 'u_ip,u_admin,u_visible', "'$u_ip', $u_admin, $u_visible" );
     $u_id = (int) self::get_user_id( $u_ip );
@@ -188,6 +191,50 @@ class E_User {
         exit;
       }
     }
+  }
+
+  /**
+   * Update user in database
+   *
+   * Prepare and execute query to update user in registered_users table
+   *
+   * @since 0.0.4
+   *
+   * @uses edb::update()
+   *
+   * @param int    $u_id         The ID of the user to update
+   * @param string $u_email      The requested email address for the registered user
+   * @param string $u_login_name The requested username for the registered user
+   * @param string $u_pass       The password for the registered user
+   * @param string $u_first      The first name of the registered user
+   * @param string $u_last       The last name of the registered user
+   * @param int    $u_admin      If 1, user is admin; else, user is not admin.
+   * @param int    $u_visible    If 0, user has been "deleted"; else, user is visible.
+   *
+   * @return void
+   *
+   * @var int $u_id The primary key of the user being registered, as created in user database
+   *
+   * @todo Test
+   */
+  public static function set_instance( $u_id, $u_email, $u_login_name, $u_pass, $u_first = null, $u_last = null, $u_admin = 0, $u_visible = 1 ) {
+    global $edb;
+
+    $u_id = (int) $u_id;
+
+    $_user = self::get_instance( $u_id );
+
+    $u_email      = !empty($u_email)      ? _email( $u_email     , 64 ) : $_user->u_email;
+    $u_login_name = !empty($u_login_name) ? _text ( $u_login_name, 32 ) : $_user->u_login_name;
+    $u_pass       = !empty($u_pass)       ? _text ( $u_pass      , 32 ) : $_user->u_pass;
+    $u_first      = !empty($u_first)      ? _text ( $u_first     , 32 ) : $_user->u_first;
+    $u_last       = !empty($u_last)       ? _text ( $u_last      , 32 ) : $_user->u_last;
+
+    $u_admin      = !empty($u_admin)   ? (int) $u_admin   : (int) $_user->u_admin;
+    $u_visible    = !empty($u_visible) ? (int) $u_visible : (int) $_user->u_visible;
+
+    $edb->update('users', 'u_admin,u_visible', "$u_admin, $u_visible", "u_id_PK = $u_id" );
+    $edb->update('registered_users', 'u_email, u_login_name, u_pass, u_first, u_last', "$u_email, $u_login_name, $u_pass, $u_first, $u_last", "reg_u_id_PK_FK = $u_id" );
   }
 
   /**
@@ -243,7 +290,7 @@ class E_User {
    */
   private function get_user_id( $u_ip ) {
     global $edb;
-    $users = self::query("SELECT BOTTOM 1 * FROM users WHERE u_ip = $u_ip");
+    $users = self::query("SELECT TOP 1 * FROM users WHERE u_ip = '$u_ip' ORDER BY u_id_PK DESC");
     foreach ( $users as $user ) {
         get_class($user);
         foreach ( $user as $key => $value )
@@ -252,6 +299,45 @@ class E_User {
     $u_id = (int) $user->u_id_PK;
     return $u_id;
   }
+}
+
+/**
+ * Create user
+ *
+ * @since 0.0.4
+ *
+ * @uses E_User::new_instance() Constructs E_User class and inserts into database
+ *
+ * @param string $u_email      The requested email address for the registered user
+ * @param string $u_login_name The requested username for the registered user
+ * @param string $u_pass       The password for the registered user
+ * @param string $u_first      The first name of the registered user
+ * @param string $u_last       The last name of the registered user
+ */
+function create_user( $u_email, $u_login_name, $u_pass, $u_first = null, $u_last = null ) {
+  $user = E_User::new_instance( $u_email, $u_login_name, $u_pass, $u_first, $u_last );
+  return $user;
+}
+
+/**
+ * Update user
+ *
+ * @since 0.0.4
+ *
+ * @uses E_User::set_instance() Constructs E_User class and updates in database
+ *
+ * @param int    $u_id         The ID of the user to update
+ * @param string $u_email      The requested email address for the registered user
+ * @param string $u_login_name The requested username for the registered user
+ * @param string $u_pass       The password for the registered user
+ * @param string $u_first      The first name of the registered user
+ * @param string $u_last       The last name of the registered user
+ * @param int    $u_admin      If 1, user is admin; else, user is not admin.
+ * @param int    $u_visible    If 0, user has been "deleted"; else, user is visible.
+ */
+function update_user( $u_id, $u_email = null, $u_login_name = null, $u_pass = null, $u_first = null, $u_last = null, $u_admin = null, $u_visible = null ) {
+  $user = E_User::set_instance( $u_id, $u_email, $u_login_name, $u_pass, $u_first, $u_last, $u_admin, $u_visible );
+  return $user;
 }
 
 /**
@@ -365,4 +451,46 @@ function get_user_login_name( $user ) {
 function get_user_email( $user ) {
   $u_email = get_user_data( $user , 'u_email' );
   return $u_email;
+}
+
+/**
+ * Check if the user is an admin user
+ *
+ * @since 0.0.4
+ *
+ * @uses get_user_data()
+ *
+ * @param  object $user    The E_User class containing the data for the user
+ * @return bool
+ * @var    int    $u_admin If 1, user is admin; else, user is not admin.
+ */
+function is_user_admin( $user ) {
+  $u_admin = get_user_data( $user , 'u_admin' );
+  $u_admin = (int) $u_admin;
+
+  if ($u_admin == 1)
+    return true;
+  else
+    return false;
+}
+
+/**
+ * Check if the user is visible or not
+ *
+ * @since 0.0.4
+ *
+ * @uses get_user_data()
+ *
+ * @param  object $user      The E_User class containing the data for the user
+ * @return bool
+ * @var    int    $u_visible If 0, user has been "deleted"; else, user is visible.
+ */
+function is_user_visible( $user ) {
+  $u_visible = get_user_data( $user , 'u_visible' );
+  $u_visible = (int) $u_visible;
+
+  if ($u_visible == 1)
+    return true;
+  else
+    return false;
 }

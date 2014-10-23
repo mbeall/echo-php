@@ -4,8 +4,7 @@
  *
  * Allows a ticket to be created or edited
  *
- * @author  Crystal Carr
- * @package Echo/PHP
+ * @author Crystal Carr
  * @since 0.0.1
  *
  * @todo Validate input fields
