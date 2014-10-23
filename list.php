@@ -4,9 +4,8 @@
  *
  * Used for search; displays list of tickets.
  *
- * @author  Hannah Turner
- * @package Echo/PHP
- * @since 0.0.1
+ * @author Hannah Turner
+ * @since 0.0.6
  */
 
 global $the_title;
