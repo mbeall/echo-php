@@ -3,12 +3,15 @@
  * Defines edb class and related functions
  *
  * @author Matt Beall <me@rams.colostate.edu>
- * @license MIT http://opensource.org/licenses/MIT
- * @version 0.0.1
  */
 
 /**
- * Connect to database and execute SQL query
+ * edb class
+ *
+ * Connects to database and creates object.
+ *
+ * @author Matt Beall
+ * @since 0.0.1
  */
 class edb {
 
