@@ -68,7 +68,7 @@ else  //otherwise, set the column variables to ""
 
 ?>
 
-<form name ="addEditForm" id="addEditForm" action="d6edit1a.php" method="post" onsubmit="return checkForm(this)">
+<form name ="addEditForm" id="addEditForm" action="edit-profile.php" method="post" onsubmit="return checkForm(this)">
 
 <?php
     if ($editmode)
