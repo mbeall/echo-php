@@ -165,6 +165,7 @@ function _email( $email, $length = 0 ) {
     return $new;
 }
 
+/** @since 0.0.8 */
 function get_tickets( $match = NULL, $args = array() ) {
   global $edb;
   $match = !empty($match) ? "tkt_visible = 1" . $match: "tkt_status = 'open' AND tkt_visible = 1";
@@ -172,6 +173,7 @@ function get_tickets( $match = NULL, $args = array() ) {
   return $results;
 }
 
+/** @since 0.0.8 */
 function get_tags() {
   global $edb;
   $results = $edb->select( 'tags', '*', "tag_visible = 1" );

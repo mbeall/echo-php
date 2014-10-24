@@ -5,7 +5,7 @@
  * Allows a registered user to create or edit a tag
  *
  * @author Crystal Carr
- * @since 0.0.3
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
@@ -13,6 +13,17 @@ global $the_title;
 $the_title= 'Create a Tag';
 
 include_once('header.php');?>
+<?php
+
+$tag_name      = !empty($_POST['tag_name'    ]) ? $_POST['tag_name'    ] : '';
+$tag_color     = !isset($_POST['tag_color'    ]) ? $_POST['tag_color'    ] : '';
+$tag_bg       = !isset($_POST['tag_bg']) ? $_POST['tag_bg'] : '';
+
+
+if(!empty($tag_name) && !isset($tag_color) && !isset($tag_bg)) {
+  create_tag($tag_name, $tag_color, $tag_bg);
+}
+?>
 
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -47,11 +58,11 @@ include_once('header.php');?>
 
           <?php ('Refresh: 5, URL=login.php');
             echo '<h2> You need to be logged in to create a tag. You are being redirected to the login page in 5 seconds.</h2>';
-            ?>
+            die();?>
 
           <?php  } ?>
 
-      <?php create_tag('tag_name', 'tag_color', 'tag_bg') ?>
+
 
 
               </div> <!--.entry-content -->
