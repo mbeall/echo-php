@@ -328,6 +328,13 @@ function get_ticket_status( $ticket ) {
   return $tkt_status;
 }
 
+/** @since 0.1.0 */
+function get_ticket_tags($ticket) {
+  global $edb;
+  $results = $edb->select( 'ticket_tags JOIN tags ON tag_id_FK = tag_id_PK', '*', "tag_visible = 1 AND tkt_id_FK = $ticket->tkt_id_PK" );
+  return $results;
+}
+
 /**
  * Check if the ticket is visible or not
  *
