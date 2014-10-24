@@ -5,7 +5,7 @@
  * Allows a ticket to be edited
  *
  * @author  Crystal Carr
- * @since 0.0.5
+ * @since 0.0.9
  *
  * @todo Validate input fields
  */
@@ -78,14 +78,14 @@ if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tk
 
               <?php }else {  ?>
 
-                <?php 
+                <?php
             echo '<h2> You need to be logged in to Edit a ticket.</h2>';
             ?>
 
 
           <?php  } ?>
 
-     
+
               </div> <!--.entry-content -->
            </article>
         </div> <!--.row -->
