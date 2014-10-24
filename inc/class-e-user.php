@@ -11,7 +11,7 @@
  * Connects to database and creates user object.
  *
  * @author Matt Beall
- * @since 0.0.9
+ * @since 0.1.1
  */
 class E_User {
 
@@ -298,6 +298,32 @@ class E_User {
     }
     $u_id = (int) $user->u_id_PK;
     return $u_id;
+  }
+
+  /**
+   * Retrieve user's id that matches an IP address
+   *
+   * @since 0.0.1
+   *
+   * @uses self::query() to query the database
+   *
+   * @param  string     $u_ip  The IP address to check for
+   * @return int               The ID of the user
+   * @var    object     $users The user(s), if any, that have the IP address
+   */
+  private function authenticate_user( $u_login_name, $u_pass ) {
+    global $edb;
+    $users = self::query("SELECT TOP 1 * FROM users JOIN registered_users ON u_id_PK = reg_u_id_PK_FK WHERE u_login_name = '$u_login_name' AND u_pass = '$u_pass' ORDER BY u_id_PK DESC");
+    foreach ( $users as $user ) {
+        get_class($user);
+        foreach ( $user as $key => $value )
+          $key = $value;
+    }
+    $u_id = (int) $user->u_id_PK;
+    if ($u_id > 0)
+      return $u_id;
+    else
+      return false;
   }
 }
 
