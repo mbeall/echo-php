@@ -11,7 +11,7 @@
  * Connects to database and creates user object.
  *
  * @author Matt Beall
- * @since 0.0.1
+ * @since 0.0.9
  */
 class E_User {
 
@@ -132,7 +132,7 @@ class E_User {
 
     $u_id = (int) $u_id;
 
-    if ( ! $user_id )
+    if ( ! $u_id )
       return false;
 
     $_user = self::query("SELECT TOP 1 * FROM users LEFT JOIN registered_users ON u_id_PK = reg_u_id_PK_FK WHERE u_id_PK = $u_id");

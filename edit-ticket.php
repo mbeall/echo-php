@@ -5,7 +5,7 @@
  * Allows a ticket to be edited
  *
  * @author  Crystal Carr
- * @since 0.0.8
+ * @since 0.0.9
  *
  * @todo Validate input fields
  */
@@ -15,13 +15,13 @@ global $the_title;
 $the_title= 'Edit a Ticket';
 
 
-include_once('header.php');?>
+include_once('header.php');
 $tkt_name = get_tkt_name($ticket);
 $tkt_priority = get_tkt_priority($ticket);
 $tkt_desc = get_tkt_desc($ticket);
 $tkt_status = get_tkt_status($ticket);
 $tag_name = get_tag_name($tag);
-
+?>
 <?php
 
 $tkt_name     = !empty($_POST['tkt_name'    ]) ? $_POST['tkt_name'    ] : '';
@@ -30,7 +30,7 @@ $tkt_priority = !empty($_POST['tkt_priority']) ? $_POST['tkt_priority'] : '';
 $tkt_status   = !empty($_POST['tkt_status']) ? $_POST['tkt_status'] : '';
 
 
-if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tkt_status) {
+if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tkt_status)) {
   update_ticket($tkt_name, $tkt_desc, $tkt_priority, $tkt_status);
 }
 ?>
@@ -78,8 +78,8 @@ if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tk
 
               <?php }else {  ?>
 
-                <?php ('Refresh: 5, URL=login.php');
-            echo '<h2> You need to be logged in to Edit a ticket. You are being redirected to the login page in 5 seconds.</h2>';
+                <?php
+            echo '<h2> You need to be logged in to Edit a ticket.</h2>';
             ?>
 
 
@@ -95,5 +95,5 @@ if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tk
 
 
 
-<?php include_once('Untitled_1.htmlfooter.php'); ?>
+<?php include_once('footer.php'); ?>
 

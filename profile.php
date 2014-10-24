@@ -7,14 +7,23 @@
  * this page displays public information for a particular user.
  *
  * @author Hannah Turner
- * @since 0.0.8
+ * @since 0.0.9
  *
  * @todo Validate input fields
  */
 
-Global $the_title;
+global $the_title;
 $the_title='Profile';
-include_once ('header.php');?>
+include_once ('header.php');
+global $user;
+$u_id=(int)$_GET['profile'];
+echo $u_id;
+$user=get_user($u_id);
+$u_first=get_user_first($user);
+$u_last=get_user_last($user);
+$u_email=get_user_email($user);
+$u_login_name=get_user_login_name($user);?>
+
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
@@ -27,7 +36,7 @@ include_once ('header.php');?>
 
 <section>
   <h1>My Profile</h1>
-    <?php echo '$u_first . $u_last'; ?>
+    <?php echo "$u_first . $u_last"; ?>
   <h2>My Contact Info</h2>
         <h3>Email:</h3>
 </section>

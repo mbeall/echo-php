@@ -5,7 +5,7 @@
  * Allows a registered user to create or edit a tag
  *
  * @author Crystal Carr
- * @since 0.0.8
+ * @since 0.0.9
  *
  * @todo Validate input fields
  */
@@ -56,13 +56,11 @@ if(!empty($tag_name) && !isset($tag_color) && !isset($tag_bg)) {
 
               <?php }else {  ?>
 
-          <?php ('Refresh: 5, URL=login.php');
-            echo '<h2> You need to be logged in to create a tag. You are being redirected to the login page in 5 seconds.</h2>';
+          <?php ;
+            echo '<h2> You need to be logged in to create a tag.</h2>';
             die();?>
 
           <?php  } ?>
-
-
 
 
               </div> <!--.entry-content -->
