@@ -13,7 +13,7 @@
  * Connects to database and creates ticket object.
  *
  * @author Matt Beall
- * @since 0.0.3
+ * @since 0.0.7
  */
 class E_Ticket {
 
@@ -159,7 +159,7 @@ class E_Ticket {
     $tkt_status   = _text( $tkt_status  , 8  );
     $tkt_visible = 1;
 
-    $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_priority,tkt_status', "'$tkt_name', '$tkt_desc', '$tkt_priority', '$tkt_status', $tkt_visible" );
+    $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_priority,tkt_status,tkt_visible', "'$tkt_name', '$tkt_desc', '$tkt_priority', '$tkt_status', $tkt_visible" );
   }
 
   /**

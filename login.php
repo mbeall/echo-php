@@ -5,7 +5,7 @@
  * Allows a registered user to login
  *
  * @author Hannah Turner
- * @since 0.0.3
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
@@ -66,10 +66,10 @@ if (isset($_POST['login']))
 
    <input type="hidden" name ="redirect" value ="<?php echo $redirect ?>" />
    <div class="form-group">
-	<label for="userlogin">Username:</label>
+  <label for="userlogin">Username:</label>
    <input type="text" name="userlogin" id ="userlogin" value="<?php echo $userLogin; ?>" maxlength="10" autofocus="autofocus" required="required" pattern="^[\w@\.\-]+" title="User Name has invalid characters" /></div>
    <div class="form-group">
-	<label for="userpassword">Password:</label>
+  <label for="userpassword">Password:</label>
    <input type="password" name="userpassword" id="userpassword" value="<?php echo $userPassword; ?>" maxlength="10" required="required" pattern="^[\w@\.\-]+" title="Password has invalid characters" /></div>
       <p>
          <input type="submit" value="Login" name="login" /> <br />
