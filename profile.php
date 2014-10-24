@@ -7,12 +7,12 @@
  * this page displays public information for a particular user.
  *
  * @author Hannah Turner
- * @since 0.0.8
+ * @since 0.0.9
  *
  * @todo Validate input fields
  */
 
-Global $the_title;
+global $the_title;
 $the_title='Profile';
 include_once ('header.php');
 global $user;
