@@ -13,7 +13,16 @@
 global $the_title;
 $the_title='Login';
 include_once ('header.php');
-require_once ('functions.php');?>
+
+if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])){
+	login_user($_REQUEST['username'], $_REQUEST['password']);
+
+//$userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
+//$userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';
+
+//$redirect = (isset($_REQUEST['redirect'])) ? $_REQUEST['redirect'] : 'index.php';
+}
+?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
@@ -24,10 +33,10 @@ require_once ('functions.php');?>
 
             <div class="entry-content">
 <?php
-$userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
-$userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';
+//$userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
+//$userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';
 
-$redirect = (isset($_REQUEST['redirect'])) ? $_REQUEST['redirect'] : 'index.php';
+//$redirect = (isset($_REQUEST['redirect'])) ? $_REQUEST['redirect'] : 'index.php';
 
 // if the form was submitted
 
