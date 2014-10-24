@@ -16,7 +16,7 @@ global $the_title;
 $the_title='Profile';
 include_once ('header.php');
 global $user;
-$u_id=(int)$_GET['profile'];
+$u_id=(int)$_REQUEST['profile'];
 echo $u_id;
 $user=get_user($u_id);
 $u_first=get_user_first($user);
@@ -36,15 +36,17 @@ $u_login_name=get_user_login_name($user);?>
 
 <section>
   <h1>My Profile</h1>
-    <?php echo "$u_first . $u_last"; ?>
-  <h2>My Contact Info</h2>
-        <h3>Email:</h3>
+    <?php echo "$u_first . $u_last"; ?><br />
+		<?php echo "$u_login_name"; ?>
+  <h1>My Contact Info</h1>
+        <h5>Email:<?php echo "$u_email"; ?></h5>
 </section>
 
 
-<FORM METHOD="LINK" action="editprofile.php">
+<FORM method="post" action="edit-profile.php">
 <p>
-  <input type="submit"  value="Edit Profile" name="edit profile" />
+	<input type="hidden" name="profile" value="<?php echo $user->u_id_PK; ?>">
+  <input type="submit"  value="Edit Profile" name="edit-profile" />
 </p>
 </FORM>
 
