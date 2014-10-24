@@ -14,13 +14,7 @@
 
 Global $the_title;
 $the_title='Profile';
-include_once ('header.php');
-
-$u_firstname=$_POST['u_first'];
-$u_first=get_user($u_firstname);
-$u_lastname=$_POST['u_last'];
-$u_last=get_user($u_lastname)?>
-
+include_once ('header.php');?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
@@ -30,7 +24,7 @@ $u_last=get_user($u_lastname)?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
-
+						
 <section>
   <h1>My Profile</h1>
     <?php echo '$u_first . $u_last'; ?>
