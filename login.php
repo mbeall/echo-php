@@ -27,11 +27,11 @@ require_once ('functions.php');?>
 $userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
 $userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';
 
-$redirect = (isset($_REQUEST['redirect'])) ? $_REQUEST['redirect'] : 'd8home.php';
+$redirect = (isset($_REQUEST['redirect'])) ? $_REQUEST['redirect'] : 'index.php';
 
 // if the form was submitted
 
-if (isset($_POST['login']))
+/*if (isset($_POST['login']))
 {
     //Call getUser method to check credentials
 
@@ -61,6 +61,7 @@ if (isset($_POST['login']))
         $error = 'Invalid login credentials<br />Please try again';
     }
 }
+*/
 ?>
 <form class="col-xs-6" action="login.php" name="loginForm" id="loginForm" method="post">
 
