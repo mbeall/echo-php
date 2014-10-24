@@ -5,7 +5,7 @@
  * Allows a ticket to be edited
  *
  * @author  Crystal Carr
- * @since 0.0.9
+ * @since 0.1.0
  *
  * @todo Validate input fields
  */
@@ -16,13 +16,14 @@ $the_title= 'Edit a Ticket';
 
 
 include_once('header.php');
-$tkt_name = get_tkt_name($ticket);
-$tkt_priority = get_tkt_priority($ticket);
-$tkt_desc = get_tkt_desc($ticket);
-$tkt_status = get_tkt_status($ticket);
-$tag_name = get_tag_name($tag);
-?>
-<?php
+global $ticket;
+$tkt_id_pk = (int)$_REQUEST['tkt_id'];
+$ticket = get_ticket($tkt_id_pk);
+$tkt_name = get_ticket_name($ticket);
+$tkt_priority = get_ticket_priority($ticket);
+$tkt_desc = get_ticket_desc($ticket);
+$tkt_status = get_ticket_status($ticket);
+//$tag_name = get_tag_name($tag);
 
 $tkt_name     = !empty($_POST['tkt_name'    ]) ? $_POST['tkt_name'    ] : '';
 $tkt_desc     = !empty($_POST['tkt_desc'    ]) ? $_POST['tkt_desc'    ] : '';
