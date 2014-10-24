@@ -5,7 +5,7 @@
  * Allows users to register
  *
  * @author Hannah Turner
- * @since 0.0.9
+ * @since 0.1.0
  *
  * @todo Validate input fields
  */
@@ -62,7 +62,7 @@ if (!empty($error))
    <div class="form-group">
   <label for="email">Email:</label>
    <input type="text" name="email" id ="email" value="<?php echo $eMail; ?>" maxlength="50" class="twenty" required="required" pattern="^[\w-\.]+@[\w]+\.[a-zA-Z]{2,4}$" title="Enter a valid email" /></div>
-   
+
    <p>
       <input type="submit" value="Register" name="register" /> <br />
       <a href="index.php">Cancel</a>
