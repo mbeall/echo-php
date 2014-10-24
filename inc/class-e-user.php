@@ -529,13 +529,21 @@ function login_user( $username, $password ) {
   $u_id = E_User::authenticate_user($u_login_name, $u_pass);
   $u_id = (int) $u_id;
   if ($u_id > 0) {
-    session_id($u_id);
-    session_start();
+    $_SESSION['u_id'] = $u_id;
+	$_SESSION['u_login_name'] = $u_login_name;
     
     header("Location: profile.php?profile=$u_id");
     exit;
   }
   else {
-    return false;
+    header("Location: login.php?invalid=1");
+    exit;
   }
+}
+
+function logout_user() {
+session_start();
+unset($_SESSION['u_id']);
+unset($_SESSION['u_login_name']);
+session_destroy();
 }

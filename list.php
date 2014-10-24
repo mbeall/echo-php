@@ -116,7 +116,9 @@ $filter .= !empty($_status)    ? " AND tkt_status = '" . $_status . "'" : " AND 
 
           <h3><a href="edit-ticket.php?tkt_id=<?php echo $ticket->tkt_id_PK; ?>"><?php echo $ticket->tkt_name; ?></a></h3>
           <p><?php echo $ticket->tkt_desc; ?></p>
-
+		  <p>Tags: <?php $tags = get_ticket_tags( $ticket ); foreach ($tags as $tag) { echo "<span class=\"label label-info\" style=\"color:$tag->tag_color;background:$tag->tag_bg;\">$tag->tag_name</span>"; } ?></p>
+		  <p>Priority: <?php echo $ticket->tkt_priority; ?></p>
+		  
         <?php } ?>
         </div><!-- .entry-content -->
         </article>

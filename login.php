@@ -21,6 +21,10 @@ if (!empty($u_login_name) && !empty($u_pass)) {
   login_user( $u_login_name, $u_pass );
 }
 
+if (isset($_REQUEST['logout'])) {
+  logout_user();
+}
+
 ?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -40,7 +44,8 @@ if (!empty($u_login_name) && !empty($u_pass)) {
                   <label for="u_pass">Password</label>
                   <input type="password" class="form-control" id="eu_pass" name="u_pass" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Login</button>
+                <a class="btn btn-default" href="register.php">Register</a>
               </form>
             </div><!-- .entry-content -->
           </article>

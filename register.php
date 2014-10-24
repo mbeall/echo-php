@@ -14,20 +14,11 @@ global $the_title;
 $the_title='User Registration';
 include_once ('header.php');
 
-print_r($_POST);
-
 $u_login_name = !empty($_POST['u_login_name']) ? $_POST['u_login_name'] : null;
 $u_pass = !empty($_POST['u_pass']) ? $_POST['u_pass'] : null;
 $u_first = !empty($_POST['u_first']) ? $_POST['u_first'] : null;
 $u_last = !empty($_POST['u_last']) ? $_POST['u_last'] : null;
 $u_email = !empty($_POST['u_email']) ? $_POST['u_email'] : null;
-
-echo $u_login_name;
-echo $u_pass;
-echo $u_first;
-echo $u_last;
-echo $u_email;
-
 
 if(!empty($u_login_name) && !empty($u_pass) && !empty($u_email)) {
   create_user($u_email, $u_login_name, $u_pass, $u_first, $u_last);
@@ -47,11 +38,11 @@ if(!empty($u_login_name) && !empty($u_pass) && !empty($u_email)) {
             <form role="form" action="register.php" method="post">
               <div class="form-group">
                 <label for="u_login_name">Username</label>
-                <input type="text" class="form-control" id="u_login_name" name="u_login_name">
+                <input type="text" class="form-control" id="u_login_name" name="u_login_name" required>
               </div>
               <div class="form-group">
                 <label for="u_pass">Password</label>
-                <input type="password" class="form-control" id="u_pass" name="u_pass">
+                <input type="password" class="form-control" id="u_pass" name="u_pass" required>
               </div>
               <div class="form-group">
                 <label for="u_first">First Name</label>
@@ -63,9 +54,10 @@ if(!empty($u_login_name) && !empty($u_pass) && !empty($u_email)) {
               </div>
               <div class="form-group">
                 <label for="u_email">Email address</label>
-                <input type="email" class="form-control" id="u_email" name="u_email">
+                <input type="email" class="form-control" id="u_email" name="u_email" required>
               </div>
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="reset" class="btn btn-default">Reset</button>
             </form>
             </div><!-- .entry-content -->
           </article>
