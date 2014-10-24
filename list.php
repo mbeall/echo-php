@@ -4,138 +4,124 @@
  *
  * Used for search; displays list of tickets.
  *
- * @author Hannah Turner
- * @since 0.0.6
+ * @author Matt Beall, Hannah Turner
+ * @since 0.0.8
+ *
+ * @todo Get rid of duplicate results
  */
 
 global $the_title;
-$the_title='Search for Tickets';
-include_once ('header.php');?>
+$the_title='Browse Tickets';
+include_once ('header.php');
+$_search = !empty($_POST['_search']) ? _text($_POST['_search']) : null;
+$_tag_id = !empty($_POST['_tag_id']) ? (int) $_POST['_tag_id'] : null;
+$_priority = !empty($_POST['_priority']) ? _text($_POST['_priority']) : null;
+$_status = !empty($_POST['_status']) ? _text($_POST['_status']) : 'open';
+
+$filter = null;
+$filter .= !empty($_search) ? " AND (tkt_name LIKE '%" . $_search . "%' OR tkt_desc LIKE '%" . $_search . "%')" : null;
+$filter .= !empty($_tag_id)    ? " AND tag_id_FK = " . (int) $_tag_id : null;
+$filter .= !empty($_priority)    ? " AND tkt_priority = '" . $_priority . "'" : null;
+$filter .= !empty($_status)    ? " AND tkt_status = '" . $_status . "'" : " AND _status = 'open'";
+?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
-          <article class="page type-page status-draft hentry col-lg-12 col-md-12 col-sm-12">
-            <header class="entry-header">
-              <h1 class="entry-title"><?php echo $the_title; ?></h1>
-            </header><!-- .entry-header -->
+        <article class="page type-page status-draft hentry col-lg-12 col-md-12 col-sm-12">
+        <header class="entry-header">
+        <h1 class="entry-title"><?php echo $the_title; ?></h1>
+        </header><!-- .entry-header -->
 
-            <div class="entry-content">
-<!--
-<section>
-  <form action="list.php" method = "post" name="searchbyticket" id="searchbyticket">
-    <label for="ticket"> Ticket Search:</label>
-    <input type="text" name="ticket" id ="ticket" maxlength="50" />
-    <p>
-      <input type="submit" value="Search" name="search" />
-    </p>
-  </form>
-</section>
--->
-<?php
-$ticket=get_ticket(); ?>
+        <div class="entry-content">
+          <form class="form-inline" role="form" method="post" action="list.php">
+            <div class="form-group">
+              <label class="sr-only" for="_search">Keyword search</label>
+              <input type="text" class="form-control" id="_search" name="_search" placeholder="Search" value="<?php echo $_search; ?>">
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="_tag_id">Tag</label>
+              <select class="form-control" id="_tag_id" name="_tag_id">
+                <option value="">All tags</option>
+                <?php
+                  $tags = get_tags();
 
-<section>
-    <form action="list.php" method = "post" name="SearchByMultiCriteria" id="SearchByMultiCriteria">
-   <label for="ticketname">Ticket Name:</label>
-   <input type="text" name="ticketname" id="ticketname" maxlength="50" />
-   <label for="ticketdesc">Ticket Description:</label>
-   <input type="text" name="ticketdesc" id="ticketdesc" maxlength="50" />
-   <label for="ticketpriority">Ticket Priority:</label>
-   <input type="text" name="ticketstatus" id="ticketstatus" maxlength="50" />
-   <label for="ticketstatus">Ticket Status:</label>
-   <input type="text" name="tickestatus" id="ticketstatus" maxlength="50" />
+                  $output = '';
 
-   <p>
-      <input name = "search" type="submit" value="Search" />
-   </p>
+                  foreach($tags as $tag) {
+                    $output .= '<option value="';
+                    $output .= $tag->tag_id_PK;
+                    $output .= '"';
+                    $output .= $_tag_id == $tag->tag_id_PK ? 'selected' : '';
+                    $output .= '>';
+                    $output .= $tag->tag_name;
+                    $output .= '</option>';
+                  }
 
-</form>
-</section>
+                  echo $output;
+                ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="_priority">Priority</label>
+              <select class="form-control" id="_priority" name="_priority">
+                <option value=""><span class="text-muted">Priority</span></option>
+                <?php
+                  $priorities = array('high', 'normal', 'low');
 
-<?php
-$ticketname = $_POST['tkt_name'];
-$ticketdesc = $_POST['tkt_desc'];
-$ticketpriority = $_POST['tkt_priority'];
-$ticketstatus = $PST['tkt_status'];
+                  $output = '';
 
+                  foreach($priorities as $priority) {
+                    $output .= '<option value="';
+                    $output .= $priority;
+                    $output .= '"';
+                    $output .= $_priority == $priority ? 'selected' : '';
+                    $output .= '>';
+                    $output .= $priority;
+                    $output .= '</option>';
+                  }
 
-$ticketname = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketname);
-$ticketdesc = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketdesc);
-$ticketpriority = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketpriority);
-$ticketstatus = preg_replace("/[^a-zA-Z0-9\s]/", '', $ticketstatus);
+                  echo $output;
+                ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="_status">Status</label>
+              <select class="form-control" id="_status" name="_status">
+                <?php
+                  $stati = array('open', 'closed', 'review');
 
+                  $output = '';
 
-$heading = <<<ABC
-You searched for<br />
-Ticket Name: '$ticketname' <br />
-Ticket Description: '$ticketdesc' <br />
-Ticket Priority: '$ticketpriority' <br />
-Ticket Status: '$ticektstatus'
-ABC;
+                  foreach($stati as $status) {
+                    $output .= '<option value="';
+                    $output .= $status;
+                    $output .= '"';
+                    $output .= $_status == $status ? 'selected' : '';
+                    $output .= '>';
+                    $output .= $status;
+                    $output .= '</option>';
+                  }
 
+                  echo $output;
+                ?>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+          </form>
+        <?php
+        $tickets = get_tickets($filter);
+        echo '<p class="small text-muted" style="float:right;">' . count($tickets) . ' results</p>';
+        foreach ($tickets as $ticket) {
+        ?>
 
-echo $heading;
-?>
+          <h3><?php echo $ticket->tkt_name; ?></h3>
+          <p><?php echo $ticket->tkt_desc; ?></p>
 
-<!--
-$tickets = getTicketByMultiCriteria($ticketname, $ticketdesc, $ticketpriority, $ticketstatus);
-
-$matchingRecords = count($tickets);
-
-echo "<section>";
-
-if ($matchingRecords == 0)
-{
-   echo "<h3>No matches found for the search term(s)</h3>";
-}
-else
-{
-
-$output = <<<ABC
-<table>
-   <caption>$matchingRecords tickets(s) found</caption>
-   <tbody>
-ABC;
-
-    foreach ($movieList as $movie)
-    {
-        extract($movie);
-        $movieNum ++;
-        $dateReleased = date_format(new DateTime($dateintheaters), "F j, Y");
-        $output .= <<<ABC
-        <tr>
-            <td>$movieNum: $movietitle<br />
-                $pitchtext
-            </td>
-            <td>
-               Released: $dateReleased
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                $summary
-            </td>
-        </tr>
-ABC;
-    }
-
-    $output .= "<tbody></table>";
-}
-$output .= <<<ABC
-<p style="text-align: center">
-    <a href="d4search2.php">[Back to Search Page]</a>
-</p></section>
-ABC;
-
-echo $output;
--->
-
-
- </div><!-- .entry-content -->
-          </article>
+        <?php } ?>
+        </div><!-- .entry-content -->
+        </article>
         </div><!-- .row -->
       </div><!-- #content -->
     </div><!-- #primary -->
 
 <?php include_once('footer.php'); ?>
-

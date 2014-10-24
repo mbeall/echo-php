@@ -7,7 +7,7 @@
  * on all pages.
  *
  * @author Matt Beall
- * @since 0.0.3
+ * @since 0.0.8
  */
 include_once('functions.php');
 include_once('inc/class-edb.php');
@@ -76,7 +76,8 @@ if (!empty($the_type)) {
           <ul id="menu-top" class="nav navbar-nav navbar-right">
             <li><a href="about.php">About</a></li>
             <li><a href="contact.php">Contact Us</a></li>
-            <li><a href="ticket.php">Submit Ticket</a></li>
+            <li><a href="list.php">Browse</a></li>
+            <li><a href="create-ticket.php">Submit Ticket</a></li>
             <li><a href="login.php">Login</a></li>
           </ul>
         </div><!-- .navbar-collapse -->

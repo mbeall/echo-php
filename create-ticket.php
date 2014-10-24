@@ -5,7 +5,7 @@
  * Allows a ticket to be created or edited
  *
  * @author Crystal Carr
- * @since 0.0.3
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
@@ -37,8 +37,8 @@ if(!empty($tkt_name) && !empty($tkt_desc)) {
 
               <div class="entry-content">
                <?php if (is_admin()) { ?>
-				
-	              <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_user" id="create_ticket_user">
+
+                <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_user" id="create_ticket_user">
                     <input type="hidden" name="tkt_id_pk" value="">
                     <div class="form-group">
                       <label for="tkt_name">Ticket Name</label>
@@ -76,7 +76,7 @@ if(!empty($tkt_name) && !empty($tkt_desc)) {
                 </form>
           <?php  } ?>
 
-                   	
+
               </div> <!--.entry-content -->
            </article>
         </div> <!--.row -->
