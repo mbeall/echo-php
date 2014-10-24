@@ -7,7 +7,7 @@
  * this page displays public information for a particular user.
  *
  * @author Hannah Turner
- * @since 0.0.6
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
@@ -24,7 +24,7 @@ include_once ('header.php');?>
             </header><!-- .entry-header -->
 
             <div class="entry-content">
-						
+
 <section>
   <h1>My Profile</h1>
     <?php echo '$u_first . $u_last'; ?>

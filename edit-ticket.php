@@ -5,7 +5,7 @@
  * Allows a ticket to be edited
  *
  * @author  Crystal Carr
- * @since 0.0.5
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
@@ -85,7 +85,7 @@ if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tk
 
           <?php  } ?>
 
-     
+
               </div> <!--.entry-content -->
            </article>
         </div> <!--.row -->
