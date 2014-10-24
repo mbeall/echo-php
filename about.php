@@ -5,7 +5,7 @@
  * A page that describes the organization/project/website
  *
  * @author Crystal Carr
- * @since 0.0.9
+ * @since 0.1.0
  *
  * @todo Validate input fields
  */
