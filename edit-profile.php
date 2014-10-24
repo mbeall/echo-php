@@ -14,7 +14,7 @@ global $the_title;
 $the_title='Edit Profile';
 include_once ('header.php');
 global $user;
-$u_id=(int)$_GET['profile'];
+$u_id=(int)$_REQUEST['profile'];
 echo $u_id;
 $user=get_user($u_id);
 $u_first=get_user_first($user);
