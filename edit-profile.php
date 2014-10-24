@@ -23,52 +23,7 @@ include_once ('header.php');?>
 
             <div class="entry-content">
 
-<?php
-/*$editmode = false;
-
-if ((isset($_GET['u_id_PK'])) && (is_numeric($_GET['u_id_PK'])))
-{
-
-    $moviedetails = getMovieDetailsByID((int)$_GET['filmpk']);
-
-
-
-    $editmode = (count($moviedetails) == 1);
-}
-
-// if mode is $editmode is true
-
-if ($editmode)
-{
-   extract($moviedetails[0]);
-
-    $dateintheaters = date_format(new DateTime($dateintheaters), 'm/d/Y');
-
-    $formtitle = 'Update a Movie';
-    $buttontext = 'Update';
- }
-else  //otherwise, set the column variables to ""
-{
-    $ = '';
-    $pitchtext = '';
-    $amountbudgeted = '';
-    $ratingfk = '';
-    $summary = '';
-    $imagename = '';
-    $dateintheaters = '';
-
-    $formtitle = 'Add a Movie';
-    $buttontext = 'Insert';
-}
-
-?>
-
-<script src="d6jsLibrary.js" type="text/javascript"></script>
-*/
-
-?>
-
-<form name ="addEditForm" id="addEditForm" action="edit-profile.php" method="post" onsubmit="return checkForm(this)">
+<form class="col-xs-6" name ="addEditForm" id="addEditForm" action="edit-profile.php" method="post" onsubmit="return checkForm(this)">
 
 <?php
     if ($editmode)
@@ -77,19 +32,24 @@ else  //otherwise, set the column variables to ""
     }
 ?>
 
-
+ <div class="form-group">
 <label for="userlogin">Username:</label>
-   <input type="text" name="userlogin" id ="userlogin" value="<?php echo $userLogin; ?>" class="ten" maxlength="10" autofocus="autofocus" required="required" pattern="^[\w@\.-]+$" title="Valid characters are a-z 0-9 _ . @ -" />
-   <label for="userpassword">Password:</label>
-   <input type="password" name="userpassword" id="userpassword" value="<?php echo $userPassword; ?>" class="ten" maxlength="10" required="required" pattern="^[\w@\.-]+$" title="Valid characters are a-z 0-9 _ . @ -" />
-   <label for="firstname">First Name:</label>
-   <input type="text" name="firstname" id ="firstname" value="<?php echo $firstName; ?>" maxlength="20" class="twenty" required="required" pattern="^[a-zA-Z-]+$" title="First Name has invalid characters" />
-   <label for="lastname">Last Name:</label>
-   <input type="text" name="lastname" id ="lastname" value="<?php echo $lastName; ?>" maxlength="20" class="twenty" required="required" pattern="^[a-zA-Z-]+$" title="Last Name has invalid characters" />
-   <label for="email">Email:</label>
-   <input type="text" name="email" id ="email" value="<?php echo $eMail; ?>" maxlength="50" class="twenty" required="required" pattern="^[\w-\.]+@[\w]+\.[a-zA-Z]{2,4}$" title="Enter a valid email" />
-   <label for="phone">Telephone:</label>
-   <input type="text" name="phone" id ="phone" value="<?php echo $phone; ?>" maxlength="12" class="ten" required="required" pattern="^(\d{3}-)?\d{3}-\d{4}$" title="Enter a valid phone number" />
+   <input type="text" name="userlogin" id ="userlogin" value="<?php echo $userLogin; ?>" class="ten" maxlength="10" autofocus="autofocus" required="required" pattern="^[\w@\.-]+$" title="Valid characters are a-z 0-9 _ . @ -" /></div>
+   <div class="form-group"> 
+	<label for="userpassword">Password:</label>
+   <input type="password" name="userpassword" id="userpassword" value="<?php echo $userPassword; ?>" class="ten" maxlength="10" required="required" pattern="^[\w@\.-]+$" title="Valid characters are a-z 0-9 _ . @ -" /></div>
+    <div class="form-group">
+	<label for="firstname">First Name:</label>
+   <input type="text" name="firstname" id ="firstname" value="<?php echo $firstName; ?>" maxlength="20" class="twenty" required="required" pattern="^[a-zA-Z-]+$" title="First Name has invalid characters" /></div>
+    <div class="form-group">
+	<label for="lastname">Last Name:</label>
+   <input type="text" name="lastname" id ="lastname" value="<?php echo $lastName; ?>" maxlength="20" class="twenty" required="required" pattern="^[a-zA-Z-]+$" title="Last Name has invalid characters" /></div>
+    <div class="form-group">
+	<label for="email">Email:</label>
+   <input type="text" name="email" id ="email" value="<?php echo $eMail; ?>" maxlength="50" class="twenty" required="required" pattern="^[\w-\.]+@[\w]+\.[a-zA-Z]{2,4}$" title="Enter a valid email" /></div>
+    <div class="form-group">
+	<label for="phone">Telephone:</label>
+   <input type="text" name="phone" id ="phone" value="<?php echo $phone; ?>" maxlength="12" class="ten" required="required" pattern="^(\d{3}-)?\d{3}-\d{4}$" title="Enter a valid phone number" /></div>
    <p>
      <input type="submit" value="Submit Changes" />
      <a href="profile.php">Cancel</a>
