@@ -164,3 +164,18 @@ function _email( $email, $length = 0 ) {
   else
     return $new;
 }
+
+/** @since 0.0.8 */
+function get_tickets( $match = NULL, $args = array() ) {
+  global $edb;
+  $match = !empty($match) ? "tkt_visible = 1" . $match: "tkt_status = 'open' AND tkt_visible = 1";
+  $results = $edb->select( 'tickets LEFT JOIN ticket_tags ON tkt_id_PK = tkt_id_FK', '*', $match, $args );
+  return $results;
+}
+
+/** @since 0.0.8 */
+function get_tags() {
+  global $edb;
+  $results = $edb->select( 'tags', '*', "tag_visible = 1" );
+  return $results;
+}
