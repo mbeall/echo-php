@@ -62,13 +62,15 @@ if (isset($_POST['login']))
     }
 }
 ?>
-<form action="login.php" name="loginForm" id="loginForm" method="post">
+<form class="col-xs-6" action="login.php" name="loginForm" id="loginForm" method="post">
 
    <input type="hidden" name ="redirect" value ="<?php echo $redirect ?>" />
-   <label for="userlogin">Username:</label>
-   <input type="text" name="userlogin" id ="userlogin" value="<?php echo $userLogin; ?>" maxlength="10" autofocus="autofocus" required="required" pattern="^[\w@\.\-]+" title="User Name has invalid characters" />
-   <label for="userpassword">Password:</label>
-   <input type="password" name="userpassword" id="userpassword" value="<?php echo $userPassword; ?>" maxlength="10" required="required" pattern="^[\w@\.\-]+" title="Password has invalid characters" />
+   <div class="form-group">
+	<label for="userlogin">Username:</label>
+   <input type="text" name="userlogin" id ="userlogin" value="<?php echo $userLogin; ?>" maxlength="10" autofocus="autofocus" required="required" pattern="^[\w@\.\-]+" title="User Name has invalid characters" /></div>
+   <div class="form-group">
+	<label for="userpassword">Password:</label>
+   <input type="password" name="userpassword" id="userpassword" value="<?php echo $userPassword; ?>" maxlength="10" required="required" pattern="^[\w@\.\-]+" title="Password has invalid characters" /></div>
       <p>
          <input type="submit" value="Login" name="login" /> <br />
          New user?  <a href="register.php">Register Here</a>
