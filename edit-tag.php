@@ -5,7 +5,7 @@
  * Allows a registered user to create or edit a tag
  *
  * @author Crystal Carr
- * @since  0.0.3
+ * @since  0.1.0
  *
  * @todo Validate input fields
  */
@@ -20,9 +20,9 @@ $tag_name = get_tag_name($tag);
 $tag_color = get_tag_color($tag);
 $tag_bg = get_tag_bg($tag);
 
-$tag_name    	= !empty($_POST['tag_name'    ]) ? $_POST['tag_name'    ] : '';
-$tag_color   	= !isset($_POST['tag_color'    ]) ? $_POST['tag_color'    ] : '';
-$tag_bg		 	= !isset($_POST['tag_bg']) ? $_POST['tag_bg'] : '';
+$tag_name      = !empty($_POST['tag_name'    ]) ? $_POST['tag_name'    ] : '';
+$tag_color     = !isset($_POST['tag_color'    ]) ? $_POST['tag_color'    ] : '';
+$tag_bg       = !isset($_POST['tag_bg']) ? $_POST['tag_bg'] : '';
 
 
 if(!empty($tag_name) && !isset($tag_color) && !isset($tag_bg)) {
