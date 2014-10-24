@@ -5,7 +5,7 @@
  * Allows a ticket to be created or edited
  *
  * @author Crystal Carr
- * @since 0.0.3
+ * @since 0.0.7
  *
  * @todo Validate input fields
  */
@@ -26,9 +26,9 @@ include_once('header.php');?>
 
               <div class="entry-content">
                <?php if (is_admin()) { ?>
-				<div class='alert alert-success'>
-				<p>Ticket Creation was a Success</p>
-				</div>
+        <div class='alert alert-success'>
+        <p>Ticket Creation was a Success</p>
+        </div>
               <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_user" id="create_ticket_user">
                     <input type="hidden" name="tkt_id_pk" value="">
                     <div class="form-group">
