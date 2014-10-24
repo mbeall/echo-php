@@ -12,8 +12,7 @@
 
 global $the_title;
 $the_title='User Registration';
-include_once ('header.php');
-include_once ('functions.php')?>
+include_once ('header.php');?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
