@@ -1,18 +1,27 @@
 <?php
 /**
- * Login page
+ * Edit profile page
  *
- * Allows a registered user to login
+ * Allows a registered user to edit profile
  *
  * @author Hannah Turner
- * @since 0.0.8
+ * @since 0.0.9
  *
  * @todo Validate input fields
  */
 
 global $the_title;
 $the_title='Edit Profile';
-include_once ('header.php');?>
+include_once ('header.php');
+global $user;
+$u_id=(int)$_GET['profile'];
+echo $u_id;
+$user=get_user($u_id);
+$u_first=get_user_first($user);
+$u_last=get_user_last($user);
+$u_email=get_user_email($user);
+$u_login_name=get_user_login_name($user);?>
+
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
