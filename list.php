@@ -114,7 +114,7 @@ $filter .= !empty($_status)    ? " AND tkt_status = '" . $_status . "'" : " AND 
         foreach ($tickets as $ticket) {
         ?>
 
-          <h3><?php echo $ticket->tkt_name; ?></h3>
+          <h3><a href="edit-ticket.php?tkt_id=<?php echo $ticket->tkt_id_PK; ?>"><?php echo $ticket->tkt_name; ?></a></h3>
           <p><?php echo $ticket->tkt_desc; ?></p>
 
         <?php } ?>

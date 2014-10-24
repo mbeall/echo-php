@@ -9,11 +9,11 @@
  * @author Matt Beall
  * @since 0.1.0
  */
-include_once('functions.php');
 include_once('inc/class-edb.php');
 include_once('inc/class-e-tag.php');
 include_once('inc/class-e-ticket.php');
 include_once('inc/class-e-user.php');
+include_once('functions.php');
 
 $edb = new edb;
 
@@ -55,6 +55,12 @@ if (!empty($the_type)) {
   <link rel="stylesheet" id="stylesheet"  href="style.css" type="text/css" media="all" />
 </head>
 <body>
+  <?php 
+
+echo '<pre>';
+print_r($_SESSION);
+echo '</pre>';
+?>
   <div id="page" class="hfeed site">
 
     <nav class="navbar navbar-canvas navbar-top" role="navigation">
