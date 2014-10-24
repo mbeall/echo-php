@@ -18,6 +18,19 @@ $tag_color = get_tag_color($tag);
 $tag_bg = get_tag_bg($tag);
 ?>
 
+<?php
+
+$tag_name    	= !empty($_POST['tag_name'    ]) ? $_POST['tag_name'    ] : '';
+$tag_color   	= !isset($_POST['tag_color'    ]) ? $_POST['tag_color'    ] : '';
+$tag_bg		 	= !isset($_POST['tag_bg']) ? $_POST['tag_bg'] : '';
+
+
+if(!empty($tag_name) && !isset($tag_color) && !isset($tag_bg)) {
+  update_tag($tag_name, $tag_color, $tag_bg);
+}
+?>
+
+
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">
@@ -50,13 +63,10 @@ $tag_bg = get_tag_bg($tag);
               <?php }else {  ?>
 
           <?php ('Refresh: 5, URL=login.php');
-            echo '<h2> You need to be logged in to Edit a tag. You are being redirected to the login page in 5 seconds.</h2>';
+            echo '<h2> You need to be logged in to Edit a tag.';
             ?>
 
           <?php  } ?>
-
-      <?php Update_tag('tag_id_PK','tag_name', 'tag_color', 'tag_bg') ?>
-
 
               </div> <!--.entry-content -->
           </article>
