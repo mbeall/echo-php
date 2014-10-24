@@ -7,20 +7,14 @@
  * this page displays public information for a particular user.
  *
  * @author Hannah Turner
- * @since 0.0.6
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
 
 Global $the_title;
 $the_title='Profile';
-include_once ('header.php');
-
-$u_firstname=$_POST['u_first'];
-$u_first=get_user($u_firstname);
-$u_lastname=$_POST['u_last'];
-$u_last=get_user($u_lastname)?>
-
+include_once ('header.php');?>
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
         <div class="row">

@@ -5,7 +5,7 @@
  * Allows a ticket to be edited
  *
  * @author  Crystal Carr
- * @since 0.0.5
+ * @since 0.0.8
  *
  * @todo Validate input fields
  */
@@ -21,6 +21,19 @@ $tkt_priority = get_tkt_priority($ticket);
 $tkt_desc = get_tkt_desc($ticket);
 $tkt_status = get_tkt_status($ticket);
 $tag_name = get_tag_name($tag);
+
+<?php
+
+$tkt_name     = !empty($_POST['tkt_name'    ]) ? $_POST['tkt_name'    ] : '';
+$tkt_desc     = !empty($_POST['tkt_desc'    ]) ? $_POST['tkt_desc'    ] : '';
+$tkt_priority = !empty($_POST['tkt_priority']) ? $_POST['tkt_priority'] : '';
+$tkt_status   = !empty($_POST['tkt_status']) ? $_POST['tkt_status'] : '';
+
+
+if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tkt_status) {
+  update_ticket($tkt_name, $tkt_desc, $tkt_priority, $tkt_status);
+}
+?>
 
 
 <div id="primary" class="content-area container">
@@ -72,7 +85,6 @@ $tag_name = get_tag_name($tag);
 
           <?php  } ?>
 
-      <?php update_ticket('tkt_name', 'tkt_desc', 'tkt_priority', 'tkt_status','tags') ?>
 
               </div> <!--.entry-content -->
            </article>
