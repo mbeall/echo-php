@@ -7,10 +7,11 @@
  * on all pages.
  *
  * @author Matt Beall
- * @since 0.0.8
+ * @since 0.1.0
  */
 include_once('functions.php');
 include_once('inc/class-edb.php');
+include_once('inc/class-e-tag.php');
 include_once('inc/class-e-ticket.php');
 include_once('inc/class-e-user.php');
 
