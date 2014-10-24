@@ -13,7 +13,7 @@
  * Connects to database and creates ticket object.
  *
  * @author Matt Beall
- * @since 0.0.3
+ * @since 0.0.7
  */
 class E_Ticket {
 
