@@ -5,7 +5,7 @@
  * Allows a registered user to login
  *
  * @author Hannah Turner
- * @since 0.1.0
+ * @since 0.1.1
  *
  * @todo Validate input fields
  */
@@ -15,7 +15,7 @@ $the_title='Login';
 include_once ('header.php');
 
 if (!empty($_REQUEST['username']) && !empty($_REQUEST['password'])){
-	login_user($_REQUEST['username'], $_REQUEST['password']);
+  login_user($_REQUEST['username'], $_REQUEST['password']);
 
 //$userLogin = (isset($_POST['u_login_name'])) ? trim($_POST['u_login_name']) : '';
 //$userPassword = (isset($_POST['u_pass'])) ? trim($_POST['u_pass']) : '';

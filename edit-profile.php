@@ -5,7 +5,7 @@
  * Allows a registered user to edit profile
  *
  * @author Hannah Turner
- * @since 0.1.0
+ * @since 0.1.1
  *
  * @todo Validate input fields
  */
@@ -57,7 +57,7 @@ $u_login_name=get_user_login_name($user);?>
   <label for="email">Email:</label>
    <input type="text" name="u_email" id ="email" value="<?php echo $u_email; ?>" maxlength="50" class="twenty" required="required" pattern="^[\w-\.]+@[\w]+\.[a-zA-Z]{2,4}$" title="Enter a valid email" /></div>
     <div class="form-group">
- 
+
    <p>
      <input type="submit" value="Submit Changes" />
      <a href="profile.php">Cancel</a>

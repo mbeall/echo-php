@@ -184,7 +184,7 @@ function get_tags() {
 function login_user( $username, $password ) {
   $u_login_name = _text( $username );
   $u_pass = _text( $password );
-  
+
   $u_id = E_User::authenticate_user($u_login_name, $u_pass);
   $u_id = (int) $u_id;
   if ($u_id > 0) {

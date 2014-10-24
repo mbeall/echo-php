@@ -5,7 +5,7 @@
  * Allows users to register
  *
  * @author Hannah Turner
- * @since 0.1.0
+ * @since 0.1.1
  *
  * @todo Validate input fields
  */
@@ -31,8 +31,8 @@ $lastName = (!empty($_POST['u_last']));
 $eMail = (!empty($_POST['u_email']));
 
 if(!empty($u_login_name) && !empty($u_pass) && !empty($u_first) && !empty($u_last) && !empty($u_email)) {
-	create_user($u_login_name, $u_pass, $u_fist, $u_last, $u_email);
-	}
+  create_user($u_login_name, $u_pass, $u_fist, $u_last, $u_email);
+  }
 ?>
 
 <div id="primary" class="content-area container">

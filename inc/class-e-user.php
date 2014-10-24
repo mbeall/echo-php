@@ -11,7 +11,7 @@
  * Connects to database and creates user object.
  *
  * @author Matt Beall
- * @since 0.0.9
+ * @since 0.1.1
  */
 class E_User {
 
