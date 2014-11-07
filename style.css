@@ -110,6 +110,9 @@ blockquote {
 section {
   margin-bottom: 40px;
 }
+.entry-header .btn-edit {
+  display: block;
+}
 
 
 /* =Media
