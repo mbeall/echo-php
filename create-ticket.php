@@ -9,8 +9,6 @@
  *
  * @todo Validate input fields
  */
-
-
 global $the_title;
 $the_title= 'Submit Ticket';
 
@@ -19,7 +17,7 @@ include_once('header.php');?>
 
 $tkt_name     = !empty($_POST['tkt_name'    ]) ? $_POST['tkt_name'    ] : '';
 $tkt_desc     = !empty($_POST['tkt_desc'    ]) ? $_POST['tkt_desc'    ] : '';
-$tkt_priority = !empty($_POST['tkt_priority']) ? $_POST['tkt_priority'] : '';
+$tkt_priority = !empty($_POST['tkt_priority']) ? $_POST['tkt_priority'] : 'normal';
 
 
 if(!empty($tkt_name) && !empty($tkt_desc)) {
@@ -36,7 +34,7 @@ if(!empty($tkt_name) && !empty($tkt_desc)) {
             </header><!-- .entry-header -->
 
               <div class="entry-content">
-               <?php if (is_admin()) { ?>
+               <?php if (is_logged_in()) { ?>
 
                 <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_user" id="create_ticket_user">
                     <input type="hidden" name="tkt_id" value="">
@@ -46,15 +44,20 @@ if(!empty($tkt_name) && !empty($tkt_desc)) {
                     </div>
                     <div class="form-group">
                       <label for="tkt_priority">Ticket Priority</label>
-                      <input type="text" name="tkt_priority" Pattern ="^[a-zA-Z0-9][\w\s\&,]*[a-zA-Z0-9\!\?\.]$"  maxlength="8" value="">
+                      <select class="form-control" name="tkt_priority">
+                        <option value="high">High</option>
+                        <option value="normal" selected>Normal</option>
+                        <option value="low">Low</option>
+                      </select>
                     </div>
                     <div class="form-group">
-                      <label for="tkt_desc">Description:</label>
-                      <textarea class="form-control"></textarea>
+                      <label for="tkt_desc">Description</label>
+                      <textarea class="form-control" name="tkt_desc"></textarea>
                     </div>
-                    <p><input type="submit" value="Sumbit">
-                  <a href="index.php">Cancel</a>
-                </p>
+                    <p>
+                      <input class="btn btn-primary" type="submit" value="Submit">
+                      <a class="btn btn-default" href="index.php">Cancel</a>
+                  </p>
                   </form>
 
               <?php }else {  ?>
