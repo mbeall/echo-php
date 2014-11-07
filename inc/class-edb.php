@@ -126,10 +126,10 @@ class edb {
     $query  = '';
     $query .= 'SELECT ' . $columns;
     $query .= ' FROM ' . $table;
-    $query .= !empty($match)         ? ' WHERE '    . $match         : '';
-    $query .= !empty($args->groupby) ? ' GROUP BY ' . $args->groupby : '';
-    $query .= !empty($args->having)  ? ' HAVING '   . $args->having  : '';
-    $query .= !empty($args->orderby) ? ' ORDER BY ' . $args->orderby . ' ' . $args->order : '';
+    $query .= !empty($match)           ? ' WHERE '    . $match           : '';
+    $query .= !empty($args['groupby']) ? ' GROUP BY ' . $args['groupby'] : '';
+    $query .= !empty($args['having' ]) ? ' HAVING '   . $args['having' ] : '';
+    $query .= !empty($args['orderby']) ? ' ORDER BY ' . $args['orderby'] . ' ' . $args['order'] : '';
     $query .= ';';
 
     /**
