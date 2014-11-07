@@ -26,68 +26,49 @@ if(!empty($tkt_name) && !empty($tkt_desc)) {
 ?>
 
 <div id="primary" class="content-area container">
-      <div id="content" class="site-content col-lg-12 col-md-12" role="main">
-        <div class="row">
-          <article class="page type-page status-draft hentry col-lg-12 col-md-12 col-sm-12">
-            <header class="entry-header">
-              <h1 class="entry-title"><?php echo $the_title; ?></h1>
-            </header><!-- .entry-header -->
+  <div id="content" class="site-content col-lg-12 col-md-12" role="main">
+    <div class="row">
+      <article class="page type-page status-draft hentry col-lg-12 col-md-12 col-sm-12">
+        <header class="entry-header">
+          <h1 class="entry-title"><?php echo $the_title; ?></h1>
+        </header><!-- .entry-header -->
 
-              <div class="entry-content">
-               <?php if (is_logged_in()) { ?>
+        <div class="entry-content">
+          <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_user" id="create_ticket_user">
+            <input type="hidden" name="tkt_id" value="">
 
-                <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_user" id="create_ticket_user">
-                    <input type="hidden" name="tkt_id" value="">
-                    <div class="form-group">
-                      <label for="tkt_name">Ticket Name</label>
-                      <input class="form-control" type="text" name="tkt_name" id="tkt_name" maxlength="45">
-                    </div>
-                    <div class="form-group">
-                      <label for="tkt_priority">Ticket Priority</label>
-                      <select class="form-control" name="tkt_priority">
-                        <option value="high">High</option>
-                        <option value="normal" selected>Normal</option>
-                        <option value="low">Low</option>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label for="tkt_desc">Description</label>
-                      <textarea class="form-control" name="tkt_desc"></textarea>
-                    </div>
-                    <p>
-                      <input class="btn btn-primary" type="submit" value="Submit">
-                      <a class="btn btn-default" href="index.php">Cancel</a>
-                  </p>
-                  </form>
+            <div class="form-group">
+              <label for="tkt_name">Ticket Name</label>
+              <input class="form-control" type="text" name="tkt_name" id="tkt_name" maxlength="45">
+            </div>
 
-              <?php }else {  ?>
+            <?php if (is_logged_in()) { ?>
 
-                <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket" id="create_ticket">
-                  <input type="hidden" name="tkt_id" value="">
-                  <div class="form-group">
-                    <label for="tkt_name">Ticket Name</label>
-                    <input class="form-control" type="text" name="tkt_name" id="tkt_name" maxlength="45">
-                  </div>
-                  <input type="hidden" name="tkt_priority" value="normal">
-                  <div class="form-group">
-                    <label for="tkt_desc">Description:</label>
-                    <textarea class="form-control" name="tkt_desc"></textarea>
-                  </div>
-                  <p><input type="submit" name="submit_tkt" id="submit_tkt"value="Submit">
-                <a href="index.php">Cancel</a>
-              </p>
-                </form>
-          <?php  } ?>
+              <div class="form-group">
+                <label for="tkt_priority">Ticket Priority</label>
+                <select class="form-control" name="tkt_priority">
+                  <option value="high">High</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
 
+            <?php } ?>
 
-              </div> <!--.entry-content -->
-           </article>
-        </div> <!--.row -->
-      </div> <!-- #content -->
-    </div> <!-- #primary -->
+            <div class="form-group">
+              <label for="tkt_desc">Description</label>
+              <textarea class="form-control" name="tkt_desc"></textarea>
+            </div>
 
-
-
+            <p>
+              <input class="btn btn-primary" type="submit" value="Submit">
+              <a class="btn btn-default" href="index.php">Cancel</a>
+            </p>
+          </form>
+        </div> <!--.entry-content -->
+      </article>
+    </div> <!--.row -->
+  </div> <!-- #content -->
+</div> <!-- #primary -->
 
 <?php include_once('footer.php'); ?>
-
