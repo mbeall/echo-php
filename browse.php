@@ -21,9 +21,9 @@ $_status   = !empty( $_POST['_status'  ]) ? _text($_POST['_status'  ]) : 'open';
 
 $filter  = null;
 $filter .= !empty($_search)   ? " AND (tkt_name LIKE '%$_search%' OR tkt_desc LIKE '%$_search%')" : null;
-$filter .= !empty($_tag_id)   ? " AND tag_id       = $_tag_id"                                    : null;
-$filter .= !empty($_priority) ? " AND tkt_priority = '$_priority'"                                : null;
-$filter .= !empty($_status)   ? " AND tkt_status   = '$_status'"                                  : null;
+$filter .= !empty($_tag_id)   ? " AND ticket_tags.tag_id = $_tag_id"                              : null;
+$filter .= !empty($_priority) ? " AND tkt_priority       = '$_priority'"                          : null;
+$filter .= !empty($_status)   ? " AND tkt_status         = '$_status'"                            : null;
 ?>
 
 <div id="primary" class="content-area container">
@@ -111,7 +111,10 @@ $filter .= !empty($_status)   ? " AND tkt_status   = '$_status'"                
     </div><!-- .row -->
 
     <?php
-      $tickets = get_tickets($filter);
+      if (!empty($_tag_id))
+        $tickets = get_tickets($filter, true);
+      else
+        $tickets = get_tickets($filter);
       echo '<p class="small text-muted" style="float:right;">' . count($tickets) . ' results</p>';
 
       foreach ($tickets as $ticket) {
