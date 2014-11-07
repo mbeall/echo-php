@@ -35,30 +35,31 @@ if(!empty($u_login_name) && !empty($u_pass) && !empty($u_email)) {
 
             <div class="entry-content">
 
-            <form role="form" action="register.php" method="post">
-              <div class="form-group">
-                <label for="u_login_name">Username</label>
-                <input type="text" class="form-control" id="u_login_name" name="u_login_name" required>
-              </div>
-              <div class="form-group">
-                <label for="u_pass">Password</label>
-                <input type="password" class="form-control" id="u_pass" name="u_pass" required>
-              </div>
-              <div class="form-group">
-                <label for="u_first">First Name</label>
-                <input type="text" class="form-control" id="u_first" name="u_first">
-              </div>
-              <div class="form-group">
-                <label for="u_last">Last Name</label>
-                <input type="text" class="form-control" id="u_last" name="u_last">
-              </div>
-              <div class="form-group">
-                <label for="u_email">Email address</label>
-                <input type="email" class="form-control" id="u_email" name="u_email" required>
-              </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-default">Reset</button>
-            </form>
+              <form role="form" action="register.php" method="post">
+                <div class="form-group">
+                  <label for="u_login_name">Username</label>
+                  <input type="text" class="form-control" id="u_login_name" name="u_login_name" required>
+                </div>
+                <div class="form-group">
+                  <label for="u_pass">Password</label>
+                  <input type="password" class="form-control" id="u_pass" name="u_pass" required>
+                </div>
+                <div class="form-group">
+                  <label for="u_first">First Name</label>
+                  <input type="text" class="form-control" id="u_first" name="u_first">
+                </div>
+                <div class="form-group">
+                  <label for="u_last">Last Name</label>
+                  <input type="text" class="form-control" id="u_last" name="u_last">
+                </div>
+                <div class="form-group">
+                  <label for="u_email">Email address</label>
+                  <input type="email" class="form-control" id="u_email" name="u_email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+              </form>
+
             </div><!-- .entry-content -->
           </article>
         </div><!-- .row -->

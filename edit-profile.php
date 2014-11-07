@@ -13,13 +13,21 @@
 global $the_title;
 $the_title='Edit Profile';
 include_once ('header.php');
+
 global $user;
-$u_id=(int)$_REQUEST['profile'];
-$user=get_user($u_id);
-$u_first=get_user_first($user);
-$u_last=get_user_last($user);
-$u_email=get_user_email($user);
-$u_login_name=get_user_login_name($user);?>
+$u_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['u_id'];
+$user = get_user($u_id);
+
+$u_login_name = get_user_login_name($user);
+$u_pass       = !empty($_POST['u_pass'])  ? $_POST['u_pass']  : null;
+$u_first      =  isset($_POST['u_first']) ? $_POST['u_first'] : get_user_first($user);
+$u_last       =  isset($_POST['u_last'])  ? $_POST['u_last']  : get_user_last($user);
+$u_email      = !empty($_POST['u_email']) ? $_POST['u_email'] : get_user_email($user);
+
+if(isset($_POST['u_first']) || isset($_POST['u_last']) || !empty($_POST['u_email']) || !empty($_POST['u_pass']) ) {
+  update_user($u_id, $u_email, $u_login_name, $u_pass, $u_first, $u_last);
+}
+?>
 
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -31,42 +39,33 @@ $u_login_name=get_user_login_name($user);?>
 
             <div class="entry-content">
 
-<form class="col-xs-6" name ="addEditForm" id="addEditForm" action="edit-profile.php" method="post" onsubmit="return checkForm(this)">
+              <form role="form" action="edit-profile.php" method="post">
+                <input type="hidden" value="<?php echo $u_id; ?>">
+                <div class="form-group">
+                  <label for="u_login_name">Username</label>
+                  <p class="text-muted" id="u_login_name"><?php echo $u_login_name; ?></p>
+                </div>
+                <div class="form-group">
+                  <label for="u_pass">Password</label>
+                  <input type="password" class="form-control" id="u_pass" name="u_pass">
+                </div>
+                <div class="form-group">
+                  <label for="u_first">First Name</label>
+                  <input type="text" class="form-control" id="u_first" name="u_first" value="<?php echo $u_first; ?>">
+                </div>
+                <div class="form-group">
+                  <label for="u_last">Last Name</label>
+                  <input type="text" class="form-control" id="u_last" name="u_last" value="<?php echo $u_last; ?>">
+                </div>
+                <div class="form-group">
+                  <label for="u_email">Email address</label>
+                  <input type="email" class="form-control" id="u_email" name="u_email" value="<?php echo $u_email; ?>" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+              </form>
 
-<?php
-    if ($editmode)
-    {
-        echo '<input type="hidden" name="u_id" value="' . $u_id . '" />';
-    }
-?>
-
- <div class="form-group">
-<label for="userlogin">Username:</label>
-   <span><?php echo $u_login_name; ?></span>
-   <div class="form-group">
-  <label for="userpassword">Password:</label>
-   <input type="password" name="u_pass" id="userpassword" value="<?php echo $u_pass; ?>" class="ten" maxlength="10" required="required" pattern="^[\w@\.-]+$" title="Valid characters are a-z 0-9 _ . @ -" /></div>
-    <div class="form-group">
-  <label for="firstname">First Name:</label>
-   <input type="text" name="u_first" id ="firstname" value="<?php echo $u_first; ?>" maxlength="20" class="twenty" required="required" pattern="^[a-zA-Z-]+$" title="First Name has invalid characters" /></div>
-    <div class="form-group">
-  <label for="lastname">Last Name:</label>
-   <input type="text" name="u_last" id ="lastname" value="<?php echo $u_last; ?>" maxlength="20" class="twenty" required="required" pattern="^[a-zA-Z-]+$" title="Last Name has invalid characters" /></div>
-    <div class="form-group">
-  <label for="email">Email:</label>
-   <input type="text" name="u_email" id ="email" value="<?php echo $u_email; ?>" maxlength="50" class="twenty" required="required" pattern="^[\w-\.]+@[\w]+\.[a-zA-Z]{2,4}$" title="Enter a valid email" /></div>
-    <div class="form-group">
-
-   <p>
-     <input type="submit" value="Submit Changes" />
-     <a href="profile.php">Cancel</a>
-   </p>
-
-</form>
-
-
-
- </div><!-- .entry-content -->
+            </div><!-- .entry-content -->
           </article>
         </div><!-- .row -->
       </div><!-- #content -->

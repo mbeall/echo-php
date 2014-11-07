@@ -16,12 +16,12 @@ global $the_title;
 $the_title='Profile';
 include_once ('header.php');
 global $user;
-$u_id=(int)$_REQUEST['profile'];
+$u_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['u_id'];
 $user=get_user($u_id);
 $u_first=get_user_first($user);
 $u_last=get_user_last($user);
 $u_email=get_user_email($user);
-$u_login_name=get_user_login_name($user);?>
+$u_login_name=get_user_login_name($user); ?>
 
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -33,23 +33,19 @@ $u_login_name=get_user_login_name($user);?>
 
             <div class="entry-content">
 
-<section>
-  <h1>My Profile</h1>
-    <?php echo "$u_first $u_last"; ?><br />
-    <?php echo "$u_login_name"; ?>
-  <h1>My Contact Info</h1>
-        <h5>Email:<?php echo "$u_email"; ?></h5>
-</section>
+              <h2><?php echo "$u_login_name"; ?></h2>
+              <p><strong>Name</strong>: <?php echo "$u_first $u_last"; ?></p>
+              <p><strong>Email</strong>: <?php echo "$u_email"; ?></p>
 
 
-<FORM method="post" action="edit-profile.php">
-<p>
-  <input type="hidden" name="profile" value="<?php echo $user->u_id; ?>">
-  <input type="submit"  value="Edit Profile" name="edit-profile" />
-</p>
-</FORM>
+              <form method="post" action="edit-profile.php">
+                <p>
+                  <input type="hidden" name="profile" value="<?php echo $user->u_id; ?>">
+                  <input class="btn btn-default" type="submit"  value="Edit Profile" name="edit-profile" />
+                </p>
+              </form>
 
- </div><!-- .entry-content -->
+            </div><!-- .entry-content -->
           </article>
         </div><!-- .row -->
       </div><!-- #content -->
