@@ -80,7 +80,7 @@ if (!empty($the_type)) {
           <ul id="menu-top" class="nav navbar-nav navbar-right">
             <li><a href="about.php">About</a></li>
             <li><a href="contact.php">Contact Us</a></li>
-            <li><a href="list.php">Browse</a></li>
+            <li><a href="browse.php">Browse</a></li>
             <li><a href="create-ticket.php">Submit Ticket</a></li>
       <?php if (is_logged_in()) { ?>
       <li><a href="login.php?logout=1">Logout</a></li>

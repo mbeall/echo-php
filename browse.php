@@ -29,7 +29,7 @@ $filter .= !empty($_status)   ? " AND tkt_status   = '$_status'"                
 <div id="primary" class="content-area container">
   <div id="content" class="site-content tickets col-lg-12 col-md-12" role="main">
     <div class="row">
-      <form class="form-inline" role="form" method="post" action="list.php">
+      <form class="form-inline" role="form" method="post" action="browse.php">
         <div class="form-group">
           <label class="sr-only" for="_search">Keyword search</label>
           <input type="text" class="form-control" id="_search" name="_search" placeholder="Search" value="<?php echo $_search; ?>">

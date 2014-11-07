@@ -124,7 +124,7 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
 
               <p>
                 <input class="btn btn-primary" type="submit" value="Submit">
-                <a class="btn btn-default" href="list.php">Browse</a>
+                <a class="btn btn-default" href="browse.php">Browse</a>
               </p>
             </form><?php
           }
