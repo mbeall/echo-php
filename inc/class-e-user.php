@@ -96,7 +96,9 @@ class E_User {
     global $edb;
     $conn = $edb->connect();
     try {
+
       $query = $conn->query($query);
+
       do {
         if ($query->columnCount() > 0) {
             $results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -187,7 +189,7 @@ class E_User {
       }
       else {
         $edb->insert( 'registered_users', 'u_id,u_first,u_last,u_email,u_login_name,u_pass', "$u_id,'$u_first','$u_last','$u_email','$u_login_name','$u_pass'" );
-        header("Location: login.php?new=1");
+        echo '<META HTTP-EQUIV="Refresh" Content="0; URL=login.php?success">';
         exit;
       }
     }
@@ -233,8 +235,17 @@ class E_User {
     $u_admin      = !empty($u_admin)   ? (int) $u_admin   : (int) $_user->u_admin;
     $u_visible    = !empty($u_visible) ? (int) $u_visible : (int) $_user->u_visible;
 
-    $edb->update('users', 'u_admin,u_visible', "$u_admin, $u_visible", "users.u_id = $u_id" );
-    $edb->update('registered_users', 'u_email, u_login_name, u_pass, u_first, u_last', "$u_email, $u_login_name, $u_pass, $u_first, $u_last", "users.u_id = $u_id" );
+    if (!empty($u_id)) {
+      if ($u_email != $_user->u_email && self::email_exists( $u_email )) {
+        echo '<div class="alert alert-danger">An account with this email address already exists.</div>';
+      }
+      else {
+        $edb->update('users', "u_admin = $u_admin, u_visible = $u_visible", "users.u_id = $u_id" );
+        $edb->update('registered_users', "u_email = '$u_email', u_login_name = '$u_login_name', u_pass = '$u_pass', u_first = '$u_first', u_last = '$u_last'", "u_id = $u_id" );
+        echo '<META HTTP-EQUIV="Refresh" Content="0; URL=profile.php?success">';
+        exit;
+      }
+    }
   }
 
   /**
@@ -529,14 +540,14 @@ function login_user( $username, $password ) {
   $u_id = E_User::authenticate_user($u_login_name, $u_pass);
   $u_id = (int) $u_id;
   if ($u_id > 0) {
-    $_SESSION['u_id'] = $u_id;
-  $_SESSION['u_login_name'] = $u_login_name;
+    $_SESSION['u_id']         = $u_id;
+    $_SESSION['u_login_name'] = $u_login_name;
 
-    header("Location: profile.php?profile=$u_id");
+    echo '<META HTTP-EQUIV="Refresh" Content="0; URL=profile.php?profile='.$u_id.'">';
     exit;
   }
   else {
-    header("Location: login.php?invalid=1");
+    echo '<META HTTP-EQUIV="Refresh" Content="0; URL=login.php?invalid">';
     exit;
   }
 }

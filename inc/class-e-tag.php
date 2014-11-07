@@ -188,7 +188,7 @@ class E_Tag {
     $tag_bg      = !empty($tag_bg)    ? _hexadec($tag_bg)      : $_tag->tag_bg;
     $tag_visible = !empty($tag_bg)    ? (int) $tag_visible     : $_tag->tag_visible;
 
-    $edb->update('tags', 'tag_name,tag_color,tag_bg,tag_visible', "'$tag_name', '#$tag_color', '#$tag_bg', $tag_visible", "tag_id = $tag_id" );
+    $edb->update('tags', "tag_name = '$tag_name', tag_color = '#$tag_color', tag_bg = '#$tag_bg', tag_visible = $tag_visible", "tag_id = $tag_id" );
   }
 }
 

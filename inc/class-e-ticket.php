@@ -98,10 +98,6 @@ class E_Ticket {
 
       $conn = null;
 
-            echo '<pre>';
-      print_r($results);
-      echo '</pre>';
-
       return $results;
     }
     catch (PDOException $e) {
@@ -189,13 +185,15 @@ class E_Ticket {
   public static function set_instance( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null, $tkt_visible = null ) {
     global $edb;
 
+    $_ticket = self::get_instance($tkt_id);
+
     $tkt_name     = !empty($tkt_name)     ? _text( $tkt_name    , 45 ) : $_ticket->tkt_name;
     $tkt_desc     = !empty($tkt_desc)     ? _text( $tkt_desc         ) : $_ticket->tkt_desc;
     $tkt_priority = !empty($tkt_priority) ? _text( $tkt_priority, 8  ) : $_ticket->tkt_priority;
     $tkt_status   = !empty($tkt_status)   ? _text( $tkt_status  , 8  ) : $_ticket->tkt_status;
     $tkt_visible  = !empty($tkt_visible)  ? (int) $tkt_visible         : (int) $_ticket->tkt_visible;
 
-    $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_priority,tkt_status', "'$tkt_name', '$tkt_desc', '$tkt_priority', '$tkt_status', $tkt_visible" );
+    $edb->update('tickets', "tkt_name = '$tkt_name', tkt_desc = '$tkt_desc', tkt_priority = '$tkt_priority', tkt_status = '$tkt_status'", "tkt_id = $tkt_id" );
   }
 }
 
@@ -231,7 +229,7 @@ function create_ticket( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_sta
  * @param int    $tkt_visible  If 0, then ticket is "deleted", otherwise ticket is visible.
  */
 function update_ticket( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null, $tkt_visible = null ) {
-  $ticket = E_Ticket::set_instance( $tkt_name, $tkt_desc, $tkt_priority, $tkt_status, $tkt_visible );
+  $ticket = E_Ticket::set_instance( $tkt_id, $tkt_name, $tkt_desc, $tkt_priority, $tkt_status, $tkt_visible );
   return $ticket;
 }
 
