@@ -18,6 +18,8 @@
   "rule-indent": 2,
   "stick-brace": " ",
   "strip-spaces": true,
+  "space-before-opening-brace": " ",
+  "space-before-closing-brace": "\n",
   "unitless-zero": true,
   "vendor-prefix-align": true,
   "sort-order": [
