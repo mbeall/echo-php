@@ -106,8 +106,8 @@ function is_admin() {
  * @var    int         $len The length of $str
  */
 function _hexadec( $string ) {
-  $new = preg_replace( '[^0-9a-f]', '', strtolower($string) );
-  $len = strlen($str);
+  $new = preg_replace( '/#/', '', preg_replace( '[^0-9a-f]', '', strtolower($string) ) );
+  $len = strlen($new);
 
   if ($len == 6 | $len == 3)
     return $new;
@@ -168,6 +168,27 @@ function _email( $email, $length = 0 ) {
 /** @since 0.0.8 */
 function get_tickets( $match = NULL, $join = false, $args = array() ) {
   global $edb;
+
+  /**
+   * Default parameters for select statement
+   *
+   * @param string $groupby Group by expression
+   * @param string $having  Search condition for group
+   * @param string $orderby Order expression
+   * @param string $order   Ascending or descending ('ASC' or 'DESC')
+   */
+  $defaults = array(
+    'groupby' => '',
+    'having'  => '',
+    'orderby' => 'tkt_priority',
+    'order'   => 'DESC',
+  );
+
+  /**
+   * Parse connection arguments
+   */
+  $args = array_merge( $defaults, $args );
+
   $match = !empty($match) ? "tkt_visible = 1" . $match : "tkt_status = 'open' AND tkt_visible = 1";
   if ($join) {
     $results = $edb->select( 'tickets LEFT JOIN ticket_tags ON tickets.tkt_id = ticket_tags.tkt_id', '*', $match, $args );
