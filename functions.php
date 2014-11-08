@@ -65,33 +65,6 @@ function is_logged_in() {
 }
 
 /**
- * Check to see if the moderator is logged in as an administrator
- *
- * @since 0.0.3
- *
- * @uses is_logged_in()  Check to see if anyone is even logged in
- * @uses is_moderator_admin() Check to see if the moderator logged in is an admin
- *
- * @return bool
- * @var    int    $mod_id  The ID of the moderator logged in
- * @var    object $_moderator The moderator object with the ID of the moderator logged in
- */
-function is_admin() {
-  if (is_logged_in()) {
-    $mod_id = (int) $_SESSION['mod_id'];
-    $_moderator = get_moderator($mod_id);
-
-    if (is_moderator_admin($_moderator))
-      return true;
-    else
-      return false;
-  }
-  else {
-    return false;
-  }
-}
-
-/**
  * Sanitize input to hexadecimal value
  *
  * First, checks to make sure that string only contains 0-9 and lowercase a-f.

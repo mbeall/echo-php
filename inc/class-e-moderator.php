@@ -26,11 +26,6 @@ class E_Moderator {
   public $mod_ip = '';
 
   /**
-   * @var int $mod_admin If 1, moderator is admin; else, moderator is not admin.
-   */
-  public $mod_admin = 0;
-
-  /**
    * @var string $mod_first The first name of the moderator
    */
   public $mod_first = '';
@@ -170,9 +165,8 @@ class E_Moderator {
     $mod_first      = _text ( $mod_first     , 32 );
     $mod_last       = _text ( $mod_last      , 32 );
     $mod_ip         = $_SERVER['REMOTE_ADDR'];
-    $mod_admin      = 0;
 
-    $edb->insert('moderators', 'mod_ip,mod_admin', "'$mod_ip', $mod_admin" );
+    $edb->insert('moderators', 'mod_ip', "'$mod_ip'" );
     $mod_id = (int) self::get_moderator_id( $mod_ip );
     if (!empty($mod_id)) {
       if (self::login_name_exists( $mod_login_name )) {
@@ -204,7 +198,6 @@ class E_Moderator {
    * @param string $mod_pass       The password for the moderator
    * @param string $mod_first      The first name of the moderator
    * @param string $mod_last       The last name of the moderator
-   * @param int    $mod_admin      If 1, moderator is admin; else, moderator is not admin.
    *
    * @return void
    *
@@ -212,7 +205,7 @@ class E_Moderator {
    *
    * @todo Test
    */
-  public static function set_instance( $mod_id, $mod_email, $mod_login_name, $mod_pass, $mod_first = null, $mod_last = null, $mod_admin = 0 ) {
+  public static function set_instance( $mod_id, $mod_email, $mod_login_name, $mod_pass, $mod_first = null, $mod_last = null ) {
     global $edb;
 
     $mod_id = (int) $mod_id;
@@ -225,14 +218,11 @@ class E_Moderator {
     $mod_first      = !empty($mod_first)      ? _text ( $mod_first     , 32 ) : $_moderator->mod_first;
     $mod_last       = !empty($mod_last)       ? _text ( $mod_last      , 32 ) : $_moderator->mod_last;
 
-    $mod_admin      = !empty($mod_admin)   ? (int) $mod_admin   : (int) $_moderator->mod_admin;
-
     if (!empty($mod_id)) {
       if ($mod_email != $_moderator->mod_email && self::email_exists( $mod_email )) {
         echo '<div class="alert alert-danger">An account with this email address already exists.</div>';
       }
       else {
-        $edb->update('moderators', "mod_admin = $mod_admin", "mod_id = $mod_id" );
         $edb->update('moderators', "mod_email = '$mod_email', mod_login_name = '$mod_login_name', mod_pass = '$mod_pass', mod_first = '$mod_first', mod_last = '$mod_last'", "mod_id = $mod_id" );
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL=profile.php?success">';
         exit;
@@ -361,10 +351,9 @@ function create_moderator( $mod_email, $mod_login_name, $mod_pass, $mod_first = 
  * @param string $mod_pass       The password for the moderator
  * @param string $mod_first      The first name of the moderator
  * @param string $mod_last       The last name of the moderator
- * @param int    $mod_admin      If 1, moderator is admin; else, moderator is not admin.
  */
-function update_moderator( $mod_id, $mod_email = null, $mod_pass = null, $mod_first = null, $mod_last = null, $mod_admin = null ) {
-  $moderator = E_Moderator::set_instance( $mod_id, $mod_email, $mod_pass, $mod_first, $mod_last, $mod_admin );
+function update_moderator( $mod_id, $mod_email = null, $mod_pass = null, $mod_first = null, $mod_last = null ) {
+  $moderator = E_Moderator::set_instance( $mod_id, $mod_email, $mod_pass, $mod_first, $mod_last );
   return $moderator;
 }
 
@@ -479,27 +468,6 @@ function get_moderator_login_name( $moderator ) {
 function get_moderator_email( $moderator ) {
   $mod_email = get_moderator_data( $moderator , 'mod_email' );
   return $mod_email;
-}
-
-/**
- * Check if the moderator is an admin moderator
- *
- * @since 0.0.4
- *
- * @uses get_moderator_data()
- *
- * @param  object $moderator    The E_Moderator class containing the data for the moderator
- * @return bool
- * @var    int    $mod_admin If 1, moderator is admin; else, moderator is not admin.
- */
-function is_moderator_admin( $moderator ) {
-  $mod_admin = get_moderator_data( $moderator , 'mod_admin' );
-  $mod_admin = (int) $mod_admin;
-
-  if ($mod_admin == 1)
-    return true;
-  else
-    return false;
 }
 
 /** @since 0.1.1 */
