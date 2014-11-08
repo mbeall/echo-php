@@ -438,8 +438,8 @@ function login_moderator( $login_name, $password ) {
 }
 
 function logout_moderator() {
-session_start();
-unset($_SESSION['mod_id']);
-unset($_SESSION['mod_login_name']);
-session_destroy();
+  session_start();
+  unset($_SESSION['mod_id']);
+  unset($_SESSION['mod_login_name']);
+  session_destroy();
 }
