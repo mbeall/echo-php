@@ -21,11 +21,6 @@ class E_Moderator {
   public $mod_id;
 
   /**
-   * @var string $mod_ip The IP address of the moderator
-   */
-  public $mod_ip = '';
-
-  /**
    * @var string $mod_first The first name of the moderator
    */
   public $mod_first = '';
@@ -164,22 +159,17 @@ class E_Moderator {
     $mod_pass       = _text ( $mod_pass      , 32 );
     $mod_first      = _text ( $mod_first     , 32 );
     $mod_last       = _text ( $mod_last      , 32 );
-    $mod_ip         = $_SERVER['REMOTE_ADDR'];
 
-    $edb->insert('moderators', 'mod_ip', "'$mod_ip'" );
-    $mod_id = (int) self::get_moderator_id( $mod_ip );
-    if (!empty($mod_id)) {
-      if (self::login_name_exists( $mod_login_name )) {
-        echo '<div class="alert alert-danger"><strong>Username unavailable.</strong> Please enter a different username.</div>';
-      }
-      elseif (self::email_exists( $mod_email )) {
-        echo '<div class="alert alert-danger">An account with this email address already exists.</div>';
-      }
-      else {
-        $edb->insert( 'moderators', 'mod_id,mod_first,mod_last,mod_email,mod_login_name,mod_pass', "$mod_id,'$mod_first','$mod_last','$mod_email','$mod_login_name','$mod_pass'" );
-        echo '<META HTTP-EQUIV="Refresh" Content="0; URL=login.php?success">';
-        exit;
-      }
+    if (self::login_name_exists( $mod_login_name )) {
+      echo '<div class="alert alert-danger"><strong>Username unavailable.</strong> Please enter a different username.</div>';
+    }
+    elseif (self::email_exists( $mod_email )) {
+      echo '<div class="alert alert-danger">An account with this email address already exists.</div>';
+    }
+    else {
+      $edb->insert( 'moderators', 'mod_id,mod_first,mod_last,mod_email,mod_login_name,mod_pass', "$mod_id,'$mod_first','$mod_last','$mod_email','$mod_login_name','$mod_pass'" );
+      echo '<META HTTP-EQUIV="Refresh" Content="0; URL=login.php?success">';
+      exit;
     }
   }
 
@@ -271,38 +261,11 @@ class E_Moderator {
   }
 
   /**
-   * Retrieve moderator's id that matches an IP address
+   * Authenticate moderator attempting to login
    *
    * @since 0.0.1
    *
    * @uses self::query() to query the database
-   *
-   * @param  string     $mod_ip  The IP address to check for
-   * @return int               The ID of the moderator
-   * @var    object     $moderators The moderator(s), if any, that have the IP address
-   */
-  private static function get_moderator_id( $mod_ip ) {
-    global $edb;
-    $moderators = self::query("SELECT * FROM moderators WHERE mod_ip = '$mod_ip' ORDER BY mod_id DESC LIMIT 1");
-    foreach ( $moderators as $moderator ) {
-        get_class($moderator);
-        foreach ( $moderator as $key => $value )
-          $key = $value;
-    }
-    $mod_id = (int) $moderator->mod_id;
-    return $mod_id;
-  }
-
-  /**
-   * Retrieve moderator's id that matches an IP address
-   *
-   * @since 0.0.1
-   *
-   * @uses self::query() to query the database
-   *
-   * @param  string     $mod_ip  The IP address to check for
-   * @return int               The ID of the moderator
-   * @var    object     $moderators The moderator(s), if any, that have the IP address
    */
   public static function authenticate_moderator( $mod_login_name, $mod_pass ) {
     global $edb;
@@ -388,22 +351,6 @@ function get_moderator_data( $moderator, $key ) {
   else
     echo 'ERROR: There is no data in the moderator object.';
     die;
-}
-
-/**
- * Get the IP address of the moderator
- *
- * @since 0.0.1
- *
- * @uses get_moderator_data()
- *
- * @param  object $moderator The E_Moderator class containing the data for the moderator
- * @return string       The IP address of the moderator
- * @var    string $mod_ip The IP address of the moderator
- */
-function get_moderator_ip( $moderator ) {
-  $mod_ip = get_moderator_data( $moderator , 'mod_ip' );
-  return $mod_ip;
 }
 
 /**
