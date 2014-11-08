@@ -2,7 +2,7 @@
 /**
  * Register page
  *
- * Allows users to register
+ * Allows moderators to register
  *
  * @author Hannah Turner
  * @since 0.1.1
@@ -14,14 +14,14 @@ global $the_title;
 $the_title='User Registration';
 include_once ('header.php');
 
-$u_login_name = !empty($_POST['u_login_name']) ? $_POST['u_login_name'] : null;
-$u_pass = !empty($_POST['u_pass']) ? $_POST['u_pass'] : null;
-$u_first = !empty($_POST['u_first']) ? $_POST['u_first'] : null;
-$u_last = !empty($_POST['u_last']) ? $_POST['u_last'] : null;
-$u_email = !empty($_POST['u_email']) ? $_POST['u_email'] : null;
+$mod_login_name = !empty($_POST['mod_login_name']) ? $_POST['mod_login_name'] : null;
+$mod_pass = !empty($_POST['mod_pass']) ? $_POST['mod_pass'] : null;
+$mod_first = !empty($_POST['mod_first']) ? $_POST['mod_first'] : null;
+$mod_last = !empty($_POST['mod_last']) ? $_POST['mod_last'] : null;
+$mod_email = !empty($_POST['mod_email']) ? $_POST['mod_email'] : null;
 
-if(!empty($u_login_name) && !empty($u_pass) && !empty($u_email)) {
-  create_user($u_email, $u_login_name, $u_pass, $u_first, $u_last);
+if(!empty($mod_login_name) && !empty($mod_pass) && !empty($mod_email)) {
+  create_moderator($mod_email, $mod_login_name, $mod_pass, $mod_first, $mod_last);
 }
 ?>
 
@@ -37,24 +37,24 @@ if(!empty($u_login_name) && !empty($u_pass) && !empty($u_email)) {
 
               <form role="form" action="register.php" method="post">
                 <div class="form-group">
-                  <label for="u_login_name">Username</label>
-                  <input type="text" class="form-control" id="u_login_name" name="u_login_name" required>
+                  <label for="mod_login_name">Username</label>
+                  <input type="text" class="form-control" id="mod_login_name" name="mod_login_name" required>
                 </div>
                 <div class="form-group">
-                  <label for="u_pass">Password</label>
-                  <input type="password" class="form-control" id="u_pass" name="u_pass" required>
+                  <label for="mod_pass">Password</label>
+                  <input type="password" class="form-control" id="mod_pass" name="mod_pass" required>
                 </div>
                 <div class="form-group">
-                  <label for="u_first">First Name</label>
-                  <input type="text" class="form-control" id="u_first" name="u_first">
+                  <label for="mod_first">First Name</label>
+                  <input type="text" class="form-control" id="mod_first" name="mod_first">
                 </div>
                 <div class="form-group">
-                  <label for="u_last">Last Name</label>
-                  <input type="text" class="form-control" id="u_last" name="u_last">
+                  <label for="mod_last">Last Name</label>
+                  <input type="text" class="form-control" id="mod_last" name="mod_last">
                 </div>
                 <div class="form-group">
-                  <label for="u_email">Email address</label>
-                  <input type="email" class="form-control" id="u_email" name="u_email" required>
+                  <label for="mod_email">Email address</label>
+                  <input type="email" class="form-control" id="mod_email" name="mod_email" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>

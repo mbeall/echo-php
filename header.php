@@ -15,7 +15,7 @@ session_regenerate_id();
 include_once('inc/class-edb.php');
 include_once('inc/class-e-tag.php');
 include_once('inc/class-e-ticket.php');
-include_once('inc/class-e-user.php');
+include_once('inc/class-e-moderator.php');
 include_once('functions.php');
 
 $edb = new edb;
@@ -25,15 +25,15 @@ global $the_type;
 
 if (!empty($the_type)) {
   switch ($the_type) {
-    case 'user':
-      global $user;
+    case 'moderator':
+      global $moderator;
       if (!empty($_REQUEST['u'])) {
         $u = (int) $_REQUEST['u'];
-        $user = get_user( $u );
+        $moderator = get_moderator( $u );
       }
       else {
         $u = 0;
-        $user = null;
+        $moderator = null;
       }
       break;
 

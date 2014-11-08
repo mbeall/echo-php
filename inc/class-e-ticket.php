@@ -18,9 +18,9 @@
 class E_Ticket {
 
   /**
-   * @var int $u_id The ID of the user who created the ticket
+   * @var int $mod_id The ID of the moderator who created the ticket
    */
-  public $u_id;
+  public $mod_id;
 
   /**
    * @var int $tkt_id The ID of the ticket

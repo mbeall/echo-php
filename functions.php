@@ -8,24 +8,24 @@
  */
 
 /**
- * Checks to see if a particular user is logged in
+ * Checks to see if a particular moderator is logged in
  *
  * @since 0.0.3
  *
- * @uses get_user_data() Gets ID of user object
+ * @uses get_moderator_data() Gets ID of moderator object
  * @uses is_logged_in() Checks to see if anyone is logged in
  *
- * @param object $_user The user to check against
+ * @param object $_moderator The moderator to check against
  * @return bool
- * @var int $u_id The ID of the user object
- * @var int $u_id    The ID of the user logged in
+ * @var int $mod_id The ID of the moderator object
+ * @var int $mod_id    The ID of the moderator logged in
  */
-function is_user_logged_in( $_user ) {
+function is_moderator_logged_in( $_moderator ) {
   if (is_logged_in()) {
-    $u_id = !empty($_user) ? get_user_data( $_user , 'u_id' ) : 0;
-    $u_id    = (int) $_SESSION['u_id'];
+    $mod_id = !empty($_moderator) ? get_moderator_data( $_moderator , 'mod_id' ) : 0;
+    $mod_id    = (int) $_SESSION['mod_id'];
 
-    if ($u_id == $u_id)
+    if ($mod_id == $mod_id)
       return true;
     else
       return false;
@@ -40,21 +40,21 @@ function is_user_logged_in( $_user ) {
  *
  * @since 0.0.3
  *
- * @uses get_user() Gets user object to make sure user actually exists
+ * @uses get_moderator() Gets moderator object to make sure moderator actually exists
  *
  * @return bool
- * @var    int    $u_id  The ID of the user logged in
- * @var    object $_user The user object with the ID of the user logged in
+ * @var    int    $mod_id  The ID of the moderator logged in
+ * @var    object $_moderator The moderator object with the ID of the moderator logged in
  *
  * @todo Do additional checks besides just if the id exists
  */
 function is_logged_in() {
-  if (!empty($_SESSION['u_id'])) {
+  if (!empty($_SESSION['mod_id'])) {
     global $edb;
-    $u_id = (int) $_SESSION['u_id'];
-    $_user = get_user($u_id);
+    $mod_id = (int) $_SESSION['mod_id'];
+    $_moderator = get_moderator($mod_id);
 
-    if (!empty($_user))
+    if (!empty($_moderator))
       return true;
     else
       return false;
@@ -65,23 +65,23 @@ function is_logged_in() {
 }
 
 /**
- * Check to see if the user is logged in as an administrator
+ * Check to see if the moderator is logged in as an administrator
  *
  * @since 0.0.3
  *
  * @uses is_logged_in()  Check to see if anyone is even logged in
- * @uses is_user_admin() Check to see if the user logged in is an admin
+ * @uses is_moderator_admin() Check to see if the moderator logged in is an admin
  *
  * @return bool
- * @var    int    $u_id  The ID of the user logged in
- * @var    object $_user The user object with the ID of the user logged in
+ * @var    int    $mod_id  The ID of the moderator logged in
+ * @var    object $_moderator The moderator object with the ID of the moderator logged in
  */
 function is_admin() {
   if (is_logged_in()) {
-    $u_id = (int) $_SESSION['u_id'];
-    $_user = get_user($u_id);
+    $mod_id = (int) $_SESSION['mod_id'];
+    $_moderator = get_moderator($mod_id);
 
-    if (is_user_admin($_user))
+    if (is_moderator_admin($_moderator))
       return true;
     else
       return false;

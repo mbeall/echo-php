@@ -2,9 +2,9 @@
 /**
  * Profile page
  *
- * If logged in, this page allows user to edit own information.
- * If not logged in, or different user from current profile,
- * this page displays public information for a particular user.
+ * If logged in, this page allows moderator to edit own information.
+ * If not logged in, or different moderator from current profile,
+ * this page displays public information for a particular moderator.
  *
  * @author Hannah Turner
  * @since 0.1.0
@@ -15,13 +15,13 @@
 global $the_title;
 $the_title='Profile';
 include_once ('header.php');
-global $user;
-$u_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['u_id'];
-$user=get_user($u_id);
-$u_first=get_user_first($user);
-$u_last=get_user_last($user);
-$u_email=get_user_email($user);
-$u_login_name=get_user_login_name($user); ?>
+global $moderator;
+$mod_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['mod_id'];
+$moderator=get_moderator($mod_id);
+$mod_first=get_moderator_first($moderator);
+$mod_last=get_moderator_last($moderator);
+$mod_email=get_moderator_email($moderator);
+$mod_login_name=get_moderator_login_name($moderator); ?>
 
 <div id="primary" class="content-area container">
       <div id="content" class="site-content col-lg-12 col-md-12" role="main">
@@ -33,14 +33,14 @@ $u_login_name=get_user_login_name($user); ?>
 
             <div class="entry-content">
 
-              <h2><?php echo "$u_login_name"; ?></h2>
-              <p><strong>Name</strong>: <?php echo "$u_first $u_last"; ?></p>
-              <p><strong>Email</strong>: <?php echo "$u_email"; ?></p>
+              <h2><?php echo "$mod_login_name"; ?></h2>
+              <p><strong>Name</strong>: <?php echo "$mod_first $mod_last"; ?></p>
+              <p><strong>Email</strong>: <?php echo "$mod_email"; ?></p>
 
 
               <form method="post" action="edit-profile.php">
                 <p>
-                  <input type="hidden" name="profile" value="<?php echo $user->u_id; ?>">
+                  <input type="hidden" name="profile" value="<?php echo $moderator->mod_id; ?>">
                   <input class="btn btn-default" type="submit"  value="Edit Profile" name="edit-profile" />
                 </p>
               </form>

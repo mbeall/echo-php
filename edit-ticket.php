@@ -42,7 +42,7 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
               update_ticket($tkt_id, $tkt_name, $tkt_desc, $tkt_priority, $tkt_status);
             }
             ?>
-            <form class="col-md-6" action="edit-ticket.php" method="post" name="edit_ticket_user" id="edit_ticket_user">
+            <form class="col-md-6" action="edit-ticket.php" method="post" name="edit_ticket_moderator" id="edit_ticket_moderator">
               <input type="hidden" name="tkt_id" value="<?php echo $tkt_id; ?>">
 
               <div class="form-group">

@@ -2,7 +2,7 @@
 /**
  * Edit profile page
  *
- * Allows a registered user to edit profile
+ * Allows a moderator to edit profile
  *
  * @author Hannah Turner
  * @since 0.1.1
@@ -14,18 +14,18 @@ global $the_title;
 $the_title='Edit Profile';
 include_once ('header.php');
 
-global $user;
-$u_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['u_id'];
-$user = get_user($u_id);
+global $moderator;
+$mod_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['mod_id'];
+$moderator = get_moderator($mod_id);
 
-$u_login_name = get_user_login_name($user);
-$u_pass       = !empty($_POST['u_pass'])  ? $_POST['u_pass']  : null;
-$u_first      =  isset($_POST['u_first']) ? $_POST['u_first'] : get_user_first($user);
-$u_last       =  isset($_POST['u_last'])  ? $_POST['u_last']  : get_user_last($user);
-$u_email      = !empty($_POST['u_email']) ? $_POST['u_email'] : get_user_email($user);
+$mod_login_name = get_moderator_login_name($moderator);
+$mod_pass       = !empty($_POST['mod_pass'])  ? $_POST['mod_pass']  : null;
+$mod_first      =  isset($_POST['mod_first']) ? $_POST['mod_first'] : get_moderator_first($moderator);
+$mod_last       =  isset($_POST['mod_last'])  ? $_POST['mod_last']  : get_moderator_last($moderator);
+$mod_email      = !empty($_POST['mod_email']) ? $_POST['mod_email'] : get_moderator_email($moderator);
 
-if(isset($_POST['u_first']) || isset($_POST['u_last']) || !empty($_POST['u_email']) || !empty($_POST['u_pass']) ) {
-  update_user($u_id, $u_email, $u_login_name, $u_pass, $u_first, $u_last);
+if(isset($_POST['mod_first']) || isset($_POST['mod_last']) || !empty($_POST['mod_email']) || !empty($_POST['mod_pass']) ) {
+  update_moderator($mod_id, $mod_email, $mod_login_name, $mod_pass, $mod_first, $mod_last);
 }
 ?>
 
@@ -40,26 +40,26 @@ if(isset($_POST['u_first']) || isset($_POST['u_last']) || !empty($_POST['u_email
             <div class="entry-content">
 
               <form role="form" action="edit-profile.php" method="post">
-                <input type="hidden" value="<?php echo $u_id; ?>">
+                <input type="hidden" value="<?php echo $mod_id; ?>">
                 <div class="form-group">
-                  <label for="u_login_name">Username</label>
-                  <p class="text-muted" id="u_login_name"><?php echo $u_login_name; ?></p>
+                  <label for="mod_login_name">Username</label>
+                  <p class="text-muted" id="mod_login_name"><?php echo $mod_login_name; ?></p>
                 </div>
                 <div class="form-group">
-                  <label for="u_pass">Password</label>
-                  <input type="password" class="form-control" id="u_pass" name="u_pass">
+                  <label for="mod_pass">Password</label>
+                  <input type="password" class="form-control" id="mod_pass" name="mod_pass">
                 </div>
                 <div class="form-group">
-                  <label for="u_first">First Name</label>
-                  <input type="text" class="form-control" id="u_first" name="u_first" value="<?php echo $u_first; ?>">
+                  <label for="mod_first">First Name</label>
+                  <input type="text" class="form-control" id="mod_first" name="mod_first" value="<?php echo $mod_first; ?>">
                 </div>
                 <div class="form-group">
-                  <label for="u_last">Last Name</label>
-                  <input type="text" class="form-control" id="u_last" name="u_last" value="<?php echo $u_last; ?>">
+                  <label for="mod_last">Last Name</label>
+                  <input type="text" class="form-control" id="mod_last" name="mod_last" value="<?php echo $mod_last; ?>">
                 </div>
                 <div class="form-group">
-                  <label for="u_email">Email address</label>
-                  <input type="email" class="form-control" id="u_email" name="u_email" value="<?php echo $u_email; ?>" required>
+                  <label for="mod_email">Email address</label>
+                  <input type="email" class="form-control" id="mod_email" name="mod_email" value="<?php echo $mod_email; ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
