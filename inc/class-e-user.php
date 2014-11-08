@@ -31,11 +31,6 @@ class E_User {
   public $u_admin = 0;
 
   /**
-   * @var int $u_visible If 0, user has been "deleted"; else, user is visible.
-   */
-  public $u_visible = 1;
-
-  /**
    * @var string $u_first The first name of the user
    */
   public $u_first = '';
@@ -176,9 +171,8 @@ class E_User {
     $u_last       = _text ( $u_last      , 32 );
     $u_ip         = $_SERVER['REMOTE_ADDR'];
     $u_admin      = 0;
-    $u_visible    = 1;
 
-    $edb->insert('users', 'u_ip,u_admin,u_visible', "'$u_ip', $u_admin, $u_visible" );
+    $edb->insert('users', 'u_ip,u_admin', "'$u_ip', $u_admin" );
     $u_id = (int) self::get_user_id( $u_ip );
     if (!empty($u_id)) {
       if (self::login_name_exists( $u_login_name )) {
@@ -211,7 +205,6 @@ class E_User {
    * @param string $u_first      The first name of the registered user
    * @param string $u_last       The last name of the registered user
    * @param int    $u_admin      If 1, user is admin; else, user is not admin.
-   * @param int    $u_visible    If 0, user has been "deleted"; else, user is visible.
    *
    * @return void
    *
@@ -219,7 +212,7 @@ class E_User {
    *
    * @todo Test
    */
-  public static function set_instance( $u_id, $u_email, $u_login_name, $u_pass, $u_first = null, $u_last = null, $u_admin = 0, $u_visible = 1 ) {
+  public static function set_instance( $u_id, $u_email, $u_login_name, $u_pass, $u_first = null, $u_last = null, $u_admin = 0 ) {
     global $edb;
 
     $u_id = (int) $u_id;
@@ -233,14 +226,13 @@ class E_User {
     $u_last       = !empty($u_last)       ? _text ( $u_last      , 32 ) : $_user->u_last;
 
     $u_admin      = !empty($u_admin)   ? (int) $u_admin   : (int) $_user->u_admin;
-    $u_visible    = !empty($u_visible) ? (int) $u_visible : (int) $_user->u_visible;
 
     if (!empty($u_id)) {
       if ($u_email != $_user->u_email && self::email_exists( $u_email )) {
         echo '<div class="alert alert-danger">An account with this email address already exists.</div>';
       }
       else {
-        $edb->update('users', "u_admin = $u_admin, u_visible = $u_visible", "users.u_id = $u_id" );
+        $edb->update('users', "u_admin = $u_admin", "users.u_id = $u_id" );
         $edb->update('registered_users', "u_email = '$u_email', u_login_name = '$u_login_name', u_pass = '$u_pass', u_first = '$u_first', u_last = '$u_last'", "u_id = $u_id" );
         echo '<META HTTP-EQUIV="Refresh" Content="0; URL=profile.php?success">';
         exit;
@@ -370,10 +362,9 @@ function create_user( $u_email, $u_login_name, $u_pass, $u_first = null, $u_last
  * @param string $u_first      The first name of the registered user
  * @param string $u_last       The last name of the registered user
  * @param int    $u_admin      If 1, user is admin; else, user is not admin.
- * @param int    $u_visible    If 0, user has been "deleted"; else, user is visible.
  */
-function update_user( $u_id, $u_email = null, $u_pass = null, $u_first = null, $u_last = null, $u_admin = null, $u_visible = null ) {
-  $user = E_User::set_instance( $u_id, $u_email, $u_pass, $u_first, $u_last, $u_admin, $u_visible );
+function update_user( $u_id, $u_email = null, $u_pass = null, $u_first = null, $u_last = null, $u_admin = null ) {
+  $user = E_User::set_instance( $u_id, $u_email, $u_pass, $u_first, $u_last, $u_admin );
   return $user;
 }
 
@@ -506,27 +497,6 @@ function is_user_admin( $user ) {
   $u_admin = (int) $u_admin;
 
   if ($u_admin == 1)
-    return true;
-  else
-    return false;
-}
-
-/**
- * Check if the user is visible or not
- *
- * @since 0.0.4
- *
- * @uses get_user_data()
- *
- * @param  object $user      The E_User class containing the data for the user
- * @return bool
- * @var    int    $u_visible If 0, user has been "deleted"; else, user is visible.
- */
-function is_user_visible( $user ) {
-  $u_visible = get_user_data( $user , 'u_visible' );
-  $u_visible = (int) $u_visible;
-
-  if ($u_visible == 1)
     return true;
   else
     return false;

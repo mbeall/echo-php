@@ -189,7 +189,7 @@ function get_tickets( $match = NULL, $join = false, $args = array() ) {
    */
   $args = array_merge( $defaults, $args );
 
-  $match = !empty($match) ? "tkt_visible = 1" . $match : "tkt_status = 'open' AND tkt_visible = 1";
+  $match = !empty($match) ? $match : "tkt_status = 'open'";
   if ($join) {
     $results = $edb->select( 'tickets LEFT JOIN ticket_tags ON tickets.tkt_id = ticket_tags.tkt_id', '*', $match, $args );
   }
@@ -202,6 +202,6 @@ function get_tickets( $match = NULL, $join = false, $args = array() ) {
 /** @since 0.0.8 */
 function get_tags() {
   global $edb;
-  $results = $edb->select( 'tags', '*', "tag_visible = 1" );
+  $results = $edb->select( 'tags', '*' );
   return $results;
 }
