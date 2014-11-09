@@ -5,7 +5,7 @@
  * Allows a moderator to create or edit a tag
  *
  * @author Crystal Carr
- * @since 0.0.9
+ * @since 0.2.0
  */
 global $the_title;
 $the_title= 'Create a Tag';

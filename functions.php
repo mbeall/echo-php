@@ -10,7 +10,7 @@
 /**
  * Checks to see if a particular moderator is logged in
  *
- * @since 0.0.3
+ * @since 0.2.0
  *
  * @uses get_moderator_data() Gets ID of moderator object
  * @uses is_logged_in() Checks to see if anyone is logged in
@@ -38,7 +38,7 @@ function is_moderator_logged_in( $_moderator ) {
 /**
  * Checks to see if anyone is logged in
  *
- * @since 0.0.3
+ * @since 0.2.0
  *
  * @uses get_moderator() Gets moderator object to make sure moderator actually exists
  *
@@ -71,7 +71,7 @@ function is_logged_in() {
  * Then, checks to make sure length is either 6 or 3 (shorthand).
  * If longer than 6, truncates to 6. If less than 6 and not 3, returns nothing.
  *
- * @since 0.0.4
+ * @since 0.2.0
  *
  * @param  string      $string The string to sanitize
  * @return string|void
@@ -144,7 +144,7 @@ function _email( $email, $length = 0 ) {
  * Get all tickets or get tickets that match
  * specified criteria.
  *
- * @since 0.0.8
+ * @since 0.2.0
  *
  * @param  string $match The search condition
  * @param  bool   $join  If yes, join with ticket_tags table.
@@ -187,7 +187,7 @@ function get_tickets( $match = NULL, $join = false, $args = array() ) {
 /**
  * Get all tags
  *
- * @since 0.0.8
+ * @since 0.2.0
  *
  * @return array An array of E_Tag objects
  */

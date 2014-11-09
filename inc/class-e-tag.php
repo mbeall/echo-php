@@ -11,7 +11,7 @@
  * Connects to database and creates tag object.
  *
  * @author Matt Beall
- * @since 0.0.4
+ * @since 0.2.0
  */
 class E_Tag {
 
@@ -94,7 +94,7 @@ class E_Tag {
    *
    * Prepare and execute query to select tag from database
    *
-   * @since 0.0.4
+   * @since 0.2.0
    *
    * @uses self::query()
    *
@@ -120,7 +120,7 @@ class E_Tag {
    *
    * Prepare and execute query to create tag in tags table
    *
-   * @since 0.0.4
+   * @since 0.2.0
    *
    * @uses edb::insert()
    * @uses _text()
@@ -149,7 +149,7 @@ class E_Tag {
    *
    * Prepare and execute query to create tag in tags table
    *
-   * @since 0.0.4
+   * @since 0.2.0
    *
    * @uses edb::insert()
    * @uses _text()
@@ -198,7 +198,7 @@ function create_tag( $tag_name, $tag_color = null, $tag_bg = null ) {
 /**
  * Update tag in database
  *
- * @since 0.0.4
+ * @since 0.2.0
  *
  * @uses E_Tag::set_instance() Constructs E_Tag class and updates in database
  *
@@ -215,7 +215,7 @@ function update_tag( $tag_id_PK, $tag_name = null, $tag_color = null, $tag_bg = 
 /**
  * Create E_Tag class
  *
- * @since 0.0.4
+ * @since 0.2.0
  *
  * @uses E_Tag::get_instance() Constructs E_Tag class and gets class object
  *

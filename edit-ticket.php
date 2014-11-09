@@ -5,7 +5,7 @@
  * Allows a ticket to be edited
  *
  * @author Matt Beall, Crystal Carr
- * @since 0.1.0
+ * @since 0.2.0
  *
  * @todo Make "Add tag" button functional
  * @todo Make "Remove" on tags functional

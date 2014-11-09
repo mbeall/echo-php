@@ -11,7 +11,7 @@
  * Connects to database and creates ticket object.
  *
  * @author Matt Beall
- * @since 0.0.7
+ * @since 0.2.0
  */
 class E_Ticket {
 
@@ -104,7 +104,7 @@ class E_Ticket {
    *
    * Prepare and execute query to select ticket from database
    *
-   * @since 0.0.3
+   * @since 0.2.0
    *
    * @uses self::query()
    *
@@ -130,7 +130,7 @@ class E_Ticket {
    *
    * Prepare and execute query to register ticket in tickets table
    *
-   * @since 0.0.4
+   * @since 0.2.0
    *
    * @uses edb::insert()
    * @uses _text()
@@ -159,7 +159,7 @@ class E_Ticket {
    *
    * Prepare and execute query to register ticket in tickets table
    *
-   * @since 0.0.4
+   * @since 0.2.0
    *
    * @uses edb::update()
    * @uses _text()
@@ -232,7 +232,7 @@ function create_ticket( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_sta
 /**
  * Update ticket
  *
- * @since 0.0.4
+ * @since 0.2.0
  *
  * @uses E_Ticket::set_instance() Constructs E_Ticket class and gets class object
  *
@@ -251,7 +251,7 @@ function update_ticket( $tkt_id_PK, $mod_id_PK, $tkt_name = null, $tkt_desc = nu
 /**
  * Get the E_Ticket class
  *
- * @since 0.0.3
+ * @since 0.2.0
  *
  * @uses E_Ticket::get_instance() Constructs E_Ticket class and gets class object
  *
@@ -348,7 +348,7 @@ function get_ticket_status( $ticket ) {
 /**
  * Get the tags for a ticket
  *
- * @since 0.1.0
+ * @since 0.2.0
  *
  * @uses edb::select()
  *
@@ -363,7 +363,7 @@ function get_ticket_tags($ticket) {
 }
 
 /**
- * Get the tags for a ticket
+ * Get the ticket history
  *
  * @since 0.2.0
  *
