@@ -148,8 +148,6 @@ class E_Moderator {
    * @return void
    *
    * @var int $mod_id_PK The primary key of the moderator being registered, as created in moderators database
-   *
-   * @todo Test
    */
   public static function new_instance( $mod_login_name, $mod_pass, $mod_email, $mod_first = null, $mod_last = null ) {
     global $edb;
@@ -192,8 +190,6 @@ class E_Moderator {
    * @return void
    *
    * @var int $mod_id_PK The primary key of the moderator being registered, as created in moderators table
-   *
-   * @todo Test
    */
   public static function set_instance( $mod_id_PK, $mod_login_name, $mod_pass, $mod_email, $mod_first = null, $mod_last = null ) {
     global $edb;
@@ -266,6 +262,11 @@ class E_Moderator {
    * @since 0.0.1
    *
    * @uses self::query() to query the database
+   *
+   * @param  string $mod_login_name The login name entered by the moderator
+   * @param  string $mod_pass       The password entered by the moderator
+   * @return bool                   If yes, valid credentials were entered.
+   * @var    int    $mod_id_PK  The ID of the moderator who entered valid credentials.
    */
   public static function authenticate_moderator( $mod_login_name, $mod_pass ) {
     global $edb;
@@ -359,8 +360,8 @@ function get_moderator_data( $moderator, $key ) {
  *
  * @uses get_moderator_data()
  *
- * @param  object $moderator         The E_Moderator class containing the data for the moderator
- * @return string               The login name of the moderator
+ * @param  object $moderator      The E_Moderator class containing the data for the moderator
+ * @return string                 The login name of the moderator
  * @var    string $mod_login_name The login name of the moderator
  */
 function get_moderator_login_name( $moderator ) {
@@ -416,13 +417,27 @@ function get_moderator_last( $moderator ) {
   return $mod_last;
 }
 
-/** @since 0.1.1 */
+/**
+ * Login moderator
+ *
+ * Authenticates moderator and sets $_SESSION variables
+ *
+ * @since 0.1.1
+ *
+ * @uses _text()
+ * @uses E_Moderator::authenticate_moderator()
+ *
+ * @param  string $login_name The login name entered by the moderator
+ * @param  string $password   The password entered by the moderator
+ * @var    int    $mod_id_PK  The ID of the moderator who entered valid credentials.
+ */
 function login_moderator( $login_name, $password ) {
   $mod_login_name = _text( $login_name );
-  $mod_pass = _text( $password );
+  $mod_pass       = _text( $password );
 
   $mod_id_PK = E_Moderator::authenticate_moderator($mod_login_name, $mod_pass);
   $mod_id_PK = (int) $mod_id_PK;
+
   if ($mod_id_PK > 0) {
     $_SESSION['mod_id_PK']      = $mod_id_PK;
     $_SESSION['mod_login_name'] = $mod_login_name;
@@ -436,6 +451,13 @@ function login_moderator( $login_name, $password ) {
   }
 }
 
+/**
+ * Logout moderator
+ *
+ * Deletes session variables and destroys session
+ *
+ * @since 0.1.1
+ */
 function logout_moderator() {
   session_start();
   unset($_SESSION['mod_id_PK']);

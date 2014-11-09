@@ -8,8 +8,6 @@
  *
  * @author Hannah Turner
  * @since 0.1.0
- *
- * @todo Validate input fields
  */
 
 global $the_title;

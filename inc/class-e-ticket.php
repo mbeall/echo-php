@@ -3,8 +3,6 @@
  * Defines class E_Ticket and related functions
  *
  * @author Matt Beall
- *
- * @todo Incorporate ticket_tags and ticket_history tables
  */
 
 /**
@@ -143,7 +141,6 @@ class E_Ticket {
    * @param string $tkt_status   The status of the ticket
    *
    * @todo Add ability to specify tags
-   * @todo Test
    */
   public static function new_instance( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_status = 'open' ) {
     global $edb;
@@ -176,7 +173,6 @@ class E_Ticket {
    * @param string $th_summary   A comment by the moderator
    *
    * @todo Add ability to specify tags
-   * @todo Test
    */
   public static function set_instance( $tkt_id_PK, $mod_id_PK, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null, $th_summary = null ) {
     global $edb;
@@ -349,15 +345,36 @@ function get_ticket_status( $ticket ) {
   return $tkt_status;
 }
 
-/** @since 0.1.0 */
+/**
+ * Get the tags for a ticket
+ *
+ * @since 0.1.0
+ *
+ * @uses edb::select()
+ *
+ * @param  object $ticket     The E_Ticket class containing the data for the ticket
+ * @return array              An array of E_Tag objects
+ * @var    array  $results    An array of tags that are attached to the ticket
+ */
 function get_ticket_tags($ticket) {
   global $edb;
   $results = $edb->select( 'ticket_tags JOIN tags ON tag_id_FK = tag_id_PK', '*', "tkt_id_FK = $ticket->tkt_id_PK" );
   return $results;
 }
 
+/**
+ * Get the tags for a ticket
+ *
+ * @since 0.2.0
+ *
+ * @uses edb::select()
+ *
+ * @param  object $ticket     The E_Ticket class containing the data for the ticket
+ * @return array              An array of objects
+ * @var    array  $results    An array of objects containing data for the ticket and the ticket's history
+ */
 function get_ticket_history($ticket) {
   global $edb;
-  $results = $edb->select( 'ticket_history JOIN tickets ON tkt_id_FK = tkt_id_PK', '*', "tkt_id_FK = $ticket->tkt_id_PK", array('orderby' => 'th_modified', 'order'   => 'DESC',) );
+  $results = $edb->select( 'ticket_history JOIN tickets ON tkt_id_FK = tkt_id_PK', '*', "tkt_id_FK = $ticket->tkt_id_PK", array('orderby' => 'th_modified', 'order'   => 'DESC' ) );
   return $results;
 }

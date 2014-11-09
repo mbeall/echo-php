@@ -133,8 +133,6 @@ class E_Tag {
    * @return void
    *
    * @var int $tag_id_PK The primary key of the tag being registered, as created in tag database
-   *
-   * @todo Test
    */
   public static function new_instance( $tag_name, $tag_color = null, $tag_bg = null ) {
     global $edb;
@@ -165,8 +163,6 @@ class E_Tag {
    * @return void
    *
    * @var int $tag_id_PK The primary key of the tag being registered, as created in tag database
-   *
-   * @todo Test
    */
   public static function set_instance( $tag_id_PK, $tag_name = null, $tag_color = null, $tag_bg = null ) {
     global $edb;

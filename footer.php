@@ -8,6 +8,7 @@
  * @since 0.0.1
  */
 ?>
+
 </div><!-- #page -->
 
   <footer id="colophon" class="site-footer" role="contentinfo">

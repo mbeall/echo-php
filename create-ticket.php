@@ -6,8 +6,6 @@
  *
  * @author Crystal Carr
  * @since 0.0.9
- *
- * @todo Validate input fields
  */
 global $the_title;
 $the_title= 'Submit Ticket';

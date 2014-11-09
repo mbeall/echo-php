@@ -138,7 +138,19 @@ function _email( $email, $length = 0 ) {
     return $new;
 }
 
-/** @since 0.0.8 */
+/**
+ * Get all tickets
+ *
+ * Get all tickets or get tickets that match
+ * specified criteria.
+ *
+ * @since 0.0.8
+ *
+ * @param  string $match The search condition
+ * @param  bool   $join  If yes, join with ticket_tags table.
+ * @param  array  $args  Additional options
+ * @return array         An array of E_Ticket objects
+ */
 function get_tickets( $match = NULL, $join = false, $args = array() ) {
   global $edb;
 
@@ -172,7 +184,13 @@ function get_tickets( $match = NULL, $join = false, $args = array() ) {
   return $results;
 }
 
-/** @since 0.0.8 */
+/**
+ * Get all tags
+ *
+ * @since 0.0.8
+ *
+ * @return array An array of E_Tag objects
+ */
 function get_tags() {
   global $edb;
   $results = $edb->select( 'tags', '*' );

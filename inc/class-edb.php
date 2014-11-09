@@ -20,6 +20,7 @@ class edb {
    *
    * @since 0.0.1
    *
+   * @param string $dbname     The name of the database to connect to
    * @param string $dbuser     The user connecting to the database
    * @param string $dbpassword The password for the user connecting to the database
    * @param string $dbhost     The host of the database (i.e. 'localhost')
@@ -28,7 +29,7 @@ class edb {
    *
    * @var object $conn PHP Data Object
    */
-  function connect( $dbname = 'echo', $dbuser = 'echo-user', $dbpassword = 'echo-pass' ) {
+  function connect( $dbname = 'echo', $dbuser = 'echo-user', $dbpassword = 'echo-pass', $dbhost = 'localhost' ) {
 
     $dbname     = empty($dbname)     ? $this->dbname     : $dbname;
     $dbuser     = empty($dbuser)     ? $this->dbuser     : $dbuser;
