@@ -18,14 +18,9 @@
 class E_Ticket {
 
   /**
-   * @var int $mod_id The ID of the moderator who created the ticket
+   * @var int $tkt_id_PK The ID of the ticket
    */
-  public $mod_id;
-
-  /**
-   * @var int $tkt_id The ID of the ticket
-   */
-  public $tkt_id;
+  public $tkt_id_PK;
 
   /**
    * @var string $tkt_name The name of the ticket
@@ -36,6 +31,11 @@ class E_Ticket {
    * @var string $tkt_desc The description of the ticket
    */
   public $tkt_desc = '';
+
+  /**
+   * @var string $tkt_created The timestamp of when the ticket was created
+   */
+  public $tkt_created = '';
 
   /**
    * @var string $tkt_priority The priority of the ticket
@@ -110,19 +110,19 @@ class E_Ticket {
    *
    * @uses self::query()
    *
-   * @param  int    $tkt_id The primary key of the ticket being retrieved from the database
-   * @return object         Data retrieved from database
-   * @var    string $conn   The PHP Data Object for the connection
+   * @param  int    $tkt_id_PK The primary key of the ticket being retrieved from the database
+   * @return object            Data retrieved from database
+   * @var    string $conn      The PHP Data Object for the connection
    */
-  public static function get_instance( $tkt_id ) {
+  public static function get_instance( $tkt_id_PK ) {
     global $edb;
 
-    $tkt_id = (int) $tkt_id;
+    $tkt_id_PK = (int) $tkt_id_PK;
 
-    if ( ! $tkt_id )
+    if ( ! $tkt_id_PK )
       return false;
 
-    $_ticket = self::query("SELECT * FROM tickets WHERE tkt_id = $tkt_id LIMIT 1");
+    $_ticket = self::query("SELECT * FROM tickets WHERE tkt_id_PK = $tkt_id_PK LIMIT 1");
 
     return new E_Ticket ( $_ticket );
   }
@@ -150,10 +150,11 @@ class E_Ticket {
 
     $tkt_name     = _text( $tkt_name    , 45 );
     $tkt_desc     = _text( $tkt_desc         );
+    $tkt_created  =  date( 'Y-m-d H:m:s'     );
     $tkt_priority = _text( $tkt_priority, 8  );
     $tkt_status   = _text( $tkt_status  , 8  );
 
-    $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_priority,tkt_status', "'$tkt_name', '$tkt_desc', '$tkt_priority', '$tkt_status'" );
+    $edb->insert('tickets', 'tkt_name,tkt_desc,tkt_created,tkt_priority,tkt_status', "'$tkt_name', '$tkt_desc', '$tkt_created', '$tkt_priority', '$tkt_status'" );
   }
 
   /**
@@ -166,26 +167,52 @@ class E_Ticket {
    * @uses edb::update()
    * @uses _text()
    *
-   * @param int    $tkt_id       The ID of the ticket to update
+   * @param int    $tkt_id_PK    The ID of the ticket to update
+   * @param int    $mod_id_PK    The ID of the moderator updating the ticket
    * @param string $tkt_name     The title of the ticket
    * @param string $tkt_desc     The description of the ticket
    * @param string $tkt_priority The priority of the ticket
    * @param string $tkt_status   The status of the ticket
+   * @param string $th_summary   A comment by the moderator
    *
    * @todo Add ability to specify tags
    * @todo Test
    */
-  public static function set_instance( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null ) {
+  public static function set_instance( $tkt_id_PK, $mod_id_PK, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null, $th_summary = null ) {
     global $edb;
 
-    $_ticket = self::get_instance($tkt_id);
+    $_ticket        = self::get_instance($tkt_id_PK);
+    $_moderator     = get_moderator($mod_id_PK);
+    $mod_login_name = $_moderator->mod_login_name;
+    $th_modified = date('Y-m-d H:m:s');
 
     $tkt_name     = !empty($tkt_name)     ? _text( $tkt_name    , 45 ) : $_ticket->tkt_name;
     $tkt_desc     = !empty($tkt_desc)     ? _text( $tkt_desc         ) : $_ticket->tkt_desc;
     $tkt_priority = !empty($tkt_priority) ? _text( $tkt_priority, 8  ) : $_ticket->tkt_priority;
     $tkt_status   = !empty($tkt_status)   ? _text( $tkt_status  , 8  ) : $_ticket->tkt_status;
-
-    $edb->update('tickets', "tkt_name = '$tkt_name', tkt_desc = '$tkt_desc', tkt_priority = '$tkt_priority', tkt_status = '$tkt_status'", "tkt_id = $tkt_id" );
+    $th_summary   = !empty($th_summary)   ? _text( $th_summary       ) : null;
+    
+    $edb->update('tickets', "tkt_name = '$tkt_name', tkt_desc = '$tkt_desc', tkt_priority = '$tkt_priority', tkt_status = '$tkt_status'", "tkt_id_PK = $tkt_id_PK" );
+    
+    $diff_name     = $tkt_name     != $_ticket->tkt_name     ? $mod_login_name . ' renamed ' . $_ticket->tkt_name . ' to ' . $tkt_name : null;
+    $diff_desc     = $tkt_desc     != $_ticket->tkt_desc     ? $mod_login_name . ' edited the description'                             : null;
+    $diff_priority = $tkt_priority != $_ticket->tkt_priority ? $mod_login_name . ' changed the priority to ' . $tkt_priority           : null;
+    $diff_status   = $tkt_status   != $_ticket->tkt_status   ? $mod_login_name . ' changed the status to ' . $tkt_status             : null;
+    
+    if (!empty($th_summary))
+      $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$th_summary','$th_modified'" );
+    
+    if (!empty($diff_name))
+      $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_name','$th_modified'" );
+    
+    if (!empty($diff_desc))
+      $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_desc','$th_modified'" );
+    
+    if (!empty($diff_priority))
+      $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_priority','$th_modified'" );
+    
+    if (!empty($diff_status))
+      $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_status','$th_modified'" );
   }
 }
 
@@ -213,14 +240,15 @@ function create_ticket( $tkt_name, $tkt_desc, $tkt_priority = 'normal', $tkt_sta
  *
  * @uses E_Ticket::set_instance() Constructs E_Ticket class and gets class object
  *
- * @param int    $tkt_id       The ID of the ticket to update
+ * @param int    $tkt_id_PK    The ID of the ticket to update
+ * @param int    $mod_id_PK    The ID of the moderator updating the ticket
  * @param string $tkt_name     The title of the ticket
  * @param string $tkt_desc     The description of the ticket
  * @param string $tkt_priority The priority of the ticket
  * @param string $tkt_status   The status of the ticket
  */
-function update_ticket( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null ) {
-  $ticket = E_Ticket::set_instance( $tkt_id, $tkt_name, $tkt_desc, $tkt_priority, $tkt_status );
+function update_ticket( $tkt_id_PK, $mod_id_PK, $tkt_name = null, $tkt_desc = null, $tkt_priority = null, $tkt_status = null ) {
+  $ticket = E_Ticket::set_instance( $tkt_id_PK, $mod_id_PK, $tkt_name, $tkt_desc, $tkt_priority, $tkt_status );
   return $ticket;
 }
 
@@ -231,12 +259,12 @@ function update_ticket( $tkt_id, $tkt_name = null, $tkt_desc = null, $tkt_priori
  *
  * @uses E_Ticket::get_instance() Constructs E_Ticket class and gets class object
  *
- * @param  int    $tkt_id The ID of the ticket to get
+ * @param  int    $tkt_id_PK The ID of the ticket to get
  * @return object $ticket The E_Ticket class with the ticket's data
  */
-function get_ticket( $tkt_id ) {
-  $tkt_id = (int) $tkt_id;
-  $ticket = E_Ticket::get_instance( $tkt_id );
+function get_ticket( $tkt_id_PK ) {
+  $tkt_id_PK = (int) $tkt_id_PK;
+  $ticket = E_Ticket::get_instance( $tkt_id_PK );
   return $ticket;
 }
 
@@ -324,6 +352,12 @@ function get_ticket_status( $ticket ) {
 /** @since 0.1.0 */
 function get_ticket_tags($ticket) {
   global $edb;
-  $results = $edb->select( 'ticket_tags JOIN tags ON tag_id_FK = tag_id', '*', "tkt_id = $ticket->tkt_id" );
+  $results = $edb->select( 'ticket_tags JOIN tags ON tag_id_FK = tag_id_PK', '*', "tkt_id_FK = $ticket->tkt_id_PK" );
+  return $results;
+}
+
+function get_ticket_history($ticket) {
+  global $edb;
+  $results = $edb->select( 'ticket_history JOIN tickets ON tkt_id_FK = tkt_id_PK', '*', "tkt_id_FK = $ticket->tkt_id_PK", array('orderby' => 'th_modified', 'order'   => 'DESC',) );
   return $results;
 }

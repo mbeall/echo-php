@@ -16,7 +16,7 @@ $the_title= 'Edit Ticket';
 include_once('header.php');
 
 global $ticket;
-$tkt_id = (int) $_REQUEST['tkt_id'];
+$tkt_id_PK = (int) $_REQUEST['tkt_id_PK'];
 ?>
 
 <div id="primary" class="content-area container">
@@ -28,9 +28,10 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
         </header><!-- .entry-header -->
 
         <div class="entry-content"><?php
-          if (!empty($tkt_id) && is_logged_in()) {
-            $ticket = get_ticket($tkt_id);
-            $tags   = get_ticket_tags($ticket);
+          if (!empty($tkt_id_PK) && is_logged_in()) {
+            $ticket  = get_ticket($tkt_id_PK);
+            $tags    = get_ticket_tags($ticket);
+            $history = get_ticket_history($ticket);
 
             $tkt_name     = !empty($_POST['tkt_name'    ]) ? $_POST['tkt_name'    ] : get_ticket_name($ticket);
             $tkt_desc     = !empty($_POST['tkt_desc'    ]) ? $_POST['tkt_desc'    ] : get_ticket_desc($ticket);
@@ -39,11 +40,11 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
             $updated      = !empty($_POST['updated'     ]) ? true                   : false;
 
             if(!empty($tkt_name) && !empty($tkt_desc) && !empty($tkt_priority) && !empty($tkt_status) && $updated == true) {
-              update_ticket($tkt_id, $tkt_name, $tkt_desc, $tkt_priority, $tkt_status);
+              update_ticket($tkt_id_PK, $_SESSION['mod_id_PK'], $tkt_name, $tkt_desc, $tkt_priority, $tkt_status);
             }
             ?>
             <form class="col-md-6" action="edit-ticket.php" method="post" name="edit_ticket_moderator" id="edit_ticket_moderator">
-              <input type="hidden" name="tkt_id" value="<?php echo $tkt_id; ?>">
+              <input type="hidden" name="tkt_id_PK" value="<?php echo $tkt_id_PK; ?>">
 
               <div class="form-group">
                 <label for="tkt_name">Ticket Name</label>
@@ -73,7 +74,7 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
                 <textarea class="form-control" name="tkt_desc"><?php echo $tkt_desc ?></textarea>
               </div>
 
-              <input type="hidden" name="tkt_tags" value="<?php foreach ($tags as $tag) { echo $tag->tag_id . ','; } ?>">
+              <input type="hidden" name="tkt_tags" value="<?php foreach ($tags as $tag) { echo $tag->tag_id_PK . ','; } ?>">
               <input type="hidden" name="updated" value="1">
 
               <p>
@@ -82,18 +83,28 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
               </p>
             </form>
             <div class="col-md-6">
-              <h4>Tags</h4>
-              <?php
-              foreach ($tags as $tag) { ?>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm" style="color:<?php echo get_tag_color($tag); ?>;background:<?php echo get_tag_bg($tag); ?>;"><?php echo get_tag_name($tag); ?></button>
-                  <button type="button" class="btn btn-sm" style="color:<?php echo get_tag_color($tag); ?>;background:<?php echo get_tag_bg($tag); ?>;" data-toggle="dropdown"><span class="caret"></span></button>
-                  <ul class="dropdown-menu">
-                    <li><a href="edit-tag.php?tag_id=<?php echo $tag->tag_id; ?>">Edit <?php echo get_tag_name($tag); ?></a></li>
-                    <li><a href="#">Remove</a></li></ul>
-                </div>
-              <?php }?>
-              <button type="button" class="btn btn-sm btn-default">Add Tag</button>
+              <div class="ticket-tags">
+                <h4>Tags</h4>
+                <?php
+                foreach ($tags as $tag) { ?>
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm" style="color:<?php echo get_tag_color($tag); ?>;background:<?php echo get_tag_bg($tag); ?>;"><?php echo get_tag_name($tag); ?></button>
+                    <button type="button" class="btn btn-sm" style="color:<?php echo get_tag_color($tag); ?>;background:<?php echo get_tag_bg($tag); ?>;" data-toggle="dropdown"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                      <li><a href="edit-tag.php?tag_id_PK=<?php echo $tag->tag_id_PK; ?>">Edit <?php echo get_tag_name($tag); ?></a></li>
+                      <li><a href="#">Remove</a></li>
+                    </ul>
+                  </div>
+                <?php }?>
+                <button type="button" class="btn btn-sm btn-default">Add Tag</button>
+              </div><!-- .ticket-tags -->
+              <div class="ticket-tags">
+                <h4>History</h4>
+                <?php
+                foreach ($history as $event) { ?>
+                 <p><?php echo $event->th_summary; ?></p>
+                <?php }?>
+              </div><!-- .ticket-history -->
             </div><!-- .col-md-6 --><?php
           }
           elseif (is_logged_in()) {
@@ -101,8 +112,8 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
             <p>Please select a ticket to edit.</p>
             <form class="col-xs-6" action="edit-ticket.php" method="post" name="select_ticket" id="select_ticket">
               <div class="form-group">
-                <label class="sr-only" for="tkt_id">Ticket</label>
-                <select class="form-control" id="tkt_id" name="tkt_id">
+                <label class="sr-only" for="tkt_id_PK">Ticket</label>
+                <select class="form-control" id="tkt_id_PK" name="tkt_id_PK">
                   <option value="">All tickets</option>
                   <?php
                     $tickets = get_tickets();
@@ -111,7 +122,7 @@ $tkt_id = (int) $_REQUEST['tkt_id'];
 
                     foreach($tickets as $ticket) {
                       $output .= '<option value="';
-                      $output .= $ticket->tkt_id;
+                      $output .= $ticket->tkt_id_PK;
                       $output .= '">';
                       $output .= $ticket->tkt_name;
                       $output .= '</option>';
