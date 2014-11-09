@@ -17,15 +17,15 @@
  *
  * @param object $_moderator The moderator to check against
  * @return bool
- * @var int $mod_id The ID of the moderator object
- * @var int $mod_id    The ID of the moderator logged in
+ * @var int $mod_id_PK The ID of the moderator object
+ * @var int $mod_id_PK    The ID of the moderator logged in
  */
 function is_moderator_logged_in( $_moderator ) {
   if (is_logged_in()) {
-    $mod_id = !empty($_moderator) ? get_moderator_data( $_moderator , 'mod_id' ) : 0;
-    $mod_id    = (int) $_SESSION['mod_id'];
+    $mod_id_PK = !empty($_moderator) ? get_moderator_data( $_moderator , 'mod_id_PK' ) : 0;
+    $mod_id_PK    = (int) $_SESSION['mod_id_PK'];
 
-    if ($mod_id == $mod_id)
+    if ($mod_id_PK == $mod_id_PK)
       return true;
     else
       return false;
@@ -43,16 +43,16 @@ function is_moderator_logged_in( $_moderator ) {
  * @uses get_moderator() Gets moderator object to make sure moderator actually exists
  *
  * @return bool
- * @var    int    $mod_id  The ID of the moderator logged in
+ * @var    int    $mod_id_PK  The ID of the moderator logged in
  * @var    object $_moderator The moderator object with the ID of the moderator logged in
  *
  * @todo Do additional checks besides just if the id exists
  */
 function is_logged_in() {
-  if (!empty($_SESSION['mod_id'])) {
+  if (!empty($_SESSION['mod_id_PK'])) {
     global $edb;
-    $mod_id = (int) $_SESSION['mod_id'];
-    $_moderator = get_moderator($mod_id);
+    $mod_id_PK = (int) $_SESSION['mod_id_PK'];
+    $_moderator = get_moderator($mod_id_PK);
 
     if (!empty($_moderator))
       return true;
@@ -164,7 +164,7 @@ function get_tickets( $match = NULL, $join = false, $args = array() ) {
 
   $match = !empty($match) ? $match : "tkt_status = 'open'";
   if ($join) {
-    $results = $edb->select( 'tickets LEFT JOIN ticket_tags ON tickets.tkt_id = ticket_tags.tkt_id', '*', $match, $args );
+    $results = $edb->select( 'tickets LEFT JOIN ticket_tags ON tkt_id_PK = tkt_id_FK', '*', $match, $args );
   }
   else {
     $results = $edb->select( 'tickets', '*', $match, $args );

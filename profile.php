@@ -16,8 +16,8 @@ global $the_title;
 $the_title='Profile';
 include_once ('header.php');
 global $moderator;
-$mod_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['mod_id'];
-$moderator=get_moderator($mod_id);
+$mod_id_PK = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['mod_id_PK'];
+$moderator=get_moderator($mod_id_PK);
 $mod_first=get_moderator_first($moderator);
 $mod_last=get_moderator_last($moderator);
 $mod_email=get_moderator_email($moderator);
@@ -40,7 +40,7 @@ $mod_login_name=get_moderator_login_name($moderator); ?>
 
               <form method="post" action="edit-profile.php">
                 <p>
-                  <input type="hidden" name="profile" value="<?php echo $moderator->mod_id; ?>">
+                  <input type="hidden" name="profile" value="<?php echo $moderator->mod_id_PK; ?>">
                   <input class="btn btn-default" type="submit"  value="Edit Profile" name="edit-profile" />
                 </p>
               </form>

@@ -15,15 +15,15 @@ $the_title='Browse Tickets';
 include_once ('header.php');
 
 $_search   = !empty( $_POST['_search'  ]) ? _text($_POST['_search'  ]) : null;
-$_tag_id   = !empty( $_POST['_tag_id'  ]) ? (int) $_POST['_tag_id'  ]  : null;
+$_tag_id   = !empty( $_POST['_tag_id_PK'  ]) ? (int) $_POST['_tag_id_PK'  ]  : null;
 $_priority = !empty( $_POST['_priority']) ? _text($_POST['_priority']) : null;
 $_status   = !empty( $_POST['_status'  ]) ? _text($_POST['_status'  ]) : 'open';
 
 $filter  = null;
+$filter .= !empty($_status)   ? "tkt_status = '$_status'"                                       : "tkt_status = 'open'";
 $filter .= !empty($_search)   ? " AND (tkt_name LIKE '%$_search%' OR tkt_desc LIKE '%$_search%')" : null;
-$filter .= !empty($_tag_id)   ? " AND ticket_tags.tag_id = $_tag_id"                              : null;
-$filter .= !empty($_priority) ? " AND tkt_priority       = '$_priority'"                          : null;
-$filter .= !empty($_status)   ? " AND tkt_status         = '$_status'"                            : null;
+$filter .= !empty($_tag_id)   ? " AND tag_id_FK    = $_tag_id"                                    : null;
+$filter .= !empty($_priority) ? " AND tkt_priority = '$_priority'"                                : null;
 ?>
 
 <div id="primary" class="content-area container">
@@ -36,8 +36,8 @@ $filter .= !empty($_status)   ? " AND tkt_status         = '$_status'"          
         </div><!-- .form-group -->
 
         <div class="form-group">
-          <label class="sr-only" for="_tag_id">Tag</label>
-          <select class="form-control" id="_tag_id" name="_tag_id">
+          <label class="sr-only" for="_tag_id_PK">Tag</label>
+          <select class="form-control" id="_tag_id_PK" name="_tag_id_PK">
             <option value="">All tags</option>
             <?php
               $tags = get_tags();
@@ -46,9 +46,9 @@ $filter .= !empty($_status)   ? " AND tkt_status         = '$_status'"          
 
               foreach($tags as $tag) {
                 $output .= '<option value="';
-                $output .= $tag->tag_id;
+                $output .= $tag->tag_id_PK;
                 $output .= '"';
-                $output .= $_tag_id == $tag->tag_id ? 'selected' : '';
+                $output .= $_tag_id == $tag->tag_id_PK ? 'selected' : '';
                 $output .= '>';
                 $output .= $tag->tag_name;
                 $output .= '</option>';
@@ -132,7 +132,7 @@ $filter .= !empty($_status)   ? " AND tkt_status         = '$_status'"          
               <h1 class="entry-title"><?php echo $name; ?></h1>
               <?php
                 if (is_logged_in()) {
-                  echo '<a class="btn btn-default btn-sm btn-edit" href="edit-ticket.php?tkt_id='.$ticket->tkt_id.'">Edit Ticket</a>';
+                  echo '<a class="btn btn-default btn-sm btn-edit" href="edit-ticket.php?tkt_id_PK='.$ticket->tkt_id_PK.'">Edit Ticket</a>';
                 }
               ?>
             </header><!-- .entry-header -->

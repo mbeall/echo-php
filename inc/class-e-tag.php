@@ -16,9 +16,9 @@
 class E_Tag {
 
   /**
-   * @var int $tag_id The ID of the tag
+   * @var int $tag_id_PK The ID of the tag
    */
-  public $tag_id;
+  public $tag_id_PK;
 
   /**
    * @var string $tag_name The name of the tag
@@ -98,19 +98,19 @@ class E_Tag {
    *
    * @uses self::query()
    *
-   * @param  int    $tag_id The primary key of the tag being retrieved from the database
-   * @return object         Data retrieved from database
-   * @var    string $conn   The PHP Data Object for the connection
+   * @param  int    $tag_id_PK The primary key of the tag being retrieved from the database
+   * @return object            Data retrieved from database
+   * @var    string $conn      The PHP Data Object for the connection
    */
-  public static function get_instance( $tag_id ) {
+  public static function get_instance( $tag_id_PK ) {
     global $edb;
 
-    $tag_id = (int) $tag_id;
+    $tag_id_PK = (int) $tag_id_PK;
 
-    if ( ! $tag_id )
+    if ( ! $tag_id_PK )
       return false;
 
-    $_tag = self::query("SELECT * FROM tags WHERE tag_id = $tag_id LIMIT 1");
+    $_tag = self::query("SELECT * FROM tags WHERE tag_id_PK = $tag_id_PK LIMIT 1");
 
     return new E_Tag ( $_tag );
   }
@@ -132,7 +132,7 @@ class E_Tag {
    *
    * @return void
    *
-   * @var int $tag_id The primary key of the tag being registered, as created in tag database
+   * @var int $tag_id_PK The primary key of the tag being registered, as created in tag database
    *
    * @todo Test
    */
@@ -157,29 +157,29 @@ class E_Tag {
    * @uses _text()
    * @uses _hexadec()
    *
-   * @param int    $tag_id      The ID of the tag to update
+   * @param int    $tag_id_PK   The ID of the tag to update
    * @param string $tag_name    The name of the tag
    * @param string $tag_color   The text color of the tag
    * @param string $tag_bg      The background color of the tag
    *
    * @return void
    *
-   * @var int $tag_id The primary key of the tag being registered, as created in tag database
+   * @var int $tag_id_PK The primary key of the tag being registered, as created in tag database
    *
    * @todo Test
    */
-  public static function set_instance( $tag_id, $tag_name = null, $tag_color = null, $tag_bg = null ) {
+  public static function set_instance( $tag_id_PK, $tag_name = null, $tag_color = null, $tag_bg = null ) {
     global $edb;
 
-    $tag_id = (int) $tag_id;
+    $tag_id_PK = (int) $tag_id_PK;
 
-    $_tag = self::get_instance( $tag_id );
+    $_tag = self::get_instance( $tag_id_PK );
 
     $tag_name    = !empty($tag_name)  ? _text( $tag_name, 32 ) : $_tag->tag_name;
     $tag_color   = !empty($tag_color) ? _hexadec($tag_color)   : $_tag->tag_color;
     $tag_bg      = !empty($tag_bg)    ? _hexadec($tag_bg)      : $_tag->tag_bg;
 
-    $edb->update('tags', "tag_name = '$tag_name', tag_color = '#$tag_color', tag_bg = '#$tag_bg'", "tag_id = $tag_id" );
+    $edb->update('tags', "tag_name = '$tag_name', tag_color = '#$tag_color', tag_bg = '#$tag_bg'", "tag_id_PK = $tag_id_PK" );
   }
 }
 
@@ -206,13 +206,13 @@ function create_tag( $tag_name, $tag_color = null, $tag_bg = null ) {
  *
  * @uses E_Tag::set_instance() Constructs E_Tag class and updates in database
  *
- * @param int    $tag_id    The ID of the tag to update
+ * @param int    $tag_id_PK    The ID of the tag to update
  * @param string $tag_name  The name of the tag
  * @param string $tag_color The text color of the tag
  * @param string $tag_bg    The background color of the tag
  */
-function update_tag( $tag_id, $tag_name = null, $tag_color = null, $tag_bg = null ) {
-  $tag = E_Tag::set_instance( $tag_id, $tag_name, $tag_color, $tag_bg );
+function update_tag( $tag_id_PK, $tag_name = null, $tag_color = null, $tag_bg = null ) {
+  $tag = E_Tag::set_instance( $tag_id_PK, $tag_name, $tag_color, $tag_bg );
   return $tag;
 }
 
@@ -223,12 +223,12 @@ function update_tag( $tag_id, $tag_name = null, $tag_color = null, $tag_bg = nul
  *
  * @uses E_Tag::get_instance() Constructs E_Tag class and gets class object
  *
- * @param  int    $tag_id The ID of the tag to get
+ * @param  int    $tag_id_PK The ID of the tag to get
  * @return object $tag The E_Tag class with the tag's data
  */
-function get_tag( $tag_id ) {
-  $tag_id = (int) $tag_id;
-  $tag = E_Tag::get_instance( $tag_id );
+function get_tag( $tag_id_PK ) {
+  $tag_id_PK = (int) $tag_id_PK;
+  $tag = E_Tag::get_instance( $tag_id_PK );
   return $tag;
 }
 

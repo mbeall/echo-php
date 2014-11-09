@@ -15,8 +15,8 @@ $the_title='Edit Profile';
 include_once ('header.php');
 
 global $moderator;
-$mod_id = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['mod_id'];
-$moderator = get_moderator($mod_id);
+$mod_id_PK = !empty($_REQUEST['profile']) ? (int) $_REQUEST['profile'] : (int) $_SESSION['mod_id_PK'];
+$moderator = get_moderator($mod_id_PK);
 
 $mod_login_name = get_moderator_login_name($moderator);
 $mod_pass       = !empty($_POST['mod_pass'])  ? $_POST['mod_pass']  : null;
@@ -25,7 +25,7 @@ $mod_last       =  isset($_POST['mod_last'])  ? $_POST['mod_last']  : get_modera
 $mod_email      = !empty($_POST['mod_email']) ? $_POST['mod_email'] : get_moderator_email($moderator);
 
 if(isset($_POST['mod_first']) || isset($_POST['mod_last']) || !empty($_POST['mod_email']) || !empty($_POST['mod_pass']) ) {
-  update_moderator($mod_id, $mod_email, $mod_login_name, $mod_pass, $mod_first, $mod_last);
+  update_moderator($mod_id_PK, $mod_email, $mod_login_name, $mod_pass, $mod_first, $mod_last);
 }
 ?>
 
@@ -40,7 +40,7 @@ if(isset($_POST['mod_first']) || isset($_POST['mod_last']) || !empty($_POST['mod
             <div class="entry-content">
 
               <form role="form" action="edit-profile.php" method="post">
-                <input type="hidden" value="<?php echo $mod_id; ?>">
+                <input type="hidden" value="<?php echo $mod_id_PK; ?>">
                 <div class="form-group">
                   <label for="mod_login_name">Username</label>
                   <p class="text-muted" id="mod_login_name"><?php echo $mod_login_name; ?></p>

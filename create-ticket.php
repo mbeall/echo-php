@@ -35,7 +35,7 @@ if(!empty($tkt_name) && !empty($tkt_desc)) {
 
         <div class="entry-content">
           <form class="col-xs-6" action="create-ticket.php" method="post" name="create_ticket_moderator" id="create_ticket_moderator">
-            <input type="hidden" name="tkt_id" value="">
+            <input type="hidden" name="tkt_id_PK" value="">
 
             <div class="form-group">
               <label for="tkt_name">Ticket Name</label>
