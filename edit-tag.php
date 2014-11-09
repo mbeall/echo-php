@@ -67,7 +67,7 @@ $tag_id_PK = (int)$_REQUEST['tag_id_PK'];
                 <a class="btn btn-default" href="edit-tag.php">Back</a>
               </p>
             </form>
-          
+
             <div class="col-md-6"><?php
               $style = "background:$tag->tag_bg;color:$tag->tag_color;"; ?>
               <span class="label" style="<?php echo $style; ?>"><?php echo $tag->tag_name; ?></span>
@@ -107,7 +107,7 @@ $tag_id_PK = (int)$_REQUEST['tag_id_PK'];
                 <a class="btn btn-default" href="index.php">Cancel</a>
               </p>
             </form>
-          
+
             <div class="col-md-6">
               <?php
                 $tags = get_tags();

@@ -191,26 +191,26 @@ class E_Ticket {
     $tkt_priority = !empty($tkt_priority) ? _text( $tkt_priority, 8  ) : $_ticket->tkt_priority;
     $tkt_status   = !empty($tkt_status)   ? _text( $tkt_status  , 8  ) : $_ticket->tkt_status;
     $th_summary   = !empty($th_summary)   ? _text( $th_summary       ) : null;
-    
+
     $edb->update('tickets', "tkt_name = '$tkt_name', tkt_desc = '$tkt_desc', tkt_priority = '$tkt_priority', tkt_status = '$tkt_status'", "tkt_id_PK = $tkt_id_PK" );
-    
+
     $diff_name     = $tkt_name     != $_ticket->tkt_name     ? $mod_login_name . ' renamed ' . $_ticket->tkt_name . ' to ' . $tkt_name : null;
     $diff_desc     = $tkt_desc     != $_ticket->tkt_desc     ? $mod_login_name . ' edited the description'                             : null;
     $diff_priority = $tkt_priority != $_ticket->tkt_priority ? $mod_login_name . ' changed the priority to ' . $tkt_priority           : null;
     $diff_status   = $tkt_status   != $_ticket->tkt_status   ? $mod_login_name . ' changed the status to ' . $tkt_status             : null;
-    
+
     if (!empty($th_summary))
       $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$th_summary','$th_modified'" );
-    
+
     if (!empty($diff_name))
       $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_name','$th_modified'" );
-    
+
     if (!empty($diff_desc))
       $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_desc','$th_modified'" );
-    
+
     if (!empty($diff_priority))
       $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_priority','$th_modified'" );
-    
+
     if (!empty($diff_status))
       $edb->insert( 'ticket_history', 'tkt_id_FK,mod_id_FK,th_summary,th_modified', "$tkt_id_PK,$mod_id_PK,'$diff_status','$th_modified'" );
   }
